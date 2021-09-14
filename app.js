@@ -3,7 +3,14 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const Center = require('./models/center');
+
+const Review = require('./models/review');
+const methodOverride = require('method-override');
+
+
+
 const engine = require('ejs-mate');
+
 
 mongoose.connect('mongodb://localhost:27017/track-vac', {
 }, err => {
@@ -20,6 +27,7 @@ db.once("open", () => {
 
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 
 
@@ -72,10 +80,39 @@ app.get('/', async (req, res) => {
     }
 
 })
-app.get('/:id', async (req, res,) => {
-    const center = await Center.findById(req.params.id)
-    res.render('center', { center });
+app.get('/:id', async (req, res) => {
+    try {
+        const center = await Center.findById(req.params.id).populate("reviews");
+        res.render('center', { center });
+    } catch {
+        console.log("A problem");
+    }
 });
+
+
+app.post('/:id/reviews', async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const review = new Review(req.body.review);
+    center.reviews.push(review);
+    await review.save();
+    await center.save();
+    res.redirect(`/${center._id}`);
+})
+
+app.delete('/:id/reviews/:reviewId', async (req, res) => {
+    const { id, reviewId } = req.params;
+    const id2 = await Center.findById(id);
+    console.log(id2.reviews);
+    // console.log(id2);
+    await Center.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/${id}`);
+})
+
+
+
+
+
 
 
 
