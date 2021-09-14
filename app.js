@@ -3,9 +3,13 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const Center = require('./models/center');
+
 const Review = require('./models/review');
 const methodOverride = require('method-override');
 
+
+
+const engine = require('ejs-mate');
 
 
 mongoose.connect('mongodb://localhost:27017/track-vac', {
@@ -28,14 +32,17 @@ app.use(methodOverride('_method'));
 
 
 
+app.engine('ejs' , engine)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
+app.set('public', path.join(__dirname, 'public'))
+app.use(express.static('public'))
 
 
 
-
-
-
+app.get('/about' , (req,res)=>{
+    res.render('about');
+})
 
 app.get('/', async (req, res) => {
 
@@ -101,6 +108,8 @@ app.delete('/:id/reviews/:reviewId', async (req, res) => {
     await Review.findByIdAndDelete(reviewId);
     res.redirect(`/${id}`);
 })
+
+
 
 
 
