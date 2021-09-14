@@ -13,10 +13,10 @@ select.addEventListener('click', function () {
     if (language=== 'en'){
         console.log('here')
         document.querySelector('#lang').removeAttribute('href');
-        document.querySelector('.location').setAttribute('src' , 'Shape.png')
+        document.querySelector('.location').setAttribute('src' , '/img/Shape.png')
     }
     if (language === 'ar'){
-        document.querySelector('#lang').setAttribute('href' , 'bootstrap-rtl.css');
+         document.querySelector('#lang').setAttribute('href' , '/css/bootstrap-rtl.css');
         document.querySelector('.location').removeAttribute('src')
     }
     // header.innerHTML = lang[language].header

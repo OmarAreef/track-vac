@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const Center = require('./models/center');
-
+const engine = require('ejs-mate');
 
 mongoose.connect('mongodb://localhost:27017/track-vac', {
 }, err => {
@@ -24,14 +24,17 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+app.engine('ejs' , engine)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
+app.set('public', path.join(__dirname, 'public'))
+app.use(express.static('public'))
 
 
 
-
-
-
+app.get('/about' , (req,res)=>{
+    res.render('about');
+})
 
 app.get('/', async (req, res) => {
 
@@ -73,6 +76,8 @@ app.get('/:id', async (req, res,) => {
     const center = await Center.findById(req.params.id)
     res.render('center', { center });
 });
+
+
 
 
 
