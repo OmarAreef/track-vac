@@ -33,7 +33,7 @@ const seedDB = async () => {
             nameArabic: helper[i].nameArabic,
             governorateArabic: helper[i].governorateArabic,
             districtArabic: helper[i].districtArabic,
-            image: helper[i].image,
+            image: helper[i].image
         })
         await center.save();
     }

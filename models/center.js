@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const Review = require('./review');
 const Schema = mongoose.Schema;
+
 
 const centersSchema = new Schema({
     name: String,
@@ -15,7 +17,22 @@ const centersSchema = new Schema({
     //     day: String,
     // }] 
     image: String,
-    //array of reviews ref.
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
+
+centersSchema.post('findOneAndDelete', async function (doc) {
+    if (doc) {
+        await Review.deleteMany({
+            _id: {
+                $in: doc.reviews
+            }
+        })
+    }
+})
 
 module.exports = mongoose.model('Center', centersSchema);
