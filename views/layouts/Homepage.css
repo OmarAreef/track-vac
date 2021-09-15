@@ -91,15 +91,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
   .container, .container-lg, .container-md, .container-sm, .container-xl {
       max-width: 1540px; }
   }
-
 #header {
-  transform: translateY(-740px);
+    transform: translateY(-740px);
 }
+#globe{
+  transform: translate(30px,42px);
+}
+#language {
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.00);
+  width: 30%;
+  transform: translateY(45px);
+  text-align: center;
+
+}
+option {
+  color: rgb(0, 0, 0);
+}
+
 #up {
-  transform: translate(50px,150px);
+  transform: translate(200px,-550px);
 }
 #Starttracking {
-  transform: translatex(90px);
+  transform: translatex(150px);
   font-size: 200%;
   text-align:center ;
   color: white ;
@@ -112,7 +128,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
   
 }
 #Aboutus {
-  transform: translatex(120px);
+  transform: translatex(200px);
   font-size: 200%;
   color: white ;
   background: transparent;
