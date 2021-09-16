@@ -5,11 +5,13 @@
         const point = ['<%- center.longitude%>', '<%- center.latitude%>'];
     </script>
 
+
     <body>
         <%- include('partials/navBar.ejs') -%>
             <div class="w-100 h-100 py-auto" style="background-color :rgba(255, 255, 255, 0.7)">
                 <div class="p-3 mx-3">
                     <div class="row w-100 h-75 pt-2">
+
 
                         <div class="col-xs-12 col-lg-6">
                             <h2 class="display-4 name">
@@ -129,11 +131,78 @@
                 <div class="container h-100">
                     reviews
 
+    </div>
+    <div class="container">
+        <h3>Reviews</h3>
+        <form action="/<%=center._id%>/reviews" method="POST" class="mb-3">
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-range" type="range" min="1" max="5" name="review[location]" id="location">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="speed">Speed</label>
+                <input class="form-range" type="range" min="1" max="5" name="review[speed]" id="speed">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="clean">Clean</label>
+                <input class="form-range" type="range" min="1" max="5" name="review[clean]" id="clean">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="service">Service</label>
+                <input class="form-range" type="range" min="1" max="5" name="review[service]" id="service">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="body">Review</label>
+                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+        <% for(let review of center.reviews) { %>
+            <div class="card mb-3 ">
+                <div class="card-body">
+
+                    <h5>Location: <%= review.location %>
+                    </h5>
+                    <h5>Speed: <%= review.speed %>
+                    </h5>
+                    <h5>Service: <%= review.service %>
+                    </h5>
+                    <h5>Cleanliness: <%= review.clean %>
+                    </h5>
+                    <h5>id: <%=review._id%>
+                    </h5>
+
+                    <p class="card-text">Review: <%= review.body %>
+                    </p>
+                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <% } %>
+
+
+
+
 
 
 
                 </div>
             </div>
+
+
+
+    
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+   
+
 
 
 
