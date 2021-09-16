@@ -1,0 +1,26 @@
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: fit-content; /* Full width (cover the whole page) */
+  height: fit-content; /* Full height (cover the whole page) */
+  top: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.2rem !important;
+  /* background-color: rgba(0,0,0,0); Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+/* #overlay {
+    transform: translateY(-400px);
+} */
+@keyframes drop {
+    0%{
+        opacity:0;
+    }
+    70%{
+        transform: translateY(200px);
+    }
+    
+}

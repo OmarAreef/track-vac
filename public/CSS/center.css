@@ -19,6 +19,11 @@ h1,h2,h3,h4,h5 .name {
 .thumb{
     border-radius: 12px;
     border :2px #050939 solid;
+    max-height: 290px;
+}
+.thumb-1{
+    border-radius: 12px;
+    border :2px #050939 solid;
 }
 .rating{
     font-family: roboto , 'sans-serif';
@@ -46,5 +51,19 @@ h1,h2,h3,h4,h5 .name {
 .text {
     font-family: roboto , 'sans-serif';
     font-size: 0.75rem;
+    font-weight: 400;
+}
+.logo{
+    background-color: transparent;
+    margin-top: -30px;
+    margin-left: -20px;
+}
+#close{
+    padding: -5px !important;
+    margin-top: -10px !important;
+}
+.label {
+    font-family: roboto , 'sans-serif';
+    font-size: 0.9rem;
     font-weight: 400;
 }
