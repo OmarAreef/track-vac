@@ -91,6 +91,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
   .container, .container-lg, .container-md, .container-sm, .container-xl {
       max-width: 1540px; }
   }
+
 #header {
     transform: translateY(-740px);
 }
@@ -107,15 +108,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
   text-align: center;
 
 }
+select{
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.00);
+}
 option {
   color: rgb(0, 0, 0);
 }
 
 #up {
-  transform: translate(200px,-550px);
+  transform: translate(30px,-550px);
 }
 #Starttracking {
-  transform: translatex(150px);
+  transform: translatex(100px);
   font-size: 200%;
   text-align:center ;
   color: white ;
@@ -128,7 +135,7 @@ option {
   
 }
 #Aboutus {
-  transform: translatex(200px);
+  transform: translatex(150px);
   font-size: 200%;
   color: white ;
   background: transparent;
@@ -145,11 +152,23 @@ h1 , h2 , h3 , h4 {
 
 
   
-button {
+button:hover {
+  color: #050939;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+#start {
+  max-width: 100%;
+  padding: 0px;
 }
 
-
-/*#homepage{
-  background:url(images/home.png);
-  background-size: cover;
+#filters {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  width: 15%;
+  height: 50%;
+  /*transform: translate(-700px , 100px);*/
+}
+.navbar {
+  padding: 0px;
 }
