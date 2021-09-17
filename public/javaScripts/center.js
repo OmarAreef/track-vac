@@ -11,14 +11,14 @@ const marker1 = new mapboxgl.Marker()
     .setLngLat(point)
     .addTo(map);
 
-function on() {
-    document.getElementById("overlay").style.display = "block";
-}
-
-function off() {
-    document.getElementById("overlay").style.display = "none";
-}
-let write = document.querySelector('#review') ;
-write.addEventListener('click' , on);
-let close = document.querySelector('#close') ;
-close.addEventListener('click' , off);
+    function on() {
+        document.getElementById("write_review").style.display = "block";
+    }
+    
+    function off() {
+        document.getElementById("write_review").style.display = "none";
+    }
+    let write = document.querySelector('#review') ;
+    write.addEventListener('click' , on);
+    let close = document.querySelector('#close_review') ;
+    close.addEventListener('click' , off);
