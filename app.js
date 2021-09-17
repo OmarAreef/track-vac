@@ -17,9 +17,6 @@ const { isLoggedIn, isReviewAuthor } = require('./middleware');
 
 
 
-const engine = require('ejs-mate');
-
-
 mongoose.connect('mongodb://localhost:27017/track-vac', {
 }, err => {
     if (err) throw err;
@@ -56,7 +53,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     secret: SESS_SECRET,
-    cookie: { maxAge: 3600000, secure: false, httpOnly: true }))
+    cookie: { maxAge: 3600000, secure: false, httpOnly: true }}))
 
 app.engine('ejs' , engine)
 app.set('view engine', 'ejs');
@@ -94,7 +91,9 @@ app.get('/', catchAsync(async (req, res) => {
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
 
+
         res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
+
         console.log("1");
 
 
@@ -125,7 +124,7 @@ app.get('/', catchAsync(async (req, res) => {
 
 app.get('/:id', catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id).populate("reviews");
-    res.render('center', { center });
+    res.render('center_amera', { center });
 }));
 
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {

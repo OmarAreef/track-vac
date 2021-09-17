@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Show</title>
+</head>
+
+<body>
+    <div class="container">
+        <ul>
+            <li>
+                <%= center.name%>
+            </li>
+            <li>
+                <%= center.latitude%>
+            </li>
+            <li>
+                <%= center.longitude%>
+            </li>
+            <li>
+                <%= center.governorate%>
+            </li>
+            <li>
+                <%= center.nameArabic%>
+            </li>
+            <li>
+                <%= center.governorateArabic%>
+            </li>
+            <li>
+                <%= center.districtArabic%>
+            </li>
+            <li>
+                <%= center.district%>
+            </li>
+            <li>
+                <img src="<%=center.image%>">
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h3>Reviews</h3>
+
+
+
+        <% for(let review of center.reviews) { %>
+            <div class="card mb-3 ">
+                <div class="card-body" id="reviewDisplay<%= review._id %>">
+                    <h5>Location: <%= review.location %>
+                    </h5>
+                    <h5>Speed: <%= review.speed %>
+                    </h5>
+                    <h5>Service: <%= review.service %>
+                    </h5>
+                    <h5>Cleanliness: <%= review.clean %>
+                    </h5>
+                    <h5>id: <%=review._id%>
+                    </h5>
+                    <p class="card-text">Review: <%= review.body %>
+                    </p>
+                </div>
+
+                <% if(user==review.author_id) { %>
+                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+
+                    <button class="btn btn-sm btn-primary" id="btn<%= review._id%>"
+                        onclick="showForm('<%= review._id %>')">Edit </button>
+                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=PUT" method="POST" class="mb-3"
+                        id=<%=review._id%> style="display: none;">
+                        <div class="mb-3">
+                            <label class="form-label" for="location">Location</label>
+                            <input class="form-range" type="range" min="1" max="5" name="review[location]" id="location"
+                                value=<%=review.location %>>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="speed">Speed</label>
+                            <input class="form-range" type="range" min="1" max="5" name="review[speed]" id="speed"
+                                value=<%=review.speed %>>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="clean">Clean</label>
+                            <input class="form-range" type="range" min="1" max="5" name="review[clean]" id="clean"
+                                value=<%=review.clean %>>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="service">Service</label>
+                            <input class="form-range" type="range" min="1" max="5" name="review[service]" id="service"
+                                value=<%=review.service %>>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="body">Review</label>
+                            <textarea class="form-control" name="review[body]" id="bodyEdit" cols="30" rows="3"
+                                required><%=review.body %></textarea>
+                        </div>
+
+                        <button class="btn btn-success">Save</button>
+
+                    </form>
+
+                    <% }%>
+            </div>
+            <% } %>
+
+                <% if(!user) { %>
+                    <form action="<%=center._id%>/login" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Registration Number</label>
+                            <input class="form-control" type="text" id="username" name="username" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Last 4 Digits From ID</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success">Login</button>
+                    </form>
+                    <% } else{ %>
+                        <form action="/<%=center._id%>/reviews" method="POST" class="mb-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="location">Location</label>
+                                <input class="form-range" type="range" min="1" max="5" name="review[location]"
+                                    id="location">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="speed">Speed</label>
+                                <input class="form-range" type="range" min="1" max="5" name="review[speed]" id="speed">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="clean">Clean</label>
+                                <input class="form-range" type="range" min="1" max="5" name="review[clean]" id="clean">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="service">Service</label>
+                                <input class="form-range" type="range" min="1" max="5" name="review[service]"
+                                    id="service">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="body">Review</label>
+                                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
+                                    required></textarea>
+                            </div>
+                            <button class="btn btn-success">Submit</button>
+                        </form>
+                        <a class="nav-link" href="/centers/logout">Logout</a>
+                        <% } %>
+    </div>
+    <script type="text/javascript">
+        function showForm(id) {
+            document.getElementById(id).style.display = 'block';
+            const btnEdit = "btn" + id;
+            const displayEdit = "reviewDisplay" + id;
+            document.getElementById(id).style.display = "block";
+            document.getElementById(btnEdit).style.display = "none";
+            document.getElementById(displayEdit).style.display = "none";
+        }
+    </script>
+
+
+
+            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+        <script src='/javascripts/center.js'> </script>
+</body>
