@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Center = require('../models/center');
+const User = require('../models/user');
 const helper = require("./centers.js");
-
+const helper1 = require("./users.js");
 
 
 
@@ -15,10 +16,6 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
-
-
-
-
 
 
 const seedDB = async () => {
@@ -37,7 +34,20 @@ const seedDB = async () => {
         })
         await center.save();
     }
+    await User.deleteMany({});
+    for (let i = 0; i < 2; i++) {
+        const user = new User({
+            reg_num: helper1[i].reg_num,
+            pass: helper1[i].pass
+        })
+        await user.save();
+    }
+
+
+
+
 }
+
 
 seedDB().then(() => {
     mongoose.connection.close();

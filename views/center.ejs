@@ -1,3 +1,4 @@
+
 <%- layout('layouts/boilerplate.ejs') -%>
     <link rel="stylesheet" href="/css/center.css">
     <link rel="stylesheet" href="/css/starability.css">
@@ -241,6 +242,30 @@
                     </div>
                 </div>
             </div>
+
+
+    <script type="text/javascript">
+        function showForm(id) {
+            document.getElementById(id).style.display = 'block';
+            const btnEdit = "btn" + id;
+            const displayEdit = "reviewDisplay" + id;
+            document.getElementById(id).style.display = "block";
+            document.getElementById(btnEdit).style.display = "none";
+            document.getElementById(displayEdit).style.display = "none";
+        }
+    </script>
+
+
+
+            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+                crossorigin="anonymous"></script>
 
             <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
             <script src='/javascripts/center.js'> </script>

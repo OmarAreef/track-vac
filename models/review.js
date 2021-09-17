@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./user');
 
 const reviewSchema = new Schema({
     body: String,
     location: Number,
     clean: Number,
     service: Number,
-    speed: Number
-    //ref. to user to be added
+    speed: Number,
+    author_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
+
 });
 
 module.exports = mongoose.model("Review", reviewSchema);
