@@ -1,0 +1,69 @@
+h1,h2,h3,h4,h5 .name {
+    font-family:  Montserrat , 'sans-serif';
+    font-weight: 700 !important;
+    
+}
+
+.location {
+    font-family: roboto , 'sans-serif';
+    font-size: 1.1rem;
+    display:inline;
+}
+.pin {
+    /* width: 10%;
+    height: 10%; */
+    display: inline;
+    width: 20px;
+    height: 20px;
+}
+.thumb{
+    border-radius: 12px;
+    border :2px #050939 solid;
+    max-height: 290px;
+}
+.thumb-1{
+    border-radius: 12px;
+    border :2px #050939 solid;
+}
+.rating{
+    font-family: roboto , 'sans-serif';
+    font-size: 1.1rem;
+}
+/* .star{
+    max-height: 0.8em;
+} */
+
+/* .card-body{
+    padding: 0.8em !important;
+} */
+#Map {
+    height: 100%;
+}
+#map{
+    height: 216px
+}
+.shadow {
+    filter: drop-shadow(0 , 4px, 4px ,black) !important;
+}
+.bg-color {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.text {
+    font-family: roboto , 'sans-serif';
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+.logo{
+    background-color: transparent;
+    margin-top: -30px;
+    margin-left: -20px;
+}
+#close{
+    padding: -5px !important;
+    margin-top: -10px !important;
+}
+.label {
+    font-family: roboto , 'sans-serif';
+    font-size: 0.9rem;
+    font-weight: 400;
+}

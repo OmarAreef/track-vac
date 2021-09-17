@@ -1,165 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <title>Show</title>
-</head>
-
-<body>
-    <div class="container">
-        <ul>
-            <li>
-                <%= center.name%>
-            </li>
-            <li>
-                <%= center.latitude%>
-            </li>
-            <li>
-                <%= center.longitude%>
-            </li>
-            <li>
-                <%= center.governorate%>
-            </li>
-            <li>
-                <%= center.nameArabic%>
-            </li>
-            <li>
-                <%= center.governorateArabic%>
-            </li>
-            <li>
-                <%= center.districtArabic%>
-            </li>
-            <li>
-                <%= center.district%>
-            </li>
-            <li>
-                <img src="<%=center.image%>">
-            </li>
-        </ul>
-    </div>
-
-    <div class="container">
-        <h3>Reviews</h3>
+<%- layout('layouts/boilerplate.ejs') -%>
+    <link rel="stylesheet" href="/css/center.css">
+    <link rel="stylesheet" href="/css/starability.css">
+    <link rel="stylesheet" href="/css/overlay.css">
+    <script>
+        const point = ['<%- center.longitude%>', '<%- center.latitude%>'];
+    </script>
 
 
+    <body>
+        <%- include('partials/navBar.ejs') -%>
+            <div class="w-100 h-100 py-auto" style="background-color :rgba(255, 255, 255, 0.7)">
+                <div class="p-3 mx-3">
+                    <div class="row w-100 h-75 pt-2">
 
-        <% for(let review of center.reviews) { %>
-            <div class="card mb-3 ">
-                <div class="card-body" id="reviewDisplay<%= review._id %>">
-                    <h5>Location: <%= review.location %>
-                    </h5>
-                    <h5>Speed: <%= review.speed %>
-                    </h5>
-                    <h5>Service: <%= review.service %>
-                    </h5>
-                    <h5>Cleanliness: <%= review.clean %>
-                    </h5>
-                    <h5>id: <%=review._id%>
-                    </h5>
-                    <p class="card-text">Review: <%= review.body %>
-                    </p>
-                </div>
 
-                <% if(user==review.author_id) { %>
-                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                    </form>
+                        <div class="col-xs-12 col-lg-6">
+                            <h2 class="display-4 name">
+                                <%= center.name%>
+                            </h2>
+                            <img src="/img/Shape.png" alt="" class='img-fluid pin ml-3 mb-2'>
+                            <p class='location '>
+                                <%= center.district%>, <%= center.governorate%>
+                            </p>
 
-                    <button class="btn btn-sm btn-primary" id="btn<%= review._id%>"
-                        onclick="showForm('<%= review._id %>')">Edit </button>
-                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=PUT" method="POST" class="mb-3"
-                        id=<%=review._id%> style="display: none;">
-                        <div class="mb-3">
-                            <label class="form-label" for="location">Location</label>
-                            <input class="form-range" type="range" min="1" max="5" name="review[location]" id="location"
-                                value=<%=review.location %>>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="speed">Speed</label>
-                            <input class="form-range" type="range" min="1" max="5" name="review[speed]" id="speed"
-                                value=<%=review.speed %>>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="clean">Clean</label>
-                            <input class="form-range" type="range" min="1" max="5" name="review[clean]" id="clean"
-                                value=<%=review.clean %>>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="service">Service</label>
-                            <input class="form-range" type="range" min="1" max="5" name="review[service]" id="service"
-                                value=<%=review.service %>>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="body">Review</label>
-                            <textarea class="form-control" name="review[body]" id="bodyEdit" cols="30" rows="3"
-                                required><%=review.body %></textarea>
-                        </div>
+                    </div>
+                    <div class="row w-100 mt-3">
 
-                        <button class="btn btn-success">Save</button>
+                        <div class="col-sm-10 col-md-5 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch">
+                            <img src="<%=center.image%>" class="img-fluid thumb h-100 mb-2">
+                        </div>
+                        <div class="col-sm-10 col-md-7 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch">
+                            <div class="card thumb w-100 shadow bg-color">
+                                <div class="card-body mx-n3">
+                                    <div class="card-title">
+                                        <h4 class="card-title text-center mb-n1">Ratings</h4>
+                                    </div>
 
-                    </form>
-
-                    <% }%>
-            </div>
-            <% } %>
-
-                <% if(!user) { %>
-                    <form action="<%=center._id%>/login" method="POST" class="validated-form" novalidate>
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Registration Number</label>
-                            <input class="form-control" type="text" id="username" name="username" required>
-                            <div class="valid-feedback">
-                                Looks good!
+                                    <div class="row mt-2">
+                                        <div class="col-3">
+                                            <span class="card-text rating mt-1">location</span>
+                                        </div>
+                                        <div class="col-6 offset-2 star">
+                                            <p class="starability-result" data-rating="3"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-3">
+                                            <span class="card-text rating mt-1">Speed</span>
+                                        </div>
+                                        <div class="col-6 offset-2 star">
+                                            <p class="starability-result" data-rating="3"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-3">
+                                            <span class="card-text rating mt-1">Service</span>
+                                        </div>
+                                        <div class="col-6 offset-2 star">
+                                            <p class="starability-result" data-rating="3"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-3">
+                                            <span class="card-text rating mt-1">Cleaniness</span>
+                                        </div>
+                                        <div class="col-6 offset-2 star">
+                                            <p class="starability-result" data-rating="3"></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-sm-10 col-md-7 col-lg-5 col-xl-4 d-flex align-items-stretch pb-2">
+                            <div class="card thumb w-100 shadow bg-color" id='Map'>
+                                <div class="card-body">
+                                    <div class=" card-title">
+                                        <h4 class="card-title text-center mb-n1">Location</h4>
+                                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Last 4 Digits From ID</label>
-                            <input class="form-control" type="password" id="password" name="password" required>
-                            <div class="valid-feedback">
-                                Looks good!
+                                    <div class="row">
+                                        <div class="col-7 border border-rounded rounded-2 pt-3 mr-n1" id='map'>
+                                            <!--  -->
+                                        </div>
+                                        <div class="col-5 card-text py-3 mt-2">
+                                            <span class="text">Mon Closed</span>
+                                            <span class="text">Tue 8:00am to 9:00pm</span>
+                                            <span class="text">wed 8:00am to 9;00pm</span>
+                                            <span class="text">Thu 8:00am to 9:00pm</span>
+                                            <span class="text">Fri 8:00am to 9:00pm</span>
+                                            <span class="text">Sat 8:00am to 9;00pm</span>
+                                            <span class="text">Sun 8:00am to 9:00pm</span>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <button class="btn btn-dark" id='review'> Write Review</button>
+                    <div class="container thumb-1" id='overlay'
+                        style="background: linear-gradient(to right,  #ffff 0%, rgba(194,194,194,1) 100%);">
+                        <div class="row px-2">
+                            <div class="col-6 offset-3">
+                                <img src="/img/logo(4).png" alt="" class="img-fluid logo">
+                            </div>
+                            <div class="col-2 ml-auto">
+                                <button class="btn btn-outline-danger" id='close'>&#10060</button>
+                            </div>
 
-                        <button class="btn btn-success">Login</button>
-                    </form>
-                    <% } else{ %>
+
+                        </div>
+
+
+                        <h3 class="display-5">Write a Review</h3>
                         <form action="/<%=center._id%>/reviews" method="POST" class="mb-3">
-                            <div class="mb-3">
-                                <label class="form-label" for="location">Location</label>
-                                <input class="form-range" type="range" min="1" max="5" name="review[location]"
-                                    id="location">
+                            <div class="mb-3 row">
+                                <div class="col-8 offset-2 d-flex justify-content-center">
+                                    <fieldset class="starability-basic">
+                                        <h2 class="label ml-5">Location</h2>
+                                        <input type="radio" id="no-rate" class="input-no-rate" name="review[location]"
+                                            value="0" checked aria-label="No rating." />
+                                        <input type="radio" id="first-rate1" name="review[location]" value="1" />
+                                        <label for="first-rate1" title="Terrible">1 star</label>
+                                        <input type="radio" id="first-rate2" name="review[location]" value="2" />
+                                        <label for="first-rate2" title="Not good">2 stars</label>
+                                        <input type="radio" id="first-rate3" name="review[location]" value="3" />
+                                        <label for="first-rate3" title="Average">3 stars</label>
+                                        <input type="radio" id="first-rate4" name="review[location]" value="4" />
+                                        <label for="first-rate4" title="Very good">4 stars</label>
+                                        <input type="radio" id="first-rate5" name="review[location]" value="5" />
+                                        <label for="first-rate5" title="Amazing">5 stars</label>
+                                    </fieldset>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="speed">Speed</label>
-                                <input class="form-range" type="range" min="1" max="5" name="review[speed]" id="speed">
+                                <div class="mb-3 row">
+                                    <div class="col-8 offset-2 d-flex justify-content-center">
+                                        <fieldset class="starability-basic">
+                                            <h2 class="label ml-5">Service</h2>
+                                            <input type="radio" id="no-rate" class="input-no-rate"
+                                                name="review[service]" value="0" checked aria-label="No rating." />
+                                            <input type="radio" id="second-rate1" name="review[service]" value="1" />
+                                            <label for="second-rate1" title="Terrible">1 star</label>
+                                            <input type="radio" id="second-rate2" name="review[service]" value="2" />
+                                            <label for="second-rate2" title="Not good">2 stars</label>
+                                            <input type="radio" id="second-rate3" name="review[service]" value="3" />
+                                            <label for="second-rate3" title="Average">3 stars</label>
+                                            <input type="radio" id="second-rate4" name="review[service]" value="4" />
+                                            <label for="second-rate4" title="Very good">4 stars</label>
+                                            <input type="radio" id="second-rate5" name="review[service]" value="5" />
+                                            <label for="second-rate5" title="Amazing">5 stars</label>
+                                        </fieldset>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="clean">Clean</label>
-                                <input class="form-range" type="range" min="1" max="5" name="review[clean]" id="clean">
+                                <div class="mb-3 row">
+                                    <div class="col-8 offset-2 d-flex justify-content-center">
+                                        <fieldset class="starability-basic">
+                                            <h2 class="label ml-5">Clean</h2>
+                                            <input type="radio" id="no-rate" class="input-no-rate" name="review[clean]"
+                                                value="0" checked aria-label="No rating." />
+                                            <input type="radio" id="third-rate1" name="review[clean]" value="1" />
+                                            <label for="third-rate1" title="Terrible">1 star</label>
+                                            <input type="radio" id="third-rate2" name="review[clean]" value="2" />
+                                            <label for="third-rate2" title="Not good">2 stars</label>
+                                            <input type="radio" id="third-rate3" name="review[clean]" value="3" />
+                                            <label for="third-rate3" title="Average">3 stars</label>
+                                            <input type="radio" id="third-rate4" name="review[clean]" value="4" />
+                                            <label for="third-rate4" title="Very good">4 stars</label>
+                                            <input type="radio" id="third-rate5" name="review[clean]" value="5" />
+                                            <label for="third-rate5" title="Amazing">5 stars</label>
+                                        </fieldset>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="service">Service</label>
-                                <input class="form-range" type="range" min="1" max="5" name="review[service]"
-                                    id="service">
+                                <div class="mb-3 row">
+                                    <div class="col-8 offset-2 d-flex justify-content-center">
+                                        <fieldset class="starability-basic">
+                                            <h2 class="label ml-5">Speed</h2>
+                                            <input type="radio" id="no-rate" class="input-no-rate" name="review[speed]"
+                                                value="0" checked aria-label="No rating." />
+                                            <input type="radio" id="fourth-rate1" name="review[speed]" value="1" />
+                                            <label for="fourth-rate1" title="Terrible">1 star</label>
+                                            <input type="radio" id="fourth-rate2" name="review[speed]" value="2" />
+                                            <label for="fourth-rate2" title="Not good">2 stars</label>
+                                            <input type="radio" id="fourth-rate3" name="review[speed]" value="3" />
+                                            <label for="fourth-rate3" title="Average">3 stars</label>
+                                            <input type="radio" id="fourth-rate4" name="review[speed]" value="4" />
+                                            <label for="fourth-rate4" title="Very good">4 stars</label>
+                                            <input type="radio" id="fourth-rate5" name="review[speed]" value="5" />
+                                            <label for="fourth-rate5" title="Amazing">5 stars</label>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="body">Review</label>
-                                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
-                                    required></textarea>
+                                <h2 class="label">Enter your Review here:</h2>
+                                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required
+                                    placeholder="What happened at the center what did you like and what did you dislike ...?"></textarea>
                             </div>
                             <button class="btn btn-success">Submit</button>
-                        </form>
-                        <a class="nav-link" href="/centers/logout">Logout</a>
-                        <% } %>
-    </div>
+                    </div>
+                </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-10 col-md-7 col-lg-5 col-xl-4 offset-1">
+
+                        <% for(let review of center.reviews) { %>
+                            <div class="card mb-3 ">
+                                <div class="card-body">
+                                    <h5>Average Rating: </h5>
+                                    <p class="starability-result"
+                                        data-rating="<%= Math.round((review.location +review.speed +review.service+ review.clean)/4) %>">
+                                    </p>
+                                    <p class="card-text">Review: <%= review.body %>
+                                    </p>
+                                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </div>
+
+                                <% } %>
+                            </div>
+                    </div>
+                </div>
+            </div>
 
     <script type="text/javascript">
         function showForm(id) {
@@ -172,21 +243,17 @@
         }
     </script>
 
-    <!-- Optional JavaScript; choose one of the two! -->
 
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-      -->
 
-</body>
 
-</html>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+                crossorigin="anonymous"></script>
+            <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+            <script src='/javascripts/center.js'> </script>
+    </body>

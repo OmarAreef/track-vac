@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const Center = require('./models/center');
+
 const Review = require('./models/review');
 const User = require('./models/user');
 const session = require('express-session');
@@ -14,6 +15,9 @@ const flash = require('connect-flash');
 
 const { isLoggedIn, isReviewAuthor } = require('./middleware');
 
+
+
+const engine = require('ejs-mate');
 
 
 mongoose.connect('mongodb://localhost:27017/track-vac', {
@@ -46,15 +50,20 @@ const {
 
 const IN_PROD = NODE_ENV === 'production'
 
+
 app.use(session({
     name: SESS_Name,
     saveUninitialized: false,
     resave: false,
     secret: SESS_SECRET,
-    cookie: { maxAge: 3600000, secure: false, httpOnly: true }
+    cookie: { maxAge: 3600000, secure: false, httpOnly: true }))
 
-})
-)
+app.engine('ejs' , engine)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'))
+app.set('public', path.join(__dirname, 'public'))
+app.use(express.static('public'))
+
 app.use(flash());
 app.use(function (req, res, next) {
     res.locals.user = req.session.userId;
@@ -65,11 +74,12 @@ app.use(function (req, res, next) {
 
 
 
-app.engine('ejs', engine)
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'))
-app.set('public', path.join(__dirname, 'public'))
 
+
+
+app.get('/about' , (req,res)=>{
+    res.render('about');
+})
 
 
 app.get('/', catchAsync(async (req, res) => {
@@ -83,23 +93,32 @@ app.get('/', catchAsync(async (req, res) => {
         const centerHelper = await Center.find({ governorate, district, name });
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
-        res.render('home', { centerHelper, governorates, governorate, district, name, districts, centers });
+
+        res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
+        console.log("1");
+
 
     } else if (governorate && district) {
         const centerHelper = await Center.find({ governorate, district });
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
-        res.render('home', { centers, centerHelper, name, governorates, governorate, district, districts });
+
+        res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
+        console.log("2");
 
     }
     else if (governorate) {
         const centerHelper = await Center.find({ governorate });
         const districts = await Center.find({ governorate }).distinct('district');
-        res.render('home', { districts, centerHelper, name, governorate, centers, governorates, district });
+
+        res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
+        console.log("3");
     }
     else {
         const centerHelper = await Center.find({});;
-        res.render('home', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+        res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+        console.log("4");
+
     }
 
 }))
@@ -165,6 +184,8 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('error', { err })
 })
+
+
 
 
 app.listen(3000, () => {
