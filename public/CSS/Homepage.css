@@ -1,7 +1,12 @@
-
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display+SC );
+html{
+  scroll-behavior: smooth;
+}
 body{
   text-align:center;
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  font-family: 'Montserrat';
 }
 #homepage {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1afeaf+0,089ca6+22,044a92+52,021f7b+78,050939+100 */
@@ -146,16 +151,28 @@ option {
   backdrop-filter: blur(70px);
   border-radius: 40px;
 }
-@import url(http://fonts.googleapis.com/css?family=Playfair+Display+SC );
+.menu {
+color: #FFFFFF;
+}
+.menu:hover{
+  text-decoration: none;
+  color: #ffffff;
+
+}
+
 h1 , h2 , h3 , h4 {
   font-family: 'Montserrat' ;
 }
 
 
   
-button:hover {
-  color: #050939;
+#Starttracking:hover , #Aboutus:hover {
+  color: #ffffff;
   background-color: rgba(255, 255, 255, 0.5);
+  transition: 1s;
+}
+.scroll:hover {
+  border: 2px solid rgba(0, 0, 26, 0.418);
 }
 #start {
   max-width: 100%;
@@ -166,10 +183,27 @@ button:hover {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
-  width: 15%;
-  height: 50%;
-  /*transform: translate(-700px , 100px);*/
+  height: 0%;
+  transform: translateY(100px);
 }
 .navbar {
   padding: 0px;
+}
+#results {
+  transform: translateY(50px);
+  width: 45%;
+  background: linear-gradient(104.15deg, rgba(255, 255, 255, .8) 2.5%, rgba(255, 255, 255, .4) 112.38%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
+  /* Note: backdrop-filter has minimal browser support */
+  border: 1px solid rgb(114, 114, 114,.4) ;
+  border-radius: 40px;
+}
+.results {
+  height: 8vh;
+  transform: translateX(50px);
+}
+#center {
+  color: #000000;
+  font-size: x-large;
+  text-decoration: none;
 }
