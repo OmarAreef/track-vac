@@ -35,10 +35,11 @@ const seedDB = async () => {
         await center.save();
     }
     await User.deleteMany({});
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         const user = new User({
             reg_num: helper1[i].reg_num,
-            pass: helper1[i].pass
+            pass: helper1[i].pass,
+            userType: helper1[i].userType
         })
         await user.save();
     }
