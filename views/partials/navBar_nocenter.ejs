@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-dark d-absolute" style="background-color: #050939;">
+    <div class="container-fluid">
+        <ul>
+            <a class="navbar-brand" href='/'><img src="/img/LOGO (3) 1.png" alt="logo"></a>
+        </ul>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link mr-4" href="/about"
+                        style="font-family: Roboto; font-weight: bold; color: white;">About us</a>
+                </li>
+                <li class="nav-item">
+
+                    <a class="btn mr-5  my-2 my-sm-0" type="button"
+                        style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;">Q&A</a>
+
+                </li>
+                <li class="nav-item">
+                    <% if (!user){ %>
+                        <button class="btn  my-2 my-sm-0" type="button" id="signin"
+                            style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;">Sign
+                            in</button>
+                        <% } else { %>
+                            <a class="btn  my-2 my-sm-0" type="button" id="logout"
+                                style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;"
+                                href="/centers/logout">Logout</a>
+                            <% } %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<%= success%>
+<%= error%>
+        <div class="container thumb-1 overlay" id='sign'
+            style="background: linear-gradient(to right,  #ffff 0%, rgba(194,194,194,1) 100%); 
+            z-index: 99999;">
+            <div class="row px-2">
+                <div class="col-6 offset-3">
+                    <img src="/img/logo(4).png" alt="" class="img-fluid logo mt-1">
+                </div>
+                <div class="col-2 ml-auto mb-2">
+                    <button class="btn btn-outline-danger mb-3" id='close_sign'>&#10060</button>
+                </div>
+            </div>
+            <h3 class="display-5 ml-5 mb-2">Login</h3>
+            <form action="/login" method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Registration Number</label>
+                    <input class="form-control" type="text" id="username" name="username" required>
+                    <div class="invalid-feedback">
+                        Please enter the required info
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="password">Last 4 Digits From ID</label>
+                    <input class="form-control" type="password" id="password" name="password" required>
+                    <div class="invalid-feedback">
+                        Please enter the required infp
+                    </div>
+                </div>
+
+                <button class="btn btn-success">Login</button>
+            </form>
+
+        </div>

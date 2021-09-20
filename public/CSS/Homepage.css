@@ -7,6 +7,7 @@ body{
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   font-family: 'Montserrat';
+  /* overflow-y: hidden; */
 }
 #homepage {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1afeaf+0,089ca6+22,044a92+52,021f7b+78,050939+100 */
@@ -94,14 +95,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
 
 @media only screen and (min-width: 1200px){
   .container, .container-lg, .container-md, .container-sm, .container-xl {
-      max-width: 1540px; }
+      max-width: 100%; }
+  }
+  #preloader {
+    max-width: 100% !important
   }
 
-#header {
-    transform: translateY(-740px);
-}
-#globe{
+
+/* #globe{
   transform: translate(30px,42px);
+} */
+#basic-addon1{
+  /* transform: translate(30px,42px); */
+  background-color: rgba(255, 255, 255, 0.00);
+  border: none;
 }
 #language {
   border: 1px solid #FFFFFF;
@@ -109,8 +116,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
   color: rgb(255, 255, 255);
   background-color: rgba(255, 255, 255, 0.00);
   width: 30%;
-  transform: translateY(45px);
+  /* transform: translateY(45px); */
   text-align: center;
+  
 
 }
 
@@ -123,32 +131,69 @@ select{
 option {
   color: rgb(0, 0, 0);
 }
+#logo {
+  width: 75%;
+  min-width: 170px;
+  padding-top: 3px ;
+  max-width: 280px;
 
+}
 #up {
-  transform: translate(30px,-550px);
+  /* transform: translateY(-550px); */
+  height: fit-content;
+  justify-content: center;
+  /* width: 500px;
+  height: 500px; */
+  /* background-image: url('/img/rectangle 3.png');
+  height: 90vh;
+  width: 100%;
+  min-width: 90%;
+  min-height: 500px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 1.5em; */
+}
+/* .glass{
+  background-image: url('/img/rectangle 3.png');
+  height: 90vh;
+  width: 100%;
+  min-width: 90%;
+  min-height: 500px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  
+} */
+#rectangle {
+  min-height: 500px;
+  max-height: 600px;
+  height: 93% ;
+  width:95% !important;
+  margin-left: 5px;
+  
 }
 #Starttracking {
-  transform: translatex(100px);
-  font-size: 200%;
+  /* transform: translatex(100px); */
+  font-size: 150%;
   text-align:center ;
   color: white ;
   background: transparent;
   border: 5px solid  rgba(255, 255, 255, 0.43);
-  height: 70px;
-  width: 15%;
-  backdrop-filter: blur(70px);
+  /* height: 70px; */
+  width: 90%;
+  backdrop-filter: blur(30px);
   border-radius: 40px;
   
 }
 #Aboutus {
-  transform: translatex(150px);
-  font-size: 200%;
+  /* transform: translatex(150px); */
+  font-size: 150%;
+  text-align:center ;
   color: white ;
   background: transparent;
   border: 5px solid rgba(255, 255, 255, 0.43);
-  height: 70px;
-  width: 15%;
-  backdrop-filter: blur(70px);
+  /* height: 70px; */
+  width: 90%;
+  backdrop-filter: blur(30px);
   border-radius: 40px;
 }
 .menu {
@@ -162,6 +207,23 @@ color: #FFFFFF;
 
 h1 , h2 , h3 , h4 {
   font-family: 'Montserrat' ;
+}
+.marker {
+  background-image: url('mapbox-icon.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  padding: 30%;
+  text-align: center;
+  font-family: roboto, sans-serif;
 }
 
 
@@ -184,26 +246,64 @@ h1 , h2 , h3 , h4 {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
   height: 0%;
-  transform: translateY(100px);
+  /* transform: translateY(100px); */
 }
 .navbar {
-  padding: 0px;
+  padding: -5px;
 }
 #results {
-  transform: translateY(50px);
-  width: 45%;
-  background: linear-gradient(104.15deg, rgba(255, 255, 255, .8) 2.5%, rgba(255, 255, 255, .4) 112.38%);
+  /* transform: translateY(50px);
+  width: 45%; */
+  background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
   /* Note: backdrop-filter has minimal browser support */
   border: 1px solid rgb(114, 114, 114,.4) ;
-  border-radius: 40px;
+  border-radius: 18px;
 }
 .results {
-  height: 8vh;
-  transform: translateX(50px);
+  /* height: 8vh;
+  transform: translateX(50px); */
 }
 #center {
   color: #000000;
-  font-size: x-large;
+  font-size: large;
   text-decoration: none;
 }
+/* .text {
+  font-size: 1.3rem;
+} */
+#main {
+  background-image: url('/img/track.png');
+  background-repeat: no-repeat;
+  background-size:scale-down ;
+  background-position-x: right;
+  background-position-y: bottom;
+  /* background-attachment: fixed; */
+  background-attachment:fixed;
+  min-height: 95vh;
+  /* padding: 1.5em; */
+}
+.thumb{
+  border-radius: 12px;
+  border :2px #050939 solid;
+  max-height: 420px;
+}
+hr{
+  border-top:2px solid  ;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+@media (max-width : 670px) {
+  .text {
+    font-size: 1.4em !important;
+  }
+  #Aboutus , #Starttracking {
+    width: 80%;
+    background-color: rgba(5, 9, 57, .8);
+  }
+  #logo{
+    margin-left: -5px !important; 
+  }
+  
+}
+
