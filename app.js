@@ -7,6 +7,8 @@ const Review = require('./models/review');
 const Question = require('./models/question');
 const Answer = require('./models/answer');
 const User = require('./models/user');
+const ReportReview = require('./models/reportReview');
+const ReportAnswer = require('./models/reportAnswer');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
@@ -174,6 +176,7 @@ app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res)
 app.delete('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Center.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await ReportReview.deleteMany({ review_id: reviewId });
     await Review.findByIdAndDelete(reviewId);
     res.redirect(`/${id}`);
 }))
@@ -230,6 +233,7 @@ app.post('/:id/:question/addAnswer', isLoggedIn, validateAnswer, catchAsync(asyn
 app.delete('/:id/:question/:answer', isLoggedIn, catchAsync(async (req, res) => {
     const { id, answer, question } = req.params;
     await Question.findByIdAndUpdate(question, { $pull: { answers: answer } });
+    await ReportAnswer.deleteMany({ answer_id: answer });
     await Answer.findByIdAndDelete(answer);
     res.redirect(`/${id}`);
 }))
@@ -239,6 +243,55 @@ app.put('/:id/:question/:answerId', isLoggedIn, validateAnswer, catchAsync(async
     await Answer.findByIdAndUpdate(answerId, { answer: req.body.answer.answer });
     res.redirect(`/${id}`);
 }));
+
+app.post('/:id/:review/reportReview', catchAsync(async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const report = new ReportReview({ type: req.body.reportReview });
+    report.review_id = req.params.review;
+    await report.save();
+    res.redirect(`/${center._id}`);
+}))
+
+app.post('/:id/:answer/reportAnswer', catchAsync(async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const report = new ReportAnswer({ type: req.body.reportAnswer });
+    report.answer_id = req.params.answer;
+    await report.save();
+    res.redirect(`/${center._id}`);
+}))
+
+app.get("/admin/home", catchAsync(async (req, res) => {
+    const reviewReports = await ReportReview.find().populate("review_id");
+    const answerReports = await ReportAnswer.find().populate("answer_id");
+    res.render('homeAdmin_back', { reviewReports, answerReports });
+}))
+
+app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
+    const { review } = req.params;
+    await Review.findByIdAndDelete(review);
+    await ReportReview.deleteMany({ review_id: review });
+    res.redirect("/admin/home");
+}))
+
+app.post("/rejectReview/:report/:review", catchAsync(async (req, res) => {
+    const { report } = req.params;
+    await ReportReview.findByIdAndDelete(report);
+    res.redirect("/admin/home");
+}))
+
+app.post("/acceptAnswer/:report/:answer", catchAsync(async (req, res) => {
+    const { answer } = req.params;
+    await Answer.findByIdAndDelete(answer);
+    await ReportAnswer.deleteMany({ answer_id: answer });
+    res.redirect("/admin/home");
+}))
+
+app.post("/rejectAnswer/:report/:answer", catchAsync(async (req, res) => {
+    const { report } = req.params;
+    await ReportAnswer.findByIdAndDelete(report);
+    res.redirect("/admin/home");
+}))
+
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
