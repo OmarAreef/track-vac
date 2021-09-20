@@ -77,6 +77,9 @@ app.use(function (req, res, next) {
 app.get('/about' , (req,res)=>{
     res.render('about');
 })
+app.get('/faq' , (req,res)=>{
+    res.render('faq');
+})
 
 
 app.get('/', catchAsync(async (req, res) => {
@@ -92,7 +95,7 @@ app.get('/', catchAsync(async (req, res) => {
         const centers = await Center.find({ governorate, district }).distinct('name');
 
 
-        res.render('home', { centerHelper, governorates, governorate, district, name, districts, centers });
+        res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
 
         console.log("1");
 
@@ -102,7 +105,7 @@ app.get('/', catchAsync(async (req, res) => {
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
 
-        res.render('home', { centers, centerHelper, name, governorates, governorate, district, districts });
+        res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
         console.log("2");
 
     }
@@ -110,12 +113,12 @@ app.get('/', catchAsync(async (req, res) => {
         const centerHelper = await Center.find({ governorate });
         const districts = await Center.find({ governorate }).distinct('district');
 
-        res.render('home', { districts, centerHelper, name, governorate, centers, governorates, district });
+        res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
         console.log("3");
     }
     else {
         const centerHelper = await Center.find({});;
-        res.render('home', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+        res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
         console.log("4");
 
     }
