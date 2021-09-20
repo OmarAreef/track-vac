@@ -116,6 +116,8 @@ app.get('/center', catchAsync(async (req, res) => {
 }))
 
 app.get('/:id', catchAsync(async (req, res) => {
+
+
     const center = await Center.findById(req.params.id).populate("reviews").populate({
         path: 'questions',
         populate: {
@@ -125,6 +127,7 @@ app.get('/:id', catchAsync(async (req, res) => {
     res.render('center', { center });
 
    
+
 }));
 
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
