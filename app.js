@@ -77,6 +77,9 @@ app.use(function (req, res, next) {
 app.get('/about' , (req,res)=>{
     res.render('about');
 })
+app.get('/faq' , (req,res)=>{
+    res.render('faq');
+})
 
 
 app.get('/', catchAsync(async (req, res) => {
@@ -124,7 +127,7 @@ app.get('/', catchAsync(async (req, res) => {
 
 app.get('/:id', catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id).populate("reviews");
-    res.render('center_amera', { center });
+    res.render('center', { center });
 }));
 
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
