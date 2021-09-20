@@ -11,14 +11,26 @@ const marker1 = new mapboxgl.Marker()
     .setLngLat(point)
     .addTo(map);
 
-    function on() {
-        document.getElementById("write_review").style.display = "block";
-    }
-    
-    function off() {
-        document.getElementById("write_review").style.display = "none";
-    }
-    let write = document.querySelector('#review') ;
-    write.addEventListener('click' , on);
-    let close = document.querySelector('#close_review') ;
-    close.addEventListener('click' , off);
+function on() {
+    document.getElementById("write_review").style.display = "block";
+}
+
+function off() {
+    document.getElementById("write_review").style.display = "none";
+}
+let write = document.querySelector('#review');
+write.addEventListener('click', on);
+let close = document.querySelector('#close_review');
+close.addEventListener('click', off);
+
+// function on_edit() {
+//     document.querySelector('.edit').style.display = "block";
+// }
+
+// function off_edit() {
+//     document.querySelector('.edit').style.display = "none";
+// }
+// let edit = document.querySelector('.edit_review');
+// edit.addEventListener('click', on_edit);
+// let closeEdit = document.querySelector('#close_edit');
+// closeEdit.addEventListener('click', off_edit);

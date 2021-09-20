@@ -22,6 +22,12 @@ const centersSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
+    ],
+    questions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Question'
+        }
     ]
 });
 
