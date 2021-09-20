@@ -115,6 +115,8 @@ app.get('/:id', catchAsync(async (req, res) => {
         }
     });
     res.render('center_amera', { center });
+
+   
 }));
 
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
