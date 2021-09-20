@@ -12,7 +12,11 @@ const methodOverride = require('method-override');
 const engine = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
 const flash = require('connect-flash');
-const { isLoggedIn, isReviewAuthor, validateReview, validateAnswer, validateQuestion } = require('./middleware');
+const { isLoggedIn, isReviewAuthor, validateReview, validateAnswer, validateQuestion,adminIsLoggedIn } = require('./middleware');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const Admin = require('./models/admin');
+const user = require('./models/user');
 
 
 
@@ -56,6 +60,16 @@ app.use(session({
     cookie: { maxAge: 3600000, secure: false, httpOnly: true }
 }))
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(Admin.authenticate()));
+
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
+
+
+
 app.engine('ejs', engine)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
@@ -65,6 +79,7 @@ app.use(express.static('public'))
 app.use(flash());
 app.use(function (req, res, next) {
     res.locals.user = req.session.userId;
+    res.locals.admin = req.user;
     res.locals.userType = req.session.userType;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -74,6 +89,9 @@ app.use(function (req, res, next) {
 app.get('/about', (req, res) => {
     res.render('about');
 })
+
+
+
 
 app.get('/center', catchAsync(async (req, res) => {
     const { governorate, district, name } = req.query;
@@ -241,6 +259,60 @@ app.put('/:id/:question/:answerId', isLoggedIn, validateAnswer, catchAsync(async
     await Answer.findByIdAndUpdate(answerId, { answer: req.body.answer.answer });
     res.redirect(`/${id}`);
 }));
+
+app.get('/admin/login', (req, res) => {
+    res.render('adminlogin');
+})
+app.get('/admin/home', adminIsLoggedIn,(req, res) => {
+    res.render('adminhome');
+})
+
+app.get('/admin/addadmin', adminIsLoggedIn,(req, res) => {
+    res.render('addadmin');
+})
+
+app.post('/admin/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/admin/login' }), async(req, res) => {
+    req.session.adminId=req.user._id;
+    res.redirect('/admin/home');
+})
+
+app.post('/admin/addadmin', adminIsLoggedIn,async(req, res) => {
+    try {
+        const { email, username, password ,role} = req.body;
+        const user = new Admin({ email, username,role });
+        const registeredUser = await Admin.register(user, password);
+        req.flash('success', "Admin Added Succesfully");
+        res.redirect('/admin/addadmin');
+    } catch (e) {
+        req.flash('error', e.message);
+        res.redirect('/admin/addadmin');
+    }
+})
+
+app.get('/admin/resetpassword', (req, res) => {
+    res.render('resetpassword');
+})
+
+app.post('/admin/resetpassword',adminIsLoggedIn, async(req, res) => {
+    const admin = req.user;
+    admin.changePassword(req.body.oldpassword,req.body.newpassword,(err)=> {
+    if (err){
+        req.flash('error',"Password not changed")
+        res.redirect('/admin/resetpassword');
+    }
+    else{
+        req.flash('success',"Password changed successfully");
+        res.redirect('/admin/resetpassword');
+    }
+        
+   })
+})
+
+app.get('/admin/logout', (req, res) => {
+    req.logout();
+    res.redirect('/admin/login');
+})
+
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
