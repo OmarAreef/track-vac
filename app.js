@@ -122,7 +122,7 @@ app.get('/:id', catchAsync(async (req, res) => {
             path: 'answers'
         }
     });
-    res.render('center_amera', { center });
+    res.render('center', { center });
 
    
 }));
