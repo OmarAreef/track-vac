@@ -12,7 +12,14 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next();
 }
-
+module.exports.adminIsLoggedIn = (req, res, next) => {
+    if (!req.session.adminId) {
+        console.log("Error Logging In");
+        req.flash('error', 'You must be signed in first!');
+        return res.redirect(`/admin/login`);
+    }
+    next();
+}
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     const { id, reviewId } = req.params;
