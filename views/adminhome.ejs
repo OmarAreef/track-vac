@@ -13,12 +13,87 @@
 
 <body>
     <h1>Welecome</h1>
-    <% if (admin.role ==='Moderator'){ %>
+    <% if (admin.role==='Moderator' ){ %>
         <a href="/admin/addadmin">Add Admin</a>
-    <% }%>
-    <a href="/admin/logout">Logout</a>
-    <a href="/admin/resetpassword">Reset Password</a>
-</body>    
+        <% }%>
+            <a href="/admin/logout">Logout</a>
+            <a href="/admin/resetpassword">Reset Password</a>
+
+            <div class="container">
+                <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review Reports</button>
+                <div id="reviewReportDisplay" style="display:none">
+                    <% for(let review of reviewReports) { %>
+                        <div class="container">
+                            <%= review.type %> <br>
+                                <%= review.review_id.body %>
+                                    <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                    <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                        </div>
+
+                        <% } %>
+
+
+
+                </div>
+
+            </div>
+            <div class="container">
+
+                <button class="btn btn-sm btn-info" id="answers" onclick="showAnswers()">Show Review Answers</button>
+
+                <div id="answerReportDisplay" style="display:none">
+
+                    <% for(let answer of answerReports) { %>
+                        <div class="container">
+                            <%= answer.type %><br>
+                                <%= answer.answer_id.answer %>
+                                    <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                    <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                        </div>
+
+                        <% } %>
+
+
+                </div>
+            </div>
+
+
+
+            <script type="text/javascript">
+                function showReviews() {
+                    if (document.getElementById("reviewReportDisplay").style.display == "none") {
+                        document.getElementById("reviewReportDisplay").style.display = "block";
+                    } else {
+                        document.getElementById("reviewReportDisplay").style.display = "none";
+                    }
+                }
+                function showAnswers() {
+                    if (document.getElementById("answerReportDisplay").style.display == "none") {
+                        document.getElementById("answerReportDisplay").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("answerReportDisplay").style.display = "none";
+                    }
+                }
+            </script>
+
+</body>
 
 
 </html>

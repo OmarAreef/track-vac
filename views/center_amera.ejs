@@ -107,24 +107,47 @@
                                             <p class="card-text" id="answerDisplay<%a._id%>">
                                                 <%=a.answer%>
                                             </p>
-                                            <% if(a.author_id==user) { %>
-                                                <form action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=DELETE"
-                                                    method="POST">
-                                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                                <button class="btn btn-sm btn-primary" id="buttonAnswer<%= a._id%>"
-                                                    onclick="showFormAnswer('<%= a._id %>')">Edit </button>
-                                                <form action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=PUT"
-                                                    method="POST" class="mb-3" id=<%=a._id%> style="display:
-                                                    none;">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Answer</label>
-                                                        <textarea class="form-control" cols="30" rows="3"
-                                                            name="answer[answer]"><%=a.answer %></textarea>
+                                            <%if(user){%>
+                                                <form action="/<%=center._id%>/<%= a._id %>/reportAnswer" method="post">
+                                                    <div class="form-group">
+                                                        <label for="reportReview<%= a._id %>">Report</label>
+                                                        <select id="reportReview<%= a._id %>" class="form-control"
+                                                            name="reportAnswer">
+                                                            <option value="spam">
+                                                                Spam
+                                                            </option>
+                                                            <option value="harassment">
+                                                                Harassment
+                                                            </option>
+                                                            <option value="inappropriate">
+                                                                Inappropriate
+                                                            </option>
+                                                        </select>
                                                     </div>
-                                                    <button class="btn btn-success">Save</button>
+                                                    <button class="btn btn-sm btn-info">Submit</button>
                                                 </form>
                                                 <%}%>
+                                                    <% if(a.author_id==user) { %>
+                                                        <form
+                                                            action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=DELETE"
+                                                            method="POST">
+                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                        </form>
+                                                        <button class="btn btn-sm btn-primary"
+                                                            id="buttonAnswer<%= a._id%>"
+                                                            onclick="showFormAnswer('<%= a._id %>')">Edit </button>
+                                                        <form
+                                                            action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=PUT"
+                                                            method="POST" class="mb-3" id=<%=a._id%> style="display:
+                                                            none;">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Answer</label>
+                                                                <textarea class="form-control" cols="30" rows="3"
+                                                                    name="answer[answer]"><%=a.answer %></textarea>
+                                                            </div>
+                                                            <button class="btn btn-success">Save</button>
+                                                        </form>
+                                                        <%}%>
                                         </div>
                         </div>
                         <%}%>
@@ -147,49 +170,74 @@
                                             <p class="card-text">Review: <%= review.body %>
                                             </p>
                                         </div>
-                                        <% if(user==review.author_id) { %>
-                                            <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE"
-                                                method="POST">
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                        <%if(user){%>
+                                            <form action="/<%=center._id%>/<%= review._id %>/reportReview"
+                                                method="post">
+                                                <div class="form-group">
+                                                    <label for="reportReview<%= review._id %>">Report</label>
+                                                    <select id="reportReview<%= review._id %>" class="form-control"
+                                                        name="reportReview">
+                                                        <option value="spam">
+                                                            Spam
+                                                        </option>
+                                                        <option value="harassment">
+                                                            Harassment
+                                                        </option>
+                                                        <option value="inappropriate">
+                                                            Inappropriate
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-sm btn-info">Submit</button>
                                             </form>
+                                            <%}%>
+                                                <% if(user==review.author_id) { %>
+                                                    <form
+                                                        action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
 
-                                            <button class="btn btn-sm btn-primary" id="btn<%= review._id%>"
-                                                onclick="showForm('<%= review._id %>')">Edit </button>
-                                            <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=PUT"
-                                                method="POST" class="mb-3" id=<%=review._id%> style="display:
-                                                none;">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="location">Location</label>
-                                                    <input class="form-range" type="range" min="1" max="5"
-                                                        name="review[location]" id="location" value=<%=review.location
-                                                        %>>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="speed">Speed</label>
-                                                    <input class="form-range" type="range" min="1" max="5"
-                                                        name="review[speed]" id="speed" value=<%=review.speed %>>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="clean">Clean</label>
-                                                    <input class="form-range" type="range" min="1" max="5"
-                                                        name="review[clean]" id="clean" value=<%=review.clean %>>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="service">Service</label>
-                                                    <input class="form-range" type="range" min="1" max="5"
-                                                        name="review[service]" id="service" value=<%=review.service %>>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="body">Review</label>
-                                                    <textarea class="form-control" name="review[body]" cols="30"
-                                                        rows="3" required><%=review.body %></textarea>
-                                                </div>
+                                                    <button class="btn btn-sm btn-primary" id="btn<%= review._id%>"
+                                                        onclick="showForm('<%= review._id %>')">Edit </button>
+                                                    <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=PUT"
+                                                        method="POST" class="mb-3" id=<%=review._id%> style="display:
+                                                        none;">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="location">Location</label>
+                                                            <input class="form-range" type="range" min="1" max="5"
+                                                                name="review[location]" id="location"
+                                                                value=<%=review.location %>>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="speed">Speed</label>
+                                                            <input class="form-range" type="range" min="1" max="5"
+                                                                name="review[speed]" id="speed" value=<%=review.speed
+                                                                %>>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="clean">Clean</label>
+                                                            <input class="form-range" type="range" min="1" max="5"
+                                                                name="review[clean]" id="clean" value=<%=review.clean
+                                                                %>>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="service">Service</label>
+                                                            <input class="form-range" type="range" min="1" max="5"
+                                                                name="review[service]" id="service"
+                                                                value=<%=review.service %>>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="body">Review</label>
+                                                            <textarea class="form-control" name="review[body]" cols="30"
+                                                                rows="3" required><%=review.body %></textarea>
+                                                        </div>
 
-                                                <button class="btn btn-success">Save</button>
+                                                        <button class="btn btn-success">Save</button>
 
-                                            </form>
+                                                    </form>
 
-                                            <% }%>
+                                                    <% }%>
                                     </div>
                                     <% } %>
 
@@ -255,7 +303,6 @@
     </div>
     <script type="text/javascript">
         function showForm(id) {
-            document.getElementById(id).style.display = 'block';
             const btnEdit = "btn" + id;
             const displayEdit = "reviewDisplay" + id;
             document.getElementById(id).style.display = "block";
@@ -263,7 +310,6 @@
             document.getElementById(displayEdit).style.display = "none";
         }
         function showFormAnswer(id) {
-            document.getElementById(id).style.display = 'block';
             const btnEdit = "buttonAnswer" + id;
             const displayEdit = "answerDisplay" + id;
             document.getElementById(id).style.display = "block";
@@ -271,7 +317,6 @@
             document.getElementById(displayEdit).style.display = "none";
         }
         function showFormQuestion(id) {
-            document.getElementById(id).style.display = 'block';
             const btnEdit = "buttonQuestion" + id;
             const displayEdit = "questionDisplay" + id;
             document.getElementById(id).style.display = "block";
@@ -279,9 +324,12 @@
             document.getElementById(displayEdit).style.display = "none";
         }
         function addQuestion() {
-            document.getElementById("question").style.display = 'block';
-            document.getElementById("addQuestionButton").style.display = 'none';
-            addQuestionButton
+            if (document.getElementById("question").style.display === "none") {
+                document.getElementById("question").style.display = 'block';
+            }
+            else {
+                document.getElementById("question").style.display = 'none';
+            }
         }
         function addQuestionError() {
             document.getElementById("errorLogin").style.display = 'block';

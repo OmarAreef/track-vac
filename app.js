@@ -7,12 +7,14 @@ const Review = require('./models/review');
 const Question = require('./models/question');
 const Answer = require('./models/answer');
 const User = require('./models/user');
+const ReportReview = require('./models/reportReview');
+const ReportAnswer = require('./models/reportAnswer');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
 const flash = require('connect-flash');
-const { isLoggedIn, isReviewAuthor, validateReview, validateAnswer, validateQuestion,adminIsLoggedIn } = require('./middleware');
+const { isLoggedIn, isReviewAuthor, validateReview, validateAnswer, validateQuestion, adminIsLoggedIn } = require('./middleware');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Admin = require('./models/admin');
@@ -134,13 +136,15 @@ app.get('/:id', catchAsync(async (req, res) => {
     });
     res.render('center_amera', { center });
 
-   
+
 }));
 
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
     req.session.destroy();
     res.redirect('/center')
 }));
+
+
 
 app.post("/login/:id", catchAsync(async (req, res) => {
     var Ireg_num = req.body.username;
@@ -184,6 +188,7 @@ app.post("/login/:id", catchAsync(async (req, res) => {
 app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id);
     const review = new Review(req.body.review);
+    review.center_id = req.params.id;
     review.author_id = req.session.userId;
     center.reviews.push(review);
     await review.save();
@@ -194,9 +199,12 @@ app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res)
 app.delete('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Center.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await ReportReview.deleteMany({ review_id: reviewId });
     await Review.findByIdAndDelete(reviewId);
     res.redirect(`/${id}`);
 }))
+
+
 
 app.put('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, validateReview, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
@@ -236,6 +244,8 @@ app.delete('/:id/:question', isLoggedIn, catchAsync(async (req, res) => {
     res.redirect(`/${id}`);
 }))
 
+
+
 app.post('/:id/:question/addAnswer', isLoggedIn, validateAnswer, catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id);
     const question = await Question.findById(req.params.question);
@@ -247,12 +257,26 @@ app.post('/:id/:question/addAnswer', isLoggedIn, validateAnswer, catchAsync(asyn
     res.redirect(`/${center._id}`);
 }))
 
+app.delete('/admin/allreviews/:reviewId', catchAsync(async (req, res) => {
+    const { reviewId } = req.params;
+    console.log(reviewId);
+    const review = await Review.findById(reviewId);
+    await ReportReview.deleteMany({ review_id: reviewId });
+    console.log(review.center_id);
+    await Center.findByIdAndUpdate(review.center_id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect('/admin/allreviews');
+}));
+
 app.delete('/:id/:question/:answer', isLoggedIn, catchAsync(async (req, res) => {
     const { id, answer, question } = req.params;
     await Question.findByIdAndUpdate(question, { $pull: { answers: answer } });
+    await ReportAnswer.deleteMany({ answer_id: answer });
     await Answer.findByIdAndDelete(answer);
     res.redirect(`/${id}`);
 }))
+
+
 
 app.put('/:id/:question/:answerId', isLoggedIn, validateAnswer, catchAsync(async (req, res) => {
     const { id, answerId } = req.params;
@@ -263,23 +287,25 @@ app.put('/:id/:question/:answerId', isLoggedIn, validateAnswer, catchAsync(async
 app.get('/admin/login', (req, res) => {
     res.render('adminlogin');
 })
-app.get('/admin/home', adminIsLoggedIn,(req, res) => {
-    res.render('adminhome');
+app.get('/admin/home', adminIsLoggedIn, async (req, res) => {
+    const reviewReports = await ReportReview.find().populate("review_id");
+    const answerReports = await ReportAnswer.find().populate("answer_id");
+    res.render('adminhome', { reviewReports, answerReports });
 })
 
-app.get('/admin/addadmin', adminIsLoggedIn,(req, res) => {
+app.get('/admin/addadmin', adminIsLoggedIn, (req, res) => {
     res.render('addadmin');
 })
 
-app.post('/admin/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/admin/login' }), async(req, res) => {
-    req.session.adminId=req.user._id;
+app.post('/admin/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/admin/login' }), async (req, res) => {
+    req.session.adminId = req.user._id;
     res.redirect('/admin/home');
 })
 
-app.post('/admin/addadmin', adminIsLoggedIn,async(req, res) => {
+app.post('/admin/addadmin', adminIsLoggedIn, async (req, res) => {
     try {
-        const { email, username, password ,role} = req.body;
-        const user = new Admin({ email, username,role });
+        const { email, username, password, role } = req.body;
+        const user = new Admin({ email, username, role });
         const registeredUser = await Admin.register(user, password);
         req.flash('success', "Admin Added Succesfully");
         res.redirect('/admin/addadmin');
@@ -293,19 +319,19 @@ app.get('/admin/resetpassword', (req, res) => {
     res.render('resetpassword');
 })
 
-app.post('/admin/resetpassword',adminIsLoggedIn, async(req, res) => {
+app.post('/admin/resetpassword', adminIsLoggedIn, async (req, res) => {
     const admin = req.user;
-    admin.changePassword(req.body.oldpassword,req.body.newpassword,(err)=> {
-    if (err){
-        req.flash('error',"Password not changed")
-        res.redirect('/admin/resetpassword');
-    }
-    else{
-        req.flash('success',"Password changed successfully");
-        res.redirect('/admin/resetpassword');
-    }
-        
-   })
+    admin.changePassword(req.body.oldpassword, req.body.newpassword, (err) => {
+        if (err) {
+            req.flash('error', "Password not changed")
+            res.redirect('/admin/resetpassword');
+        }
+        else {
+            req.flash('success', "Password changed successfully");
+            res.redirect('/admin/resetpassword');
+        }
+
+    })
 })
 
 app.get('/admin/logout', (req, res) => {
@@ -313,15 +339,142 @@ app.get('/admin/logout', (req, res) => {
     res.redirect('/admin/login');
 })
 
+app.post('/:id/:review/reportReview', catchAsync(async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const report = new ReportReview({ type: req.body.reportReview });
+    report.review_id = req.params.review;
+    await report.save();
+    res.redirect(`/${center._id}`);
+}))
+
+app.post('/:id/:answer/reportAnswer', catchAsync(async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const report = new ReportAnswer({ type: req.body.reportAnswer });
+    report.answer_id = req.params.answer;
+    await report.save();
+    res.redirect(`/${center._id}`);
+}))
+
+// app.get("/admin/home", catchAsync(async (req, res) => {
+//     const reviewReports = await ReportReview.find().populate("review_id");
+//     const answerReports = await ReportAnswer.find().populate("answer_id");
+//     res.render('homeAdmin_back', { reviewReports, answerReports });
+// }))
+
+app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
+    const { review } = req.params;
+    await Review.findByIdAndDelete(review);
+    await ReportReview.deleteMany({ review_id: review });
+    res.redirect("/admin/home");
+}))
+
+app.post("/rejectReview/:report/:review", catchAsync(async (req, res) => {
+    const { report } = req.params;
+    await ReportReview.findByIdAndDelete(report);
+    res.redirect("/admin/home");
+}))
+
+app.post("/acceptAnswer/:report/:answer", catchAsync(async (req, res) => {
+    const { answer } = req.params;
+    await Answer.findByIdAndDelete(answer);
+    await ReportAnswer.deleteMany({ answer_id: answer });
+    res.redirect("/admin/home");
+}))
+
+app.post("/rejectAnswer/:report/:answer", catchAsync(async (req, res) => {
+    const { report } = req.params;
+    await ReportAnswer.findByIdAndDelete(report);
+    res.redirect("/admin/home");
+}))
+
+app.get('/admin/allreviews', catchAsync(async (req, res) => {
+    const { governorate, district, name } = req.query;
+    var districts = [];
+    var centers = [];
+    const governorates = await Center.distinct("governorate");
+    if (governorate && district && name) {
+        const centerHelper = await Center.find({ governorate, district, name }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "center_id"
+            }
+        }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        });
+        const districts = await Center.find({ governorate }).distinct('district');
+        const centers = await Center.find({ governorate, district }).distinct('name');
+        let reviewHelper = [];
+        for (let center of centerHelper) {
+            for (let review of center.reviews) {
+                reviewHelper.push(review);
+            }
+        }
+        console.log(reviewHelper);
+        res.render('allreviews', { centerHelper, governorates, governorate, district, name, districts, centers, reviewHelper });
+    } else if (governorate && district) {
+        const centerHelper = await Center.find({ governorate, district }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "center_id"
+            }
+        }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        });
+        const districts = await Center.find({ governorate }).distinct('district');
+        const centers = await Center.find({ governorate, district }).distinct('name');
+        let reviewHelper = [];
+        for (let center of centerHelper) {
+            for (let review of center.reviews) {
+                reviewHelper.push(review);
+            }
+        }
+        console.log(reviewHelper);
+        res.render('allreviews', { centers, centerHelper, name, governorates, governorate, district, districts, reviewHelper });
+    }
+    else if (governorate) {
+        const centerHelper = await Center.find({ governorate }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "center_id"
+            }
+        }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        });
+        const districts = await Center.find({ governorate }).distinct('district');
+        let reviewHelper = [];
+        for (let center of centerHelper) {
+            for (let review of center.reviews) {
+                reviewHelper.push(review);
+            }
+        }
+        res.render('allreviews', { districts, centerHelper, name, governorate, centers, governorates, district, reviewHelper });
+    }
+    else {
+        const reviewHelper = await Review.find({}).populate("author_id").populate("center_id");
+        res.render('allreviews', { governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
+    }
+}));
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('error', { err })
 })
-
-
-
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
