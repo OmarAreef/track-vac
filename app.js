@@ -96,7 +96,7 @@ app.get('/faq' , (req,res)=>{
 
 
 
-app.get('/center', catchAsync(async (req, res) => {
+app.get('/', catchAsync(async (req, res) => {
     const { governorate, district, name } = req.query;
     var districts = [];
     var centers = [];
@@ -132,7 +132,10 @@ app.get('/center', catchAsync(async (req, res) => {
         console.log("4");
     }
 }))
-
+app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
+    req.session.destroy();
+    res.redirect('/')
+}));
 app.get('/:id', catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id).populate("reviews").populate({
         path: 'questions',
@@ -140,15 +143,12 @@ app.get('/:id', catchAsync(async (req, res) => {
             path: 'answers'
         }
     });
-    res.render('center_amera', { center });
+    res.render('center', { center });
 
    
 }));
 
-app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
-    req.session.destroy();
-    res.redirect('/center')
-}));
+
 
 app.post("/login/:id", catchAsync(async (req, res) => {
     var Ireg_num = req.body.username;
