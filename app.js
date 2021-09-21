@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Center = require('./models/center');
 const Review = require('./models/review');
 const Question = require('./models/question');
+const Day = require('./models/day');
 const Answer = require('./models/answer');
 const User = require('./models/user');
 const ReportReview = require('./models/reportReview');
@@ -110,7 +111,7 @@ app.get('/center', catchAsync(async (req, res) => {
         const centers = await Center.find({ governorate, district }).distinct('name');
 
 
-        res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
+        res.render('home', { centerHelper, governorates, governorate, district, name, districts, centers });
 
         console.log("1");
     } else if (governorate && district) {
@@ -118,19 +119,19 @@ app.get('/center', catchAsync(async (req, res) => {
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
 
-        res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
+        res.render('home', { centers, centerHelper, name, governorates, governorate, district, districts });
         console.log("2");
     }
     else if (governorate) {
         const centerHelper = await Center.find({ governorate });
         const districts = await Center.find({ governorate }).distinct('district');
 
-        res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
+        res.render('home', { districts, centerHelper, name, governorate, centers, governorates, district });
         console.log("3");
     }
     else {
         const centerHelper = await Center.find({});;
-        res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+        res.render('home', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
         console.log("4");
     }
 }))
@@ -138,13 +139,18 @@ app.get('/center', catchAsync(async (req, res) => {
 app.get('/:id', catchAsync(async (req, res) => {
 
 
-    const center = await Center.findById(req.params.id).populate("reviews").populate({
+    const center = await Center.findById(req.params.id)
+    .populate("workingHours")
+    .populate("reviews")
+    .populate({
         path: 'questions',
         populate: {
             path: 'answers'
         }
-    });
-    res.render('center', { center });
+    })
+    
+    console.log(center);
+    res.render('center_amera', { center });
 
 }));
 
@@ -364,6 +370,7 @@ app.post('/:id/:answer/reportAnswer', catchAsync(async (req, res) => {
     res.redirect(`/${center._id}`);
 }))
 
+
 // app.get("/admin/home", catchAsync(async (req, res) => {
 //     const reviewReports = await ReportReview.find().populate("review_id");
 //     const answerReports = await ReportAnswer.find().populate("answer_id");
@@ -478,6 +485,34 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
         res.render('allreviews', { governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
     }
 }));
+
+app.get('/admin/addcenter', adminIsLoggedIn, (req, res) => {
+
+    res.render('addcenter');
+})
+
+app.post('/admin/addcenter', adminIsLoggedIn, async (req, res) => {
+        const { sunFrom, sunTo, monFrom, monTo, tueFrom, tueTo, wedFrom, wedTo, thuFrom, thuTo, friFrom, friTo, satFrom, satTo } = req.body;
+        const sun = new Day({ day: 'sun', From: sunFrom, To: sunTo });
+        const mon = new Day({ day: 'mon', From: monFrom, To: monTo });
+        const tue = new Day({ day: 'tue', From: tueFrom, To: tueTo });
+        const wed = new Day({ day: 'wed', From: wedFrom, To: wedTo });
+        const thu = new Day({ day: 'thu', From: thuFrom, To: thuTo });
+        const fri = new Day({ day: 'fri', From: friFrom, To: friTo });
+        const sat = new Day({ day: 'sat', From: satFrom, To: satTo });
+        const center = new Center(req.body.center);
+        center.workingHours = [sun, mon, tue, wed, thu, fri, sat];
+        await sun.save();
+        await mon.save();
+        await tue.save();
+        await wed.save();
+        await thu.save();
+        await fri.save();
+        await sat.save();
+        await center.save();
+        req.flash('success', 'Successfully made a new Center!');
+        res.redirect("/admin/addcenter");
+})
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
