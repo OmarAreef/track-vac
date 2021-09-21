@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Center = require('../models/center');
 const User = require('../models/user');
+const Day = require('../models/day');
 const helper = require("./centers.js");
 const helper1 = require("./users.js");
 
@@ -18,8 +19,17 @@ db.once("open", () => {
 });
 
 
+
+
 const seedDB = async () => {
     await Center.deleteMany({});
+    await Day.deleteMany({});
+    const sun = new Day({ day: 'sun', From: '8:00', To: '21:00' });
+    const mon = new Day({ day: 'mon', From: '8:00', To: '21:00' });
+    const tue = new Day({ day: 'tue', From: '8:00', To: '21:00' });
+    await sun.save();
+    await mon.save();
+    await tue.save();
     for (let i = 0; i < 9; i++) {
         const center = new Center({
             name: helper[i].name,
@@ -30,7 +40,8 @@ const seedDB = async () => {
             nameArabic: helper[i].nameArabic,
             governorateArabic: helper[i].governorateArabic,
             districtArabic: helper[i].districtArabic,
-            image: helper[i].image
+            image: helper[i].image,
+            workingHours: [sun, mon, tue]
         })
         await center.save();
     }

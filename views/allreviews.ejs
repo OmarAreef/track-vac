@@ -87,7 +87,11 @@
             </select>
         </div>
     </div>
-    <div class="container">
+    <div class="col-4 offset-2">
+        <button class="btn btn-sm btn-info" onclick="showAllReviews()">Show
+            All Reviews</button>
+    </div>
+    <div class="container" id="showAllReviews" style="display:none">
         <%for(let review of reviewHelper) {%>
             <div class="row">
                 <div class="col-4 offset-2">
@@ -148,6 +152,65 @@
             </div>
             <%}%>
     </div>
+    <div class="col-4 offset-2">
+        <button class="btn btn-sm btn-info" onclick="showAllQuestions()">Show
+            All Questions</button>
+    </div>
+    <div class="container" id="showAllQuestions" style="display:none">
+        <%for(let center of centerHelper) {%>
+            <%for(let question of center.questions) {%>
+                <div class="row">
+                    <div class="col-4 offset-2">
+                        <%= question.author_id._id%>
+                    </div>
+                    <div class="col-4 offset-2">
+                        <%=question.question%>
+                    </div>
+                    <div class="col-4 offset-2"><button type="button" class="btn btn-primary"
+                            onclick="showQuestions('<%=question._id%>')">read
+                            More </button>
+                        <div class="container" id="question<%=question._id%>" style="display:none;">
+                            <div class="container">
+                                <h4>Answers details</h4>
+                                <ul>
+                                    <% for(let answer of question.answers) {%>
+                                        <li>
+                                            Answer <%= answer._id%> :
+                                                <%=answer.answer%>
+                                        </li>
+                                        <li>
+                                            Answer <%= answer._id%> author :
+                                                <%=answer.author_id%>
+                                        </li>
+                                        <% }%>
+                                </ul>
+                            </div>
+                            <div class="container">
+                                <h4>Question details</h4>
+                                <ul>
+                                    <li>Author id :
+                                        <%=question.author_id._id%>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="container">
+                                <h4>Center details</h4>
+                                <%=center.name%>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-4 offset-2">
+                        <form action="/admin/allquestions/<%=center._id%>/<%=question._id%>?_method=DELETE"
+                            method="POST">
+                            <button class="btn btn-sm btn-danger">Delete Question</button>
+                        </form>
+                    </div>
+                </div>
+                <%}%>
+                    <%}%>
+    </div>
 
     <script type="text/javascript">
         function showReviews(id) {
@@ -157,6 +220,31 @@
             }
             else {
                 document.getElementById(reviewId).style.display = "none";
+            }
+        }
+        function showQuestions(id) {
+            const questionId = "question" + id;
+            if (document.getElementById(questionId).style.display === "none") {
+                document.getElementById(questionId).style.display = "block";
+            }
+            else {
+                document.getElementById(questionId).style.display = "none";
+            }
+        }
+        function showAllReviews() {
+            if (document.getElementById("showAllReviews").style.display === "none") {
+                document.getElementById("showAllReviews").style.display = "block";
+            }
+            else {
+                document.getElementById("showAllReviews").style.display = "none";
+            }
+        }
+        function showAllQuestions() {
+            if (document.getElementById("showAllQuestions").style.display === "none") {
+                document.getElementById("showAllQuestions").style.display = "block";
+            }
+            else {
+                document.getElementById("showAllQuestions").style.display = "none";
             }
         }
     </script>

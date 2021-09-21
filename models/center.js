@@ -3,6 +3,8 @@ const Review = require('./review');
 const Schema = mongoose.Schema;
 
 
+
+
 const centersSchema = new Schema({
     name: String,
     latitude: Number,
@@ -12,10 +14,12 @@ const centersSchema = new Schema({
     nameArabic: String,
     governorateArabic: String,
     districtArabic: String,
-    // to be continued
-    // workingDays:[{
-    //     day: String,
-    // }] 
+    workingHours: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Day'
+        }
+    ],
     image: String,
     reviews: [
         {

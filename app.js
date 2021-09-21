@@ -18,6 +18,7 @@ const { isLoggedIn, isReviewAuthor, validateReview, validateAnswer, validateQues
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Admin = require('./models/admin');
+const Day = require('./models/day');
 const user = require('./models/user');
 
 
@@ -133,7 +134,8 @@ app.get('/:id', catchAsync(async (req, res) => {
         populate: {
             path: 'answers'
         }
-    });
+    }).populate("workingHours");
+    console.log(center);
     res.render('center_amera', { center });
 
 
@@ -257,7 +259,7 @@ app.post('/:id/:question/addAnswer', isLoggedIn, validateAnswer, catchAsync(asyn
     res.redirect(`/${center._id}`);
 }))
 
-app.delete('/admin/allreviews/:reviewId', catchAsync(async (req, res) => {
+app.delete('/admin/allreviews/:reviewId', adminIsLoggedIn, catchAsync(async (req, res) => {
     const { reviewId } = req.params;
     console.log(reviewId);
     const review = await Review.findById(reviewId);
@@ -265,6 +267,19 @@ app.delete('/admin/allreviews/:reviewId', catchAsync(async (req, res) => {
     console.log(review.center_id);
     await Center.findByIdAndUpdate(review.center_id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    res.redirect('/admin/allreviews');
+}));
+
+app.delete('/admin/allquestions/:centerId/:questionId', adminIsLoggedIn, catchAsync(async (req, res) => {
+    const { questionId, centerId } = req.params;
+    console.log(questionId);
+    const question = await Question.findById(questionId);
+    await Center.findByIdAndUpdate(centerId, { $pull: { questions: questionId } });
+    for (let answer of question.answers) {
+        await Answer.findByIdAndDelete(answer);
+        await ReportAnswer.deleteMany({ answer_id: answer });
+    }
+    await Question.findByIdAndDelete(question);
     res.redirect('/admin/allreviews');
 }));
 
@@ -355,39 +370,33 @@ app.post('/:id/:answer/reportAnswer', catchAsync(async (req, res) => {
     res.redirect(`/${center._id}`);
 }))
 
-// app.get("/admin/home", catchAsync(async (req, res) => {
-//     const reviewReports = await ReportReview.find().populate("review_id");
-//     const answerReports = await ReportAnswer.find().populate("answer_id");
-//     res.render('homeAdmin_back', { reviewReports, answerReports });
-// }))
-
-app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
+app.post("/acceptReview/:report/:review", adminIsLoggedIn, catchAsync(async (req, res) => {
     const { review } = req.params;
     await Review.findByIdAndDelete(review);
     await ReportReview.deleteMany({ review_id: review });
     res.redirect("/admin/home");
 }))
 
-app.post("/rejectReview/:report/:review", catchAsync(async (req, res) => {
+app.post("/rejectReview/:report/:review", adminIsLoggedIn, catchAsync(async (req, res) => {
     const { report } = req.params;
     await ReportReview.findByIdAndDelete(report);
     res.redirect("/admin/home");
 }))
 
-app.post("/acceptAnswer/:report/:answer", catchAsync(async (req, res) => {
+app.post("/acceptAnswer/:report/:answer", adminIsLoggedIn, catchAsync(async (req, res) => {
     const { answer } = req.params;
     await Answer.findByIdAndDelete(answer);
     await ReportAnswer.deleteMany({ answer_id: answer });
     res.redirect("/admin/home");
 }))
 
-app.post("/rejectAnswer/:report/:answer", catchAsync(async (req, res) => {
+app.post("/rejectAnswer/:report/:answer", adminIsLoggedIn, catchAsync(async (req, res) => {
     const { report } = req.params;
     await ReportAnswer.findByIdAndDelete(report);
     res.redirect("/admin/home");
 }))
 
-app.get('/admin/allreviews', catchAsync(async (req, res) => {
+app.get('/admin/allreviews', adminIsLoggedIn, catchAsync(async (req, res) => {
     const { governorate, district, name } = req.query;
     var districts = [];
     var centers = [];
@@ -404,6 +413,18 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             ,
             populate: {
                 path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
             }
         });
         const districts = await Center.find({ governorate }).distinct('district');
@@ -428,6 +449,18 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             ,
             populate: {
                 path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
             }
         });
         const districts = await Center.find({ governorate }).distinct('district');
@@ -454,6 +487,18 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             populate: {
                 path: "author_id"
             }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
         });
         const districts = await Center.find({ governorate }).distinct('district');
         let reviewHelper = [];
@@ -465,8 +510,53 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
         res.render('allreviews', { districts, centerHelper, name, governorate, centers, governorates, district, reviewHelper });
     }
     else {
-        const reviewHelper = await Review.find({}).populate("author_id").populate("center_id");
-        res.render('allreviews', { governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
+        const reviewHelper = await Review.find({}).populate("author_id").populate({
+            path: "center_id"
+            ,
+            populate: {
+                path: "questions"
+                ,
+                populate: {
+                    path: "answers"
+                }
+            }
+        }).populate({
+            path: "center_id"
+            ,
+            populate: {
+                path: "questions"
+                ,
+                populate: {
+                    path: "author_id"
+                }
+            }
+        });
+        const centerHelper = await Center.find({}).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "center_id"
+            }
+        }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
+        });
+        res.render('allreviews', { centerHelper, governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
     }
 }));
 
