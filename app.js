@@ -99,7 +99,7 @@ app.get('/faq' , (req,res)=>{
 
 
 
-app.get('/center', catchAsync(async (req, res) => {
+app.get('/', catchAsync(async (req, res) => {
     const { governorate, district, name } = req.query;
     var districts = [];
     var centers = [];
@@ -135,7 +135,10 @@ app.get('/center', catchAsync(async (req, res) => {
         console.log("4");
     }
 }))
-
+app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
+    req.session.destroy();
+    res.redirect('/')
+}));
 app.get('/:id', catchAsync(async (req, res) => {
 
 
@@ -154,10 +157,7 @@ app.get('/:id', catchAsync(async (req, res) => {
 
 }));
 
-app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
-    req.session.destroy();
-    res.redirect('/center')
-}));
+
 
 
 

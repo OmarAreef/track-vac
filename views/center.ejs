@@ -15,8 +15,8 @@
 
 
                     <div class="col-xs-12 col-lg-6">
-                        <h2 class="display-4 name">
-                            <%= center.name%>
+                        <h2 class="display-4 name" style="direction:rtl">
+                            <%= center.nameArabic%>
                         </h2>
                         <img src="/img/Shape.png" alt="" class='img-fluid pin ml-3 mb-2'>
                         <p class='location '>
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-10 col-md-7 col-lg-5 col-xl-4 d-flex align-items-stretch pb-2">
+                    <div class="col-sm-10 col-md-11 col-lg-10 col-xl-4 d-flex align-items-stretch pb-2">
                         <div class="card thumb w-100 shadow bg-color" id='Map'>
                             <div class="card-body">
                                 <div class=" card-title">
@@ -230,41 +230,48 @@
 
             <div class="row mx-2">
                 <div class="col-sm-12 col-md-8 col-lg-6">
-
-
                     <div class="card mb-3 bg-color shadow thumb" style="min-height:400px">
-                        <div class="card-title mb-n1 py-2 row">
-                            <div class="col-6 offset-2">
-                                <h4 class="text-center">Reviews</h4>
+                        <div class="card-title mb-n1 py-2">
+                            <div class="row">
+                                <div class="col-6 offset-3">
+                                    <h4 class="text-center">Reviews</h4>
+                                </div>
                             </div>
-                            <div class="col-md-4 ml-auto col-sm-6">
-                                <button class="btn btn-dark ml-auto" id='review'> Write Review</button>
+                            <div class="row">
+                                <div class="col-6 offset-3 d-flex justify-content-center">
+                                    <button class="btn btn-primary" id='review'>Write a Review</button>
+                                </div>
                             </div>
                         </div>
                         <div class="overflow-auto">
                             <% for(let review of center.reviews) { %>
                                 <div class="card-body">
-                                    <h5 class="label">Average Rating: </h5>
-                                    <p class="starability-result"
-                                        data-rating="<%= Math.round((review.location +review.speed +review.service+ review.clean)/4) %>">
-                                    </p>
-                                    <p class="card-text">Review: <%= review.body %>
-                                    </p>
-                                    <% if(user==review.author_id) { %>
-                                        <div class="row">
-                                            <div class="col-4 offset-2">
+                                    <div class="row mb-2">
+                                        <div class="col-7">
+                                            <h5 class="label">Average Rating: </h5>
+                                            <p class="starability-result"
+                                                data-rating="<%= Math.round((review.location +review.speed +review.service+ review.clean)/4) %>">
+                                            </p>
+                                            <p class="card-text">Review: <%= review.body %>
+                                            </p>
+                                        </div>
+                                        <% if(user==review.author_id) { %>
+                                            <div class="col-2 ml-auto mt-1">
                                                 <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=DELETE"
                                                     method="POST">
                                                     <button class="btn btn-sm btn-danger">Delete</button>
                                                 </form>
                                             </div>
-                                            <div class="col-4 ">
+                                            <div class="col-2 mt-1">
                                                 <button class="btn btn-sm btn-primary edit_review"
                                                     id="btn<%= review._id%>"
                                                     onclick="document.querySelector('.h<%=review._id%>').style.display = 'block'"
                                                     type="button">Edit </button>
                                             </div>
-                                        </div>
+                                            <% } %>
+                                    </div>
+                                    <% if(user==review.author_id) { %>
+
                                         <form action="/<%=center._id%>/reviews/<%=review._id%>?_method=PUT"
                                             method="POST" class="mb-3 thumb-1 overlay edit h<%=review._id%>"
                                             id=<%=review._id%>
@@ -441,10 +448,174 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-12 col-md-8 col-lg-6">
+                    <div class="card mb-3 bg-color shadow thumb container" style="min-height:400px">
+                        <div class="card-title mb-n1 py-2 row">
+                            <div class="col-6 offset-3">
+                                <h4 class="text-center">Questions and Answers</h4>
+                            </div>
+                        </div>
+                        <!-- <div class="card-body"> -->
+                        <div class="row mb-3">
+                            <div class="col-10 offset-1 justify-content-center d-flex">
+                                <% if(!user) { %>
+                                    <p id="errorLogin" style="display: none;">
+                                        You must login first
+                                    </p>
+                                    <button class="btn btn btn-primary" onclick="addQuestionError()">Add
+                                        Question
+                                    </button>
+                                    <%} else { %>
+                                        <button class="btn btn-primary" onclick="addQuestion()"
+                                            id="addQuestionButton">Add
+                                            Question
+                                        </button>
+                                        <%}%>
+
+                                            <div id="question" style="display: none; width: 100%;">
+                                                <form action="/<%=center._id%>/addQuestion" method="POST"
+                                                    class="w-100 ">
+                                                    <div class="row">
+                                                        <input class="form-control mb-1" type="text" cols="30" rows="3"
+                                                            name="question[question]" id="questionBody"
+                                                            placeholder="What is your question.. ?"></input>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6 offset-3 d-flex justify-content-center">
+                                                            <button class="btn btn-success ml-auto mr-auto">Add
+                                                                question</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                        <div class="overflow-auto container py-1">
+                            <% for(let q of center.questions) { %>
+
+                                <div class="row d-flex align-items-center mb-2 mt-2">
+                                    <div class="col-8">
+                                        <p class="card-text question" id="questionDisplay<%q._id%>">
+                                            Q: <%=q.question%>
+                                        </p>
+                                    </div>
+                                    <% if(user==q.author_id) { %>
+                                        <div class="col-2">
+                                            <form action="/<%=center._id%>/<%=q._id%>?_method=DELETE" method="POST">
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-2">
+                                            <button class="btn btn-sm btn-primary" id="buttonQuestion<%= q._id%>"
+                                                onclick="showFormQuestion('<%= q._id %>')">Edit </button>
+                                        </div>
+                                        <%} else {%>
+                                            <% if(user && userType !=="notVaccinated" ) { %>
+                                                <div class="col-4">
+                                                    <button class="btn btn-sm btn-success"
+                                                        id="buttonQuestion<%= q._id%>" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
+                                                .style.display = 'block' ">Add answer </button>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8 offset-2">
+                                        <form action="/<%=center._id%>/<%=q._id%>?_method=PUT" method="POST"
+                                            class="mb-3" id=<%=q._id%> style="display:
+                                            none;" >
+                                            <div class="mb-3">
+                                                <label class="form-label">Edit your question</label>
+                                                <textarea class="form-control" cols="30" rows="3"
+                                                    name="question[question]"><%=q.question %></textarea>
+                                            </div>
+                                            <button class="btn btn-success">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <% if(user && userType !=="notVaccinated" ) { %>
+                                    <form action="/<%=center._id%>/<%=q._id%>/addAnswer" method="POST"
+                                        style="display: none;" id="h/<%=center._id%>/<%=q._id%>">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label class="form-label" for="answerBody">Add Answer</label>
+                                            </div>
+                                            <div class="col-3 ml-auto">
+                                                <span class="btn btn-outline-danger" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
+                                        .style.display = 'none'">x</span>
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control" id="answerBody" name="answer[answer]" cols="30"
+                                            rows="3"></textarea>
+                                        <button class="btn btn-success">ADD</button>
+                                    </form>
+                                    <%}%>
+                                        <div class="row bg-secondary py-2 answer-round">
+                                            <% if (q.answers) {%>
+                                                <div class="row">
+                                                    <div class="col-6 offset-3 d-flex justify-content-center">
+                                                        <h5 class="card-title answers">Answers</h5>
+                                                    </div>
+                                                </div>
+                                                <%}%>
+                                                    <% for(let a of q.answers) { %>
+                                                        <div
+                                                            class="row container d-flex align-items-center answer-border py-2 mb-1">
+                                                            <div class="col-7 ">
+                                                                <p class="card-text answers"
+                                                                    id="answerDisplay<%a._id%>">
+                                                                    <%=a.answer%>
+                                                                </p>
+                                                            </div>
+                                                            <% if(a.author_id==user) { %>
+                                                                <div class="col-2">
+                                                                    <form
+                                                                        action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=DELETE"
+                                                                        method="POST">
+                                                                        <button
+                                                                            class="btn btn-sm btn-danger">Delete</button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button class="btn btn-sm btn-primary"
+                                                                        id="buttonAnswer<%= a._id%>"
+                                                                        onclick="showFormAnswer('<%= a._id %>')">Edit
+                                                                    </button>
+                                                                </div>
+                                                                <form
+                                                                    action="/<%=center._id%>/<%=q._id%>/<%=a._id%>?_method=PUT"
+                                                                    method="POST" class="mb-3" id=<%=a._id%>
+                                                                    style="display:
+                                                                    none;">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Answer</label>
+                                                                        <textarea class="form-control" cols="30"
+                                                                            rows="3"
+                                                                            name="answer[answer]"><%=a.answer %></textarea>
+                                                                    </div>
+                                                                    <button class="btn btn-success">Save</button>
+                                                                </form>
+                                                                <%}%>
+                                                        </div>
+                                                        <%}%>
+                                        </div>
+
+
+                                        <%}%>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
 
 
-            <!-- <script type="text/javascript">
+
+        <!-- <script type="text/javascript">
                     function showForm(id) {
                         document.getElementById(id).style.display = 'block';
                         const btnEdit = "btn" + id;
@@ -458,6 +629,6 @@
 
 
 
-            <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
-            <script src='/javascripts/center.js'> </script>
-            <!-- <script src="/javaScripts/signin.js"></script> -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+        <script src='/javascripts/center.js'> </script>
+        <!-- <script src="/javaScripts/signin.js"></script> -->
