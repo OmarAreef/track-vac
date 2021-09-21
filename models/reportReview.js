@@ -5,6 +5,7 @@ const reportReviewSchema = new Schema({
     type: {
         type: String,
         required: true,
+        enum : ['spam' , 'inappropriate' , 'harassment']
     }
     ,
     review_id: {
