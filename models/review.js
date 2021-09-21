@@ -12,6 +12,11 @@ const reviewSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
+    ,
+    center_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Center'
+    }
 
 });
 

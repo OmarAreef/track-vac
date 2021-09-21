@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Review = require('./review');
+const Day = require('./day');
 const Schema = mongoose.Schema;
 
 
@@ -12,11 +13,13 @@ const centersSchema = new Schema({
     nameArabic: String,
     governorateArabic: String,
     districtArabic: String,
-    // to be continued
-    // workingDays:[{
-    //     day: String,
-    // }] 
     image: String,
+    workingHours : [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Day'
+        }
+    ],
     reviews: [
         {
             type: Schema.Types.ObjectId,
