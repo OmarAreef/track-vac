@@ -41,8 +41,16 @@
             </li>
             <li>
                 <img src="<%=center.image%>">
-            </li>
+            </li>     
         </ul>
+        <h4>Working Hours</h4>
+        <ul>
+            <% for(let w of center.workingHours) { %>
+                <li><%=w.day%> <%=w.From%> <%=w.To%></li>
+            
+            <% } %>
+        </ul>
+        
     </div>
 
     <div class="container">
