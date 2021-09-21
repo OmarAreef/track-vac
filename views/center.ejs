@@ -238,9 +238,15 @@
                                 </div>
                             </div>
                             <div class="row">
+                                
                                 <div class="col-6 offset-3 d-flex justify-content-center">
+                                    <%if(user && user.type === 'notVaccinated' ){%>
                                     <button class="btn btn-primary" id='review'>Write a Review</button>
+                                    <% } else { %>
+                                    <span class="text-danger text-center">you are not eligible to write a review or you are not signed in</span>
+                                    <% } %> 
                                 </div>
+                               
                             </div>
                         </div>
                         <div class="overflow-auto">

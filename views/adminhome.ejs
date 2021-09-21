@@ -1,99 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplate_track.ejs') %>
+ <%- include('partials/navbar_admin.ejs') %> 
+    <div class="container position-absolute">
+        <h1>Welcome</h1>
+      
+                <div class="container">
+                    <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
+                        Reports</button>
+                    <div id="reviewReportDisplay" style="display:none">
+                        <% for(let review of reviewReports) { %>
+                            <div class="container">
+                                <%= review.type %> <br>
+                                    <%= review.review_id.body %>
+                                        <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
+                                            method="post">
+                                            <button class="btn btn-sm btn-danger">Reject
+                                                Report</button>
+                                        </form>
+                                        <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
+                                            method="POST">
+                                            <button class="btn btn-sm btn-info">Accept
+                                                Report</button>
+                                        </form>
+                            </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <title>Test</title>
-</head>
-
-<body>
-    <h1>Welecome</h1>
-    <% if (admin.role==='Moderator' ){ %>
-        <a href="/admin/addadmin">Add Admin</a>
-        <% }%>
-            <a href="/admin/logout">Logout</a>
-            <a href="/admin/resetpassword">Reset Password</a>
-
-            <div class="container">
-                <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review Reports</button>
-                <div id="reviewReportDisplay" style="display:none">
-                    <% for(let review of reviewReports) { %>
-                        <div class="container">
-                            <%= review.type %> <br>
-                                <%= review.review_id.body %>
-                                    <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
-                                        method="post">
-                                        <button class="btn btn-sm btn-danger">Reject
-                                            Report</button>
-                                    </form>
-                                    <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
-                                        method="POST">
-                                        <button class="btn btn-sm btn-info">Accept
-                                            Report</button>
-                                    </form>
-                        </div>
-
-                        <% } %>
+                            <% } %>
 
 
+
+                    </div>
 
                 </div>
+                <div class="container">
 
-            </div>
-            <div class="container">
+                    <button class="btn btn-sm btn-info" id="answers" onclick="showAnswers()">Show Review
+                        Answers</button>
 
-                <button class="btn btn-sm btn-info" id="answers" onclick="showAnswers()">Show Review Answers</button>
+                    <div id="answerReportDisplay" style="display:none">
 
-                <div id="answerReportDisplay" style="display:none">
+                        <% for(let answer of answerReports) { %>
+                            <div class="container">
+                                <%= answer.type %><br>
+                                    <%= answer.answer_id.answer %>
+                                        <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                            method="post">
+                                            <button class="btn btn-sm btn-danger">Reject
+                                                Report</button>
+                                        </form>
+                                        <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                            method="POST">
+                                            <button class="btn btn-sm btn-info">Accept
+                                                Report</button>
+                                        </form>
+                            </div>
 
-                    <% for(let answer of answerReports) { %>
-                        <div class="container">
-                            <%= answer.type %><br>
-                                <%= answer.answer_id.answer %>
-                                    <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                        method="post">
-                                        <button class="btn btn-sm btn-danger">Reject
-                                            Report</button>
-                                    </form>
-                                    <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                        method="POST">
-                                        <button class="btn btn-sm btn-info">Accept
-                                            Report</button>
-                                    </form>
-                        </div>
-
-                        <% } %>
+                            <% } %>
 
 
+                    </div>
                 </div>
-            </div>
 
 
 
-            <script type="text/javascript">
-                function showReviews() {
-                    if (document.getElementById("reviewReportDisplay").style.display == "none") {
-                        document.getElementById("reviewReportDisplay").style.display = "block";
-                    } else {
-                        document.getElementById("reviewReportDisplay").style.display = "none";
+                <script type="text/javascript">
+                    function showReviews() {
+                        if (document.getElementById("reviewReportDisplay").style.display == "none") {
+                            document.getElementById("reviewReportDisplay").style.display = "block";
+                        } else {
+                            document.getElementById("reviewReportDisplay").style.display = "none";
+                        }
                     }
-                }
-                function showAnswers() {
-                    if (document.getElementById("answerReportDisplay").style.display == "none") {
-                        document.getElementById("answerReportDisplay").style.display = "block";
+                    function showAnswers() {
+                        if (document.getElementById("answerReportDisplay").style.display == "none") {
+                            document.getElementById("answerReportDisplay").style.display = "block";
+                        }
+                        else {
+                            document.getElementById("answerReportDisplay").style.display = "none";
+                        }
                     }
-                    else {
-                        document.getElementById("answerReportDisplay").style.display = "none";
-                    }
-                }
-            </script>
+                </script>
 
-</body>
-
-
-</html>
+    </div>

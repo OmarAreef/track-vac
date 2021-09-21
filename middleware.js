@@ -5,6 +5,7 @@ const { reviewSchema, questionSchema, answerSchema } = require('./schemas');
 
 module.exports.isLoggedIn = (req, res, next) => {
     const { id } = req.params;
+    req.session.returnTo = req.originalUrl
     if (!req.session.userId) {
         console.log("Error Logging In");
         req.flash('error', 'You must be signed in first!');

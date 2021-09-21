@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/CSS/Homepage.css">
     <link rel="stylesheet" href="/CSS/overlay.css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-
+    <link rel="stylesheet" href="/css/starability.css">
 
 </head>
 
@@ -121,8 +121,7 @@
             <%- include('partials/navBar_nocenter.ejs') %>
 
                 <div class="row mx-2 mt-5 py-2 d-flex">
-                    <div id="filters" class="col-sm-9 col-md-5 col-lg-3 container mb-3"
-                        style="z-index: 2; height:100%">
+                    <div id="filters" class="col-sm-9 col-md-5 col-lg-3 container mb-3" style="z-index: 2; height:100%">
                         <div class="row mb-2 pt-3">
                             <h1 class="col-6 offset-3">Filters</h1>
                         </div>
@@ -209,21 +208,35 @@
                         <div class="row mb-2 pt-3">
                             <h1 class="col-6 offset-3">Results</h1>
                         </div>
-                        <form  class="mb-2"id="live-search" action="" class="styled" method="post">
-                            <fieldset>                                
-                                <input type="text" class="text-input" id="filter" placeholder="search" />                               
+                        <form class="mb-2" id="live-search" action="" class="styled" method="post">
+                            <fieldset>
+                                <input type="text" class="text-input" id="filter" placeholder="search" />
                             </fieldset>
                         </form>
-                       
+
                         <nav class='search'>
                             <ul>
-                        <%for(let center of centerHelper) {%>                                                                                              
-                            <li><a id="center" href="<%= center._id %>">
-                                <%= center.name %>
-                            </a> 
-                            <hr> 
-                           </li>                                                                                                          
-                        <% }%>
+                                <%for(let center of centerHelper) {%>
+                                    <li><a id="center" href="<%= center._id %>">
+                                            <div class="row d-flex align-items-center">
+                                                
+                                                <div class="col-6">
+                                                    <p class="starability-result" data-rating="3">
+                                                    </p>
+                                                </div>
+                                                <div class="col-5">
+                                                    <%= center.nameArabic %>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 offset-3">
+                                                    <%= center.districtArabic%>, <%= center.governorateArabic%>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr>
+                                    </li>
+                                    <% }%>
                             </ul>
                         </nav>
 
@@ -290,22 +303,22 @@
 
         });
 
-        $(document).ready(function(){
-            $("#filter").keyup(function(){
-                var filter = $(this).val(), count = 0;
-                $(".search ul li").each(function(){
-                    if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                        $(this).fadeOut();
-                    } else {
-                        $(this).show();
-                        count++;
-                    }
-                });
-
-                var numberItems = count;
-                $("#filter-count").text("Number of Filter = "+count);
+    $(document).ready(function () {
+        $("#filter").keyup(function () {
+            var filter = $(this).val(), count = 0;
+            $(".search ul li").each(function () {
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).fadeOut();
+                } else {
+                    $(this).show();
+                    count++;
+                }
             });
+
+            var numberItems = count;
+            $("#filter-count").text("Number of Filter = " + count);
         });
+    });
 </script>
 
 

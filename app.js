@@ -111,51 +111,36 @@ app.get('/', catchAsync(async (req, res) => {
         const centers = await Center.find({ governorate, district }).distinct('name');
 
 
-        res.render('home', { centerHelper, governorates, governorate, district, name, districts, centers });
+        res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
 
-        console.log("1");
+        // console.log("1");
     } else if (governorate && district) {
         const centerHelper = await Center.find({ governorate, district });
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
 
-        res.render('home', { centers, centerHelper, name, governorates, governorate, district, districts });
-        console.log("2");
+        res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
+        // console.log("2");
     }
     else if (governorate) {
         const centerHelper = await Center.find({ governorate });
         const districts = await Center.find({ governorate }).distinct('district');
 
-        res.render('home', { districts, centerHelper, name, governorate, centers, governorates, district });
-        console.log("3");
+        res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
+        // console.log("3");
     }
     else {
         const centerHelper = await Center.find({});;
-        res.render('home', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
-        console.log("4");
+        res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+        // console.log("4");
     }
 }))
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
     req.session.destroy();
+    console.log(req.baseUrl , res.baseUrl)
     res.redirect('/')
 }));
-app.get('/:id', catchAsync(async (req, res) => {
 
-
-    const center = await Center.findById(req.params.id)
-    .populate("workingHours")
-    .populate("reviews")
-    .populate({
-        path: 'questions',
-        populate: {
-            path: 'answers'
-        }
-    })
-    
-    console.log(center);
-    res.render('center_amera', { center });
-
-}));
 
 
 
@@ -513,6 +498,23 @@ app.post('/admin/addcenter', adminIsLoggedIn, async (req, res) => {
         req.flash('success', 'Successfully made a new Center!');
         res.redirect("/admin/addcenter");
 })
+app.get('/:id', catchAsync(async (req, res) => {
+
+
+    const center = await Center.findById(req.params.id)
+    .populate("workingHours")
+    .populate("reviews")
+    .populate({
+        path: 'questions',
+        populate: {
+            path: 'answers'
+        }
+    })
+    
+    console.log(center);
+    res.render('center', { center });
+
+}));
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
@@ -521,5 +523,7 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(3000, () => {
+
     console.log('Serving on port 3000')
+   
 })

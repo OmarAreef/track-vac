@@ -1,105 +1,101 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<% layout('layouts/boilerplate_track.ejs') %>
+    <%- include('partials/navbar_admin.ejs') %>
+        <div class="container position-absolute">
+            <h2>Add Center</h2>
+            <form action="/admin/addcenter" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="center[name]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="latitude">latitude</label>
+                    <input class="form-control" type="text" id="latitude" name="center[latitude]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="longitude">longitude</label>
+                    <input class="form-control" type="text" id="longitude" name="center[longitude]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="governorate">Governorate</label>
+                    <input class="form-control" type="text" id="governorate" name="center[governorate]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="district">District</label>
+                    <input class="form-control" type="text" id="district" name="center[district]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="governorateArabic"> Governorate Arabic</label>
+                    <input class="form-control" type="text" id="governorateArabic" name="center[governorateArabic]"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="districtArabic"> District Arabic</label>
+                    <input class="form-control" type="text" id="districtArabic" name="center[districtArabic]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="nameArabic"> Name Arabic</label>
+                    <input class="form-control" type="text" id="nameArabic" name="center[nameArabic]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="image">Image Url</label>
+                    <input class="form-control" type="text" id="image" name="center[image]" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">sun</span>
+                    <input type="text" name='sunFrom' class="form-control">
+                    <input type="text" name='sunTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">mon</span>
+                    <input type="text" name='monFrom' class="form-control">
+                    <input type="text" name='monTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Tue</span>
+                    <input type="text" name='tueFrom' class="form-control">
+                    <input type="text" name='tueTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Wed</span>
+                    <input type="text" name='wedFrom' class="form-control">
+                    <input type="text" name='wedTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Thu</span>
+                    <input type="text" name='thuFrom' class="form-control">
+                    <input type="text" name='thuTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Fri</span>
+                    <input type="text" name='friFrom' class="form-control">
+                    <input type="text" name='friTo' class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Sat</span>
+                    <input type="text" name='satFrom' class="form-control">
+                    <input type="text" name='satTo' class="form-control">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-success">Add Center</button>
+                </div>
+            </form>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+            <p class="text-danger">
+                <%=error %>
+            </p>
+            <p class="text-success">
+                <%=success %>
+            </p>
+            <!-- Optional JavaScript; choose one of the two! -->
 
-    <title>Add Center</title>
-  </head>
-  <body>
-        <h2>Add Center</h2>
-        <form action="/admin/addcenter" method="POST" >
-            <div class="mb-3">
-                <label class="form-label" for="name">Name</label>
-                <input class="form-control" type="text" id="name" name="center[name]" required>
-            </div> 
-            <div class="mb-3">
-                <label class="form-label" for="latitude">latitude</label>
-                <input class="form-control" type="text" id="latitude" name="center[latitude]" required>
-            </div> 
-            <div class="mb-3">
-                <label class="form-label" for="longitude">longitude</label>
-                <input class="form-control" type="text" id="longitude" name="center[longitude]" required>
-            </div> 
-            <div class="mb-3">
-                <label class="form-label" for="governorate">Governorate</label>
-                <input class="form-control" type="text" id="governorate" name="center[governorate]" required>
-            </div> 
-            <div class="mb-3">
-                <label class="form-label" for="district">District</label>
-                <input class="form-control" type="text" id="district" name="center[district]" required>
-            </div> 
-            <div class="mb-3">
-                <label class="form-label" for="governorateArabic"> Governorate Arabic</label>
-                <input class="form-control" type="text" id="governorateArabic" name="center[governorateArabic]" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="districtArabic"> District Arabic</label>
-                <input class="form-control" type="text" id="districtArabic" name="center[districtArabic]" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="nameArabic"> Name Arabic</label>
-                <input class="form-control" type="text" id="nameArabic" name="center[nameArabic]" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="image">Image Url</label>
-                <input class="form-control" type="text" id="image" name="center[image]" required>
-            </div>     
-            <div class="input-group mb-3">
-                <span class="input-group-text">sun</span>
-                <input type="text" name='sunFrom' class="form-control">
-                <input type="text" name='sunTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">mon</span>
-                <input type="text" name='monFrom' class="form-control">
-                <input type="text" name='monTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Tue</span>
-                <input type="text" name='tueFrom' class="form-control">
-                <input type="text" name='tueTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Wed</span>
-                <input type="text" name='wedFrom' class="form-control">
-                <input type="text" name='wedTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Thu</span>
-                <input type="text" name='thuFrom' class="form-control">
-                <input type="text" name='thuTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Fri</span>
-                <input type="text" name='friFrom' class="form-control">
-                <input type="text" name='friTo'class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Sat</span>
-                <input type="text" name='satFrom' class="form-control">
-                <input type="text" name='satTo'class="form-control">
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-success">Add Center</button>
-            </div>
-        </form>
+            <!-- Option 1: Bootstrap Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+                crossorigin="anonymous"></script>
 
-        <p class="text-danger"><%=error %></p>
-        <p class="text-success"><%=success %></p>
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+            <!-- Option 2: Separate Popper and Bootstrap JS -->
+            <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
     -->
-  </body>
-</html>
+        </div>

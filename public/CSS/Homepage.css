@@ -293,6 +293,10 @@ hr{
   margin-left: 3px;
   margin-right: 3px;
 }
+li{
+  text-decoration: none !important;
+  list-style: none ;
+}
 @media (max-width : 670px) {
   .text {
     font-size: 1.4em !important;
