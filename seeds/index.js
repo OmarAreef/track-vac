@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Center = require('../models/center');
+const Day = require('../models/day');
 const User = require('../models/user');
 const helper = require("./centers.js");
 const helper1 = require("./users.js");
@@ -20,6 +21,13 @@ db.once("open", () => {
 
 const seedDB = async () => {
     await Center.deleteMany({});
+    await Day.deleteMany({});
+    const sun = new Day({ day: 'sun', From: '8:00', To: '21:00' });
+    const mon = new Day({ day: 'mon', From: '8:00', To: '21:00' });
+    const tue = new Day({ day: 'tue', From: '8:00', To: '21:00' });
+    await sun.save();
+    await mon.save();
+    await tue.save();
     for (let i = 0; i < 9; i++) {
         const center = new Center({
             name: helper[i].name,
@@ -30,21 +38,20 @@ const seedDB = async () => {
             nameArabic: helper[i].nameArabic,
             governorateArabic: helper[i].governorateArabic,
             districtArabic: helper[i].districtArabic,
-            image: helper[i].image
+            image: helper[i].image,
+            workingHours: [sun, mon, tue]
         })
         await center.save();
     }
     await User.deleteMany({});
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         const user = new User({
             reg_num: helper1[i].reg_num,
-            pass: helper1[i].pass
+            pass: helper1[i].pass,
+            userType: helper1[i].userType
         })
         await user.save();
     }
-
-
-
 
 }
 

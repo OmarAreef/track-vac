@@ -107,21 +107,19 @@
 
         $("#eventtype1").on('change', function () {
             var e1 = $(this).val();
-            window.location.href = "/?governorate=" + e1;
+            window.location.href = "/center/?governorate=" + e1;
         });
         $("#eventtype2").on('change', function () {
             var e1 = $("#eventtype1").val();
             var e2 = $("#eventtype2").val();
-            location.href = "/?governorate=" + e1 + "&district=" + e2;
+            window.location.href = "/center/?governorate=" + e1 + "&district=" + e2;
         });
         $("#eventtype3").on('change', function () {
             var e1 = $("#eventtype1").val();
             var e2 = $("#eventtype2").val();
             var e3 = $("#eventtype3").val();
-            location.href = "/?governorate=" + e1 + "&district=" + e2 + "&name=" + e3;
+            window.location.href = "/center/?governorate=" + e1 + "&district=" + e2 + "&name=" + e3;
         });
-
-
     });
 </script>
 
