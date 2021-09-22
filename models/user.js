@@ -22,6 +22,11 @@ const userSchema = new Schema({
             },
             message: val => `${val.value} has to be 4 digits`
         }
+    },
+    userType: {
+        type: String,
+        enum: ['notVaccinated', '1stDose', '2ndDose'],
+        default: 'notVaccinated'
     }
 });
 
