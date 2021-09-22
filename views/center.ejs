@@ -238,15 +238,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
+
                                 <div class="col-6 offset-3 d-flex justify-content-center">
-                                    <%if(user && user.type === 'notVaccinated' ){%>
-                                    <button class="btn btn-primary" id='review'>Write a Review</button>
-                                    <% } else { %>
-                                    <span class="text-danger text-center">you are not eligible to write a review or you are not signed in</span>
-                                    <% } %> 
+
+                                    <%if(user && !(userType==='notVaccinated' ) ){%>
+                                        <button class="btn btn-primary" id='review'>Write a Review</button>
+                                        <% } else { %>
+                                            <span class="text-danger text-center">you are not eligible to write a review
+                                                or you are not signed in</span>
+                                            <% } %>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="overflow-auto">
@@ -274,7 +276,32 @@
                                                     onclick="document.querySelector('.h<%=review._id%>').style.display = 'block'"
                                                     type="button">Edit </button>
                                             </div>
-                                            <% } %>
+                                            <% } else { if (user) {%>
+                                                <div class="col-4 ml-auto mt-1">
+                                                    <button class="btn btn-sm btn-warning"
+                                                        onclick="document.getElementById('h/<%=center._id%>/<%= review._id %>').style.display='block'">Report</button>
+                                                    <form action="/<%=center._id%>/<%= review._id %>/reportReview"
+                                                        method="post" style="display: none;"
+                                                        id="h/<%=center._id%>/<%= review._id %>">
+                                                        <div class="form-group">
+                                                            <label for="reportReview<%= review._id %>">Report</label>
+                                                            <select id="reportReview<%= review._id %>"
+                                                                class="form-control" name="reportReview">
+                                                                <option value="spam">
+                                                                    Spam
+                                                                </option>
+                                                                <option value="harassment">
+                                                                    Harassment
+                                                                </option>
+                                                                <option value="inappropriate">
+                                                                    Inappropriate
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <button class="btn btn-sm btn-warning">Submit</button>
+                                                    </form>
+                                                </div>
+                                                <%} } %>
                                     </div>
                                     <% if(user==review.author_id) { %>
 
@@ -605,7 +632,45 @@
                                                                     </div>
                                                                     <button class="btn btn-success">Save</button>
                                                                 </form>
-                                                                <%}%>
+                                                                <%} else { if (user) {%>
+                                                                    <div class="col-4">
+                                                                        <button class="btn btn-sm btn-warning ml-auto"
+                                                                            onclick="document.getElementById('h/<%=center._id%>/<%= a._id %>').style.display='block'">Report</button>
+                                                                        <form
+                                                                            action="/<%=center._id%>/<%= a._id %>/reportAnswer"
+                                                                            method="post" style="display: none;"
+                                                                            id="h/<%=center._id%>/<%= a._id %>">
+                                                                            <div class="form-group">
+                                                                                <di class="row">
+                                                                                    <div class="col-5">
+                                                                                        <label
+                                                                                            for="reportReview<%= a._id %>">Report</label>
+                                                                                    </div>
+                                                                                    <div class="col-5"><button
+                                                                                            class="btn btn-sm btn-outline-danger"
+                                                                                            type="button"
+                                                                                            onclick="document.getElementById('h/<%=center._id%>/<%= a._id %>').style.display='none'">X
+                                                                                        </button></div>
+                                                                                </di>
+                                                                                <select id="reportReview<%= a._id %>"
+                                                                                    class="form-control d-inline"
+                                                                                    name="reportAnswer">
+                                                                                    <option value="spam">
+                                                                                        Spam
+                                                                                    </option>
+                                                                                    <option value="harassment">
+                                                                                        Harassment
+                                                                                    </option>
+                                                                                    <option value="inappropriate">
+                                                                                        Inappropriate
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <button
+                                                                                class="btn btn-sm btn-warning">Submit</button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <% } } %>
                                                         </div>
                                                         <%}%>
                                         </div>
