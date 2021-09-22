@@ -1,41 +1,45 @@
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display+SC );
 #white{
 /* background-color: rgba(255, 255, 255, 0.7); */
     position: absolute;    
-    /* height: 100vh; */
-    width: 100vw;
+    /*height: 100vh;*/
+    max-width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
     z-index: 1;
-}
-body{
-    background-color: rgba(255, 255, 255, 0.6);
-    position: relative;    
-    height: 100vh;
-    width: 100vw;
-    z-index: 1;
-
+    margin: 0px !important ;
+    padding: 0px!important;
 }
 
 .track{
     width: 100%;
-    height: 100vh ;
-    /* //position: absolute; */
-    background-color: rgba(255, 255, 255, 0.55);
+    height: 90vh;
+    position: absolute; 
+} 
+.who{
+   color:  rgb(2, 2, 42);
 }
-#language{
-    background-color: transparent;
-    border: 2px black solid;
-    border-radius: 10px;
-    padding: 2px 2px;
+.aim {
+    margin-left:30px ;
+    color: rgb(2, 2, 42);;
 }
 #description {
     font-family: Roboto,'sans-serif';
     font-weight: 400;
     font-size: 1.6em;
+    background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.577) 2.5%, rgba(255, 255, 255, .1) 112.38%);
+box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
+backdrop-filter: blur(70px);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+    margin-left: 90px ;
+/* height: 50vh;*/
+    transition-duration: 1s;
+    transition-property: all;
+    transition-timing-function: ease-in;
 }
 #Slogan {
     font-family: Roboto,'sans-serif';
     color : rgba(0, 0, 0, 0.55);
-
-
     font-weight: 700;
     font-size: 2.7em;
     letter-spacing: 2px;
@@ -43,9 +47,11 @@ body{
     text-indent: 30px;
 }
 #Header {
-    font-family: Montserrat , 'sans-serif';
+    font-family: 'Montserrat' , 'sans-serif';
     font-weight:400;
-   
+    color: rgb(2, 2, 42);
+    margin-left:100px;
+    border-left: .2em dotted rgba(255, 255, 255, 1);
 }
 span {
     margin-left: 2.1em;
@@ -57,4 +63,80 @@ span {
 } */
 .line {
     border-top: 2px solid black;
+}
+.row{
+    margin-right: 0px;
+}
+.Team {
+    position: relative;
+    background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.577) 2.5%, rgba(255, 255, 255, .1) 112.38%);
+    box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(70px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+    color: rgb(2, 2, 42);
+    width: 80%;
+}
+.photos {
+    padding-top: 5%;
+}
+.team {
+    height: 20vh;
+    width: 30%;
+  }
+  .services-list .item {
+    background-color: rgba(250,250,250,0.25);
+    border-radius: 10px;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  .box {
+    font-size:15px;
+    background-color: rgba(250,250,250,0.25);
+    border-radius: 10px;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    padding:20px 20px;
+    height:100%;
+  }
+  .services-list .item:hover {
+    background-color: #fff;
+    color: #1e1e1e;
+  }
+  .box p:last-child {
+    margin:0;
+  }
+  .owl-carousel .owl-dots .owl-dot {
+    border-radius: 3px;
+  }
+  .owl-dots {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      margin-top: 50px
+  }
+  
+  .owl-carousel .owl-dots .owl-dot {
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      background: rgba(255, 255, 255, .2)
+  }
+  
+  .owl-carousel .owl-dots .owl-dot:focus {
+      outline: none
+  }
+  
+  .owl-carousel .owl-dots .owl-dot.active {
+      background: #fff
+  }
+  .coor {
+border-radius: 50%;
+width: 70%;
+ height: 20vh;
 }
