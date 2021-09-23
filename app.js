@@ -141,7 +141,7 @@ app.get('/', catchAsync(async (req, res) => {
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
     req.session.destroy();
     console.log(req.baseUrl, res.baseUrl)
-    res.redirect('/')
+    res.redirect('back')
 }));
 
 app.post("/login/:id", catchAsync(async (req, res) => {
@@ -152,6 +152,17 @@ app.post("/login/:id", catchAsync(async (req, res) => {
             res.redirect('/');
         }
         else {
+            res.redirect('/' + req.params.id);
+        }
+        return;
+    }
+    if(!(/^-?\d+$/.test(Ipass))||!(/^-?\d+$/.test(Ireg_num))){
+        if (req.params.id === 'undefined') {
+            //req.flash('error', 'you are not registered');
+            res.redirect('/center');
+        }
+        else {
+            //req.flash('error', 'you are not registered');
             res.redirect('/' + req.params.id);
         }
         return;
