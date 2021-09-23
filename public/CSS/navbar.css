@@ -2,3 +2,6 @@ span{
     display: flex;
     align-content: flex-end;
 }
+.navbar {
+position: sticky;
+}
