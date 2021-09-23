@@ -21,6 +21,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Admin = require('./models/admin');
 const user = require('./models/user');
+const center = require('./models/center');
 
 
 
@@ -91,7 +92,12 @@ app.use(function (req, res, next) {
 });
 
 app.get('/about', (req, res) => {
-    res.render('about');
+    // res.sendFile(path.join(__dirname+'/views/code/index.html'));
+    res.render('about')
+})
+app.get('/about/team', (req, res) => {
+    res.sendFile(path.join(__dirname+'/views/code/index.html'));
+   
 })
 app.get('/faq', (req, res) => {
     res.render('faq');
@@ -141,7 +147,7 @@ app.get('/', catchAsync(async (req, res) => {
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
     req.session.destroy();
     console.log(req.baseUrl, res.baseUrl)
-    res.redirect('/')
+    res.redirect('back')
 }));
 
 app.post("/login/:id", catchAsync(async (req, res) => {
@@ -152,6 +158,17 @@ app.post("/login/:id", catchAsync(async (req, res) => {
             res.redirect('/');
         }
         else {
+            res.redirect('/' + req.params.id);
+        }
+        return;
+    }
+    if(!(/^-?\d+$/.test(Ipass))||!(/^-?\d+$/.test(Ireg_num))){
+        if (req.params.id === 'undefined') {
+            //req.flash('error', 'you are not registered');
+            res.redirect('/center');
+        }
+        else {
+            //req.flash('error', 'you are not registered');
             res.redirect('/' + req.params.id);
         }
         return;
@@ -196,9 +213,11 @@ app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res)
 
 app.delete('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
+    let center = await Center.findById(id);
     await Center.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await ReportReview.deleteMany({ review_id: reviewId });
     await Review.findByIdAndDelete(reviewId);
+    center.save();
     res.redirect(`/${id}`);
 }))
 
@@ -206,7 +225,17 @@ app.delete('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(asyn
 
 app.put('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, validateReview, catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
+    const review = await Review.findById(reviewId);
+    let center = await Center.findById(req.params.id);
+    // center.avgSpeed = center.avgSpeed- review.speed
+    // center.avgLocation = center.avgLocation- review.location
+    // center.avgService = center.avgService- review.service
+    // center.avgClean = center.avgClean- review.clean
+
     await Review.findByIdAndUpdate(reviewId, { ...req.body.review });
+    
+    
+    center.save();
     res.redirect(`/${id}`);
 }));
 
@@ -728,7 +757,7 @@ app.get('/:id', catchAsync(async (req, res) => {
             }
         })
 
-    console.log(center);
+    // console.log(center);
     res.render('center', { center });
 
 }));
@@ -743,3 +772,4 @@ app.listen(3000, () => {
 
     console.log('Serving on port 3000')
 
+})
