@@ -70,6 +70,7 @@
                                 <option value="" disabled selected hidden>
                                     Select center
                                 </option>
+
                                 <% for(let cent of centers) { %>
                                     <%if(name===cent){%>
                                         <option selected>
@@ -82,6 +83,7 @@
                                             <%}%>
                                                 <% } %>
                             </select>
+
                         </div>
                     </div>
                 </div>
@@ -166,6 +168,147 @@
                 </div>
                 <%}%>
             </div>
+            <div class="col-4 offset-2">
+                <button class="btn btn-sm btn-info" onclick="showAllQuestions()">Show
+                    All Questions</button>
+            </div>
+            <div class="container" id="showAllQuestions" style="display:none">
+                <%for(let center of centerHelper) {%>
+                    <%for(let question of center.questions) {%>
+                        <div class="row">
+                            <div class="col-4 offset-2">
+                                <%= question.author_id._id%>
+                            </div>
+                            <div class="col-4 offset-2">
+                                <%=question.question%>
+                            </div>
+                            <div class="col-4 offset-2"><button type="button" class="btn btn-primary"
+                                    onclick="showQuestions('<%=question._id%>')">read
+                                    More </button>
+                                <div class="container" id="question<%=question._id%>" style="display:none;">
+                                    <div class="container">
+                                        <h4>Answers details</h4>
+                                        <ul>
+                                            <% for(let answer of question.answers) {%>
+                                                <li>
+                                                    Answer <%= answer._id%> :
+                                                        <%=answer.answer%>
+                                                </li>
+                                                <li>
+                                                    Answer <%= answer._id%> author :
+                                                        <%=answer.author_id%>
+                                                </li>
+                                                <% }%>
+                                        </ul>
+                                    </div>
+                                    <div class="container">
+                                        <h4>Question details</h4>
+                                        <ul>
+                                            <li>Author id :
+                                                <%=question.author_id._id%>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="container">
+                                        <h4>Center details</h4>
+                                        <%=center.name%>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-4 offset-2">
+                                <form action="/admin/allquestions/<%=center._id%>/<%=question._id%>?_method=DELETE"
+                                    method="POST">
+                                    <button class="btn btn-sm btn-danger">Delete Question</button>
+                                </form>
+                            </div>
+                        </div>
+                        <%}%>
+                            <%}%>
+            </div>
+            <div class="col-4 offset-2">
+                <button class="btn btn-sm btn-info" onclick="showAllCenters()">Show
+                    All Centers</button>
+            </div>
+            <div class="container" id="showAllCenters" style="display:none">
+                <%for(let center of centerHelper) {%>
+                    <div class="row">
+                        <div class="col-4 offset-2">
+                            <%=center.name%>
+                        </div>
+                        <div class="col-4 offset-2">
+                            <%=center.nameArabic%>
+                        </div>
+                        <div class="col-4 offset-2"><button type="button" class="btn btn-primary"
+                                onclick="showCenters('<%=center._id%>')">read
+                                More </button>
+                            <div class="container" id="center<%=center._id%>" style="display:none;">
+                                <div class="container">
+                                    <h4>Center details</h4>
+                                    <ul>
+                                        <li>
+                                            Latitude :
+                                            <%=center.latitude%>
+                                        </li>
+                                        <li>
+                                            Longitude :
+                                            <%=center.longitude%>
+                                        </li>
+                                        <li>Governorate :
+                                            <%=center.governorate%>
+                                        </li>
+                                        <li>
+                                            district :
+                                            <%=center.district%>
+                                        </li>
+                                        <li>
+                                            governorateArabic :
+                                            <%=center.governorateArabic%>
+                                        </li>
+                                        <li>
+                                            districtArabic :
+                                            <%=center.districtArabic%>
+                                        </li>
+                                        <li>
+                                            Image :
+                                            <img src="<%=center.districtArabic%>">
+                                        </li>
+                                        <li>
+                                            <% for(let day of center.workingHours) { %>
+                                                <ul>
+                                                    <li>
+                                                        day :
+                                                        <%=day.day%>
+                                                    </li>
+                                                    <li>
+                                                        from :
+                                                        <%=day.From%>
+                                                    </li>
+                                                    <li>
+                                                        To :
+                                                        <%=day.To%>
+                                                    </li>
+                                                </ul>
+                                                <%}%>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-4 offset-2">
+                            <form action="/admin/allcenters/<%=center._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Delete Center</button>
+                            </form>
+                        </div>
+                        <div class="col-4 offset-2">
+                            <a class="btn btn-sm btn-info" href="/admin/editcenter/?centerId=<%=center._id%>">Edit
+                                Center</a>
+                        </div>
+                    </div>
+                    <%}%>
+            </div>
         </div>
 
         <script type="text/javascript">
@@ -180,7 +323,51 @@
             }
         </script>
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-        </div>
+                function showQuestions(id) {
+                    const questionId = "question" + id;
+                    if (document.getElementById(questionId).style.display === "none") {
+                        document.getElementById(questionId).style.display = "block";
+                    }
+                    else {
+                        document.getElementById(questionId).style.display = "none";
+                    }
+                }
+                function showCenters(id) {
+                    const centerId = "center" + id;
+                    if (document.getElementById(centerId).style.display === "none") {
+                        document.getElementById(centerId).style.display = "block";
+                    }
+                    else {
+                        document.getElementById(centerId).style.display = "none";
+                    }
+                }
+                function showAllReviews() {
+                    if (document.getElementById("showAllReviews").style.display === "none") {
+                        document.getElementById("showAllReviews").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("showAllReviews").style.display = "none";
+                    }
+                }
+                function showAllQuestions() {
+                    if (document.getElementById("showAllQuestions").style.display === "none") {
+                        document.getElementById("showAllQuestions").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("showAllQuestions").style.display = "none";
+                    }
+                }
+                function showAllCenters() {
+                    if (document.getElementById("showAllCenters").style.display === "none") {
+                        document.getElementById("showAllCenters").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("showAllCenters").style.display = "none";
+                    }
+                }
+            </script>
+            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        
         <script>
             $(document).on('ready', function () {
 

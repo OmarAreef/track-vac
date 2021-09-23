@@ -10,6 +10,7 @@ const Answer = require('./models/answer');
 const User = require('./models/user');
 const ReportReview = require('./models/reportReview');
 const ReportAnswer = require('./models/reportAnswer');
+const ReportQuestion = require('./models/reportQuestion');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
@@ -92,7 +93,7 @@ app.use(function (req, res, next) {
 app.get('/about', (req, res) => {
     res.render('about');
 })
-app.get('/faq' , (req,res)=>{
+app.get('/faq', (req, res) => {
     res.render('faq');
 })
 
@@ -137,14 +138,9 @@ app.get('/', catchAsync(async (req, res) => {
 }))
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
     req.session.destroy();
-    console.log(req.baseUrl , res.baseUrl)
+    console.log(req.baseUrl, res.baseUrl)
     res.redirect('/')
 }));
-
-
-
-
-
 
 app.post("/login/:id", catchAsync(async (req, res) => {
     var Ireg_num = req.body.username;
@@ -238,8 +234,10 @@ app.delete('/:id/:question', isLoggedIn, catchAsync(async (req, res) => {
     const question = await Question.findById(questionId);
     await Center.findByIdAndUpdate(id, { $pull: { questions: questionId } });
     for (let answer of question.answers) {
+        await ReportAnswer.deleteMany({ answer_id: answer });
         await Answer.findByIdAndDelete(answer);
     }
+    await ReportQuestion.deleteMany({ question_id: questionId });
     await Question.findByIdAndDelete(question);
     res.redirect(`/${id}`);
 }))
@@ -257,7 +255,8 @@ app.post('/:id/:question/addAnswer', isLoggedIn, validateAnswer, catchAsync(asyn
     res.redirect(`/${center._id}`);
 }))
 
-app.delete('/admin/allreviews/:reviewId', catchAsync(async (req, res) => {
+
+app.delete('/admin/allreviews/:reviewId', adminIsLoggedIn, catchAsync(async (req, res) => {
     const { reviewId } = req.params;
     console.log(reviewId);
     const review = await Review.findById(reviewId);
@@ -266,6 +265,77 @@ app.delete('/admin/allreviews/:reviewId', catchAsync(async (req, res) => {
     await Center.findByIdAndUpdate(review.center_id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
     res.redirect('/admin/allreviews');
+}));
+
+app.delete('/admin/allquestions/:centerId/:questionId', adminIsLoggedIn, catchAsync(async (req, res) => {
+    const { questionId, centerId } = req.params;
+    console.log(questionId);
+    const question = await Question.findById(questionId);
+    await Center.findByIdAndUpdate(centerId, { $pull: { questions: questionId } });
+    for (let answer of question.answers) {
+        await Answer.findByIdAndDelete(answer);
+        await ReportAnswer.deleteMany({ answer_id: answer });
+    }
+    await ReportQuestion.deleteMany({ question_id: questionId });
+    await Question.findByIdAndDelete(question);
+    res.redirect('/admin/allreviews');
+}));
+
+app.delete('/admin/allcenters/:centerId', adminIsLoggedIn, catchAsync(async (req, res) => {
+    const { centerId } = req.params;
+    const center = await Center.findById(centerId).populate("questions");
+    for (let question of center.questions) {
+        for (let answer of question.answers) {
+            await Answer.findByIdAndDelete(answer);
+            await ReportAnswer.deleteMany({ answer_id: answer });
+        }
+        await Question.findByIdAndDelete(question._id);
+    }
+    for (let review of center.reviews) {
+        await Review.findByIdAndDelete(review);
+        await ReportReview.deleteMany({ review_id: review });
+    }
+    for (let day of center.workingHours) {
+        await Day.findByIdAndDelete(day);
+    }
+    await Center.findByIdAndDelete(centerId);
+    res.redirect('/admin/allreviews');
+}));
+
+app.put('/admin/editcenter/:centerId', adminIsLoggedIn, catchAsync(async (req, res) => {
+    const { centerId } = req.params;
+    const { sunFrom, sunTo, monFrom, monTo, tueFrom, tueTo, wedFrom, wedTo, thuFrom, thuTo, friFrom, friTo, satFrom, satTo } = req.body;
+    const center = await Center.findByIdAndUpdate(centerId, { ...req.body.center }).populate("workingHours");
+    for (let day of center.workingHours) {
+        if (day.day === "sun") {
+            await Day.findByIdAndUpdate(day._id, { From: sunFrom, To: sunTo });
+        }
+        else
+            if (day.day === "mon") {
+                await Day.findByIdAndUpdate(day._id, { From: monFrom, To: monTo });
+            }
+            else
+                if (day.day === "tue") {
+                    await Day.findByIdAndUpdate(day._id, { From: tueFrom, To: tueTo });
+                }
+                else
+                    if (day.day === "wed") {
+                        await Day.findByIdAndUpdate(day._id, { From: wedFrom, To: wedTo });
+                    }
+                    else
+                        if (day.day === "thu") {
+                            await Day.findByIdAndUpdate(day._id, { From: thuFrom, To: thuTo });
+                        }
+                        else
+                            if (day.day === "fri") {
+                                await Day.findByIdAndUpdate(day._id, { From: friFrom, To: friTo });
+                            }
+                            else
+                                if (day.day === "sat") {
+                                    await Day.findByIdAndUpdate(day._id, { From: satFrom, To: satTo });
+                                }
+    }
+    res.redirect(`/admin/allreviews`);
 }));
 
 app.delete('/:id/:question/:answer', isLoggedIn, catchAsync(async (req, res) => {
@@ -290,11 +360,55 @@ app.get('/admin/login', (req, res) => {
 app.get('/admin/home', adminIsLoggedIn, async (req, res) => {
     const reviewReports = await ReportReview.find().populate("review_id");
     const answerReports = await ReportAnswer.find().populate("answer_id");
-    res.render('adminhome', { reviewReports, answerReports });
+    const questionReports = await ReportAnswer.find().populate("question_id");
+    res.render('adminhome', { reviewReports, answerReports, questionReports });
 })
 
 app.get('/admin/addadmin',adminIsLoggedIn,  (req, res) => {
     res.render('addadmin');
+})
+
+app.get('/admin/editcenter', adminIsLoggedIn, async (req, res) => {
+    const { centerId } = req.query;
+    if (centerId) {
+        const center = await Center.findById(centerId).populate("workingHours");
+        console.log(center);
+        console.log(center.workingHours);
+        let sun, mon, tue, wed, thu, fri, sat;
+        for (let day of center.workingHours) {
+            if (day.day === "sun") {
+                sun = await Day.findById(day._id);
+            }
+            else
+                if (day.day === "mon") {
+                    mon = await Day.findById(day._id);
+                }
+                else
+                    if (day.day === "tue") {
+                        tue = await Day.findById(day._id);
+                    }
+                    else
+                        if (day.day === "wed") {
+                            wed = await Day.findById(day._id);
+                        }
+                        else
+                            if (day.day === "thu") {
+                                thu = await Day.findById(day._id);
+                            }
+                            else
+                                if (day.day === "fri") {
+                                    fri = await Day.findById(day._id);
+                                }
+                                else
+                                    if (day.day === "sat") {
+                                        sat = await Day.findById(day._id);
+                                    }
+        }
+        res.render('editcenter', { center, sun, mon, tue, wed, thu, fri, sat });
+    }
+    else {
+        res.redirect("/admin/allreviews");
+    }
 })
 
 app.post('/admin/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/admin/login' }), async (req, res) => {
@@ -355,12 +469,13 @@ app.post('/:id/:answer/reportAnswer', catchAsync(async (req, res) => {
     res.redirect(`/${center._id}`);
 }))
 
-
-// app.get("/admin/home", catchAsync(async (req, res) => {
-//     const reviewReports = await ReportReview.find().populate("review_id");
-//     const answerReports = await ReportAnswer.find().populate("answer_id");
-//     res.render('homeAdmin_back', { reviewReports, answerReports });
-// }))
+app.post('/:id/:question/reportQuestion', catchAsync(async (req, res) => {
+    const center = await Center.findById(req.params.id);
+    const report = new ReportQuestion({ type: req.body.reportQuestion });
+    report.question_id = req.params.question;
+    await report.save();
+    res.redirect(`/${center._id}`);
+}))
 
 app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
     const { review } = req.params;
@@ -372,6 +487,25 @@ app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
 app.post("/rejectReview/:report/:review", catchAsync(async (req, res) => {
     const { report } = req.params;
     await ReportReview.findByIdAndDelete(report);
+    res.redirect("/admin/home");
+}))
+
+app.post("/acceptQuestion/:report/:question", catchAsync(async (req, res) => {
+    const { question } = req.params;
+    const questionBody = await Question.findById(question);
+    await Center.findByIdAndUpdate(id, { $pull: { questions: question } });
+    for (let answer of questionBody.answers) {
+        await ReportAnswer.deleteMany({ answer_id: answer });
+        await Answer.findByIdAndDelete(answer);
+    }
+    await ReportQuestion.deleteMany({ question_id: question });
+    await Question.findByIdAndDelete(question);
+    res.redirect("/admin/home");
+}))
+
+app.post("/rejectQuestion/:report/:question", catchAsync(async (req, res) => {
+    const { report } = req.params;
+    await ReportQuestion.findByIdAndDelete(report);
     res.redirect("/admin/home");
 }))
 
@@ -388,7 +522,7 @@ app.post("/rejectAnswer/:report/:answer", catchAsync(async (req, res) => {
     res.redirect("/admin/home");
 }))
 
-app.get('/admin/allreviews', catchAsync(async (req, res) => {
+app.get('/admin/allreviews', adminIsLoggedIn, catchAsync(async (req, res) => {
     const { governorate, district, name } = req.query;
     var districts = [];
     var centers = [];
@@ -406,7 +540,19 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             populate: {
                 path: "author_id"
             }
-        });
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
+        }).populate("workingHours");
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
         let reviewHelper = [];
@@ -430,7 +576,19 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             populate: {
                 path: "author_id"
             }
-        });
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
+        }).populate("workingHours");
         const districts = await Center.find({ governorate }).distinct('district');
         const centers = await Center.find({ governorate, district }).distinct('name');
         let reviewHelper = [];
@@ -455,7 +613,19 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
             populate: {
                 path: "author_id"
             }
-        });
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
+        }).populate("workingHours");
         const districts = await Center.find({ governorate }).distinct('district');
         let reviewHelper = [];
         for (let center of centerHelper) {
@@ -466,8 +636,53 @@ app.get('/admin/allreviews', catchAsync(async (req, res) => {
         res.render('allreviews', { districts, centerHelper, name, governorate, centers, governorates, district, reviewHelper });
     }
     else {
-        const reviewHelper = await Review.find({}).populate("author_id").populate("center_id");
-        res.render('allreviews', { governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
+        const reviewHelper = await Review.find({}).populate("author_id").populate({
+            path: "center_id"
+            ,
+            populate: {
+                path: "questions"
+                ,
+                populate: {
+                    path: "answers"
+                }
+            }
+        }).populate({
+            path: "center_id"
+            ,
+            populate: {
+                path: "questions"
+                ,
+                populate: {
+                    path: "author_id"
+                }
+            }
+        });
+        const centerHelper = await Center.find({}).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "center_id"
+            }
+        }).populate({
+            path: "reviews"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "author_id"
+            }
+        }).populate({
+            path: "questions"
+            ,
+            populate: {
+                path: "answers"
+            }
+        }).populate("workingHours");
+        res.render('allreviews', { centerHelper, governorates, district, name, governorate: 'All', districts, centers, reviewHelper });
     }
 }));
 
@@ -477,40 +692,40 @@ app.get('/admin/addcenter', adminIsLoggedIn, (req, res) => {
 })
 
 app.post('/admin/addcenter', adminIsLoggedIn, async (req, res) => {
-        const { sunFrom, sunTo, monFrom, monTo, tueFrom, tueTo, wedFrom, wedTo, thuFrom, thuTo, friFrom, friTo, satFrom, satTo } = req.body;
-        const sun = new Day({ day: 'sun', From: sunFrom, To: sunTo });
-        const mon = new Day({ day: 'mon', From: monFrom, To: monTo });
-        const tue = new Day({ day: 'tue', From: tueFrom, To: tueTo });
-        const wed = new Day({ day: 'wed', From: wedFrom, To: wedTo });
-        const thu = new Day({ day: 'thu', From: thuFrom, To: thuTo });
-        const fri = new Day({ day: 'fri', From: friFrom, To: friTo });
-        const sat = new Day({ day: 'sat', From: satFrom, To: satTo });
-        const center = new Center(req.body.center);
-        center.workingHours = [sun, mon, tue, wed, thu, fri, sat];
-        await sun.save();
-        await mon.save();
-        await tue.save();
-        await wed.save();
-        await thu.save();
-        await fri.save();
-        await sat.save();
-        await center.save();
-        req.flash('success', 'Successfully made a new Center!');
-        res.redirect("/admin/addcenter");
+    const { sunFrom, sunTo, monFrom, monTo, tueFrom, tueTo, wedFrom, wedTo, thuFrom, thuTo, friFrom, friTo, satFrom, satTo } = req.body;
+    const sun = new Day({ day: 'sun', From: sunFrom, To: sunTo });
+    const mon = new Day({ day: 'mon', From: monFrom, To: monTo });
+    const tue = new Day({ day: 'tue', From: tueFrom, To: tueTo });
+    const wed = new Day({ day: 'wed', From: wedFrom, To: wedTo });
+    const thu = new Day({ day: 'thu', From: thuFrom, To: thuTo });
+    const fri = new Day({ day: 'fri', From: friFrom, To: friTo });
+    const sat = new Day({ day: 'sat', From: satFrom, To: satTo });
+    const center = new Center(req.body.center);
+    center.workingHours = [sun, mon, tue, wed, thu, fri, sat];
+    await sun.save();
+    await mon.save();
+    await tue.save();
+    await wed.save();
+    await thu.save();
+    await fri.save();
+    await sat.save();
+    await center.save();
+    req.flash('success', 'Successfully made a new Center!');
+    res.redirect("/admin/addcenter");
 })
 app.get('/:id', catchAsync(async (req, res) => {
 
 
     const center = await Center.findById(req.params.id)
-    .populate("workingHours")
-    .populate("reviews")
-    .populate({
-        path: 'questions',
-        populate: {
-            path: 'answers'
-        }
-    })
-    
+        .populate("workingHours")
+        .populate("reviews")
+        .populate({
+            path: 'questions',
+            populate: {
+                path: 'answers'
+            }
+        })
+
     console.log(center);
     res.render('center', { center });
 
@@ -525,5 +740,5 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
 
     console.log('Serving on port 3000')
-   
+
 })
