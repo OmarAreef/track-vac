@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const reportQuestionSchema = new Schema({
+    type: {
+        type: String,
+        required: true,
+        enum: ['spam', 'inappropiate', 'harassment']
+    }
+    ,
+    question_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Answer'
+    }
+});
+
+module.exports = mongoose.model("ReportQuestion", reportQuestionSchema);

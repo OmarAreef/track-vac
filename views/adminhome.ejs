@@ -1,82 +1,117 @@
 <% layout('layouts/boilerplate_track.ejs') %>
- <%- include('partials/navbar_admin.ejs') %> 
-    <div class="container position-absolute">
-        <h1>Welcome</h1>
-      
-                <div class="container">
-                    <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
-                        Reports</button>
-                    <div id="reviewReportDisplay" style="display:none">
-                        <% for(let review of reviewReports) { %>
-                            <div class="container">
-                                <%= review.type %> <br>
-                                    <%= review.review_id.body %>
-                                        <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
-                                            method="post">
-                                            <button class="btn btn-sm btn-danger">Reject
-                                                Report</button>
-                                        </form>
-                                        <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-info">Accept
-                                                Report</button>
-                                        </form>
-                            </div>
+    <%- include('partials/navbar_admin.ejs') %>
+        <div class="container position-absolute">
+            <h1>Welcome</h1>
 
-                            <% } %>
+            <div class="container">
+                <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
+                    Reports</button>
+                <div id="reviewReportDisplay" style="display:none">
+                    <% for(let review of reviewReports) { %>
+                        <div class="container">
+                            <%= review.type %> <br>
+                                <%= review.review_id.body %>
+                                    <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                    <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                        </div>
+
+                        <% } %>
 
 
-
-                    </div>
 
                 </div>
-                <div class="container">
 
-                    <button class="btn btn-sm btn-info" id="answers" onclick="showAnswers()">Show Review
-                        Answers</button>
+            </div>
+            <div class="container">
 
-                    <div id="answerReportDisplay" style="display:none">
+                <button class="btn btn-sm btn-info" id="answers" onclick="showAnswers()">Show Answers Reports</button>
 
-                        <% for(let answer of answerReports) { %>
-                            <div class="container">
-                                <%= answer.type %><br>
-                                    <%= answer.answer_id.answer %>
-                                        <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                            method="post">
-                                            <button class="btn btn-sm btn-danger">Reject
-                                                Report</button>
-                                        </form>
-                                        <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-info">Accept
-                                                Report</button>
-                                        </form>
-                            </div>
+                <div id="answerReportDisplay" style="display:none">
 
-                            <% } %>
+                    <% for(let answer of answerReports) { %>
+                        <div class="container">
+                            <%= answer.type %><br>
+                                <%= answer.answer_id.answer %>
+                                    <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                    <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                        </div>
+
+                        <% } %>
 
 
-                    </div>
                 </div>
+            </div>
+            <div class="container">
+
+                <button class="btn btn-sm btn-info" id="questions" onclick="showQuestions()">Show Questions Reports
+                </button>
+
+                <div id="questionReportDisplay" style="display:none">
+
+                    <% for(let question of questionReports) { %>
+                        <div class="container">
+                            <%= question.type %><br>
+                                <%= question.question_id.question %>
+                                    <form action="/rejectQuestion/<%=question._id%>/<%= question.question_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                    <form action="/acceptQuestion/<%=question._id%>/<%= question.question_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                        </div>
+
+                        <% } %>
+
+
+                </div>
+            </div>
 
 
 
-                <script type="text/javascript">
-                    function showReviews() {
-                        if (document.getElementById("reviewReportDisplay").style.display == "none") {
-                            document.getElementById("reviewReportDisplay").style.display = "block";
-                        } else {
-                            document.getElementById("reviewReportDisplay").style.display = "none";
-                        }
+            <script type="text/javascript">
+                function showReviews() {
+                    if (document.getElementById("reviewReportDisplay").style.display == "none") {
+                        document.getElementById("reviewReportDisplay").style.display = "block";
+                    } else {
+                        document.getElementById("reviewReportDisplay").style.display = "none";
                     }
-                    function showAnswers() {
-                        if (document.getElementById("answerReportDisplay").style.display == "none") {
-                            document.getElementById("answerReportDisplay").style.display = "block";
-                        }
-                        else {
-                            document.getElementById("answerReportDisplay").style.display = "none";
-                        }
+                }
+                function showAnswers() {
+                    if (document.getElementById("answerReportDisplay").style.display == "none") {
+                        document.getElementById("answerReportDisplay").style.display = "block";
                     }
-                </script>
+                    else {
+                        document.getElementById("answerReportDisplay").style.display = "none";
+                    }
+                }
+                function showQuestions() {
+                    if (document.getElementById("questionReportDisplay").style.display == "none") {
+                        document.getElementById("questionReportDisplay").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("questionReportDisplay").style.display = "none";
+                    }
+                }
+            </script>
 
-    </div>
+        </div>

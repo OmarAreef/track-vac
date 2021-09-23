@@ -41,16 +41,20 @@
             </li>
             <li>
                 <img src="<%=center.image%>">
-            </li>     
+            </li>
         </ul>
         <h4>Working Hours</h4>
         <ul>
             <% for(let w of center.workingHours) { %>
-                <li><%=w.day%> <%=w.From%> <%=w.To%></li>
-            
-            <% } %>
+                <li>
+                    <%=w.day%>
+                        <%=w.From%>
+                            <%=w.To%>
+                </li>
+
+                <% } %>
         </ul>
-        
+
     </div>
 
     <div class="container">
@@ -100,6 +104,26 @@
                                         <p class="card-text" id="questionDisplay<%q._id%>">
                                             <%=q.question%>
                                         </p>
+                                        <%if(user){%>
+                                            <form action="/<%=center._id%>/<%= q._id %>/reportQuestion" method="post">
+                                                <div class="form-group">
+                                                    <label for="reportQuestion<%= q._id %>">Report</label>
+                                                    <select id="reportQuestion<%= q._id %>" class="form-control"
+                                                        name="reportQuestion">
+                                                        <option value="spam">
+                                                            Spam
+                                                        </option>
+                                                        <option value="harassment">
+                                                            Harassment
+                                                        </option>
+                                                        <option value="inappropriate">
+                                                            Inappropriate
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-sm btn-info">Submit</button>
+                                            </form>
+                                            <%}%>
                             </div>
                             <% if(user && userType !=="notVaccinated" ) { %>
                                 <form action="/<%=center._id%>/<%=q._id%>/addAnswer" method="POST">
