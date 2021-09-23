@@ -5,7 +5,7 @@ const reportAnswerSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum : ['spam' , 'inappropiate' , 'harassment']
+        enum : ['spam' , 'inappropriate' , 'harassment']
     }
     ,
     answer_id: {

@@ -205,34 +205,40 @@
                     </div>
                     <div id="results" class="col-sm-9 col-md-6 col-lg-4 container thumb overflow-auto mb-3"
                         style="z-index: 2; min-height: 326px;">
-                        <div class="row mb-2 pt-3">
+                        <div class="row mb-1 pt-3">
                             <h1 class="col-6 offset-3">Results</h1>
                         </div>
-                        <form class="mb-2" id="live-search" action="" class="styled" method="post">
-                            <fieldset>
-                                <input type="text" class="text-input" id="filter" placeholder="search" />
-                            </fieldset>
-                        </form>
+                        <div class="row mb-4">
+                            <div class="col-6 offset-3">
+                                <form class="px-3 py-2" id="live-search" action="" class="styled" method="post">
+                                    <fieldset>
+                                        <input type="text" class="text-input thumb" id="filter" placeholder="search" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+
 
                         <nav class='search'>
                             <ul>
                                 <%for(let center of centerHelper) {%>
                                     <li><a id="center" href="<%= center._id %>">
-                                            <div class="row d-flex align-items-center">
-                                                
-                                                <div class="col-6">
-                                                    <p class="starability-result" data-rating="3">
-                                                    </p>
-                                                </div>
-                                                <div class="col-5">
-                                                    <%= center.nameArabic %>
-                                                </div>
-                                            </div>
                                             <div class="row">
-                                                <div class="col-6 offset-3">
+                                                <div class="col-6 offset-5 mb-1">
                                                     <%= center.districtArabic%>, <%= center.governorateArabic%>
                                                 </div>
                                             </div>
+                                            <div class="row d-flex align-items-center">
+
+                                                <div class="col-5">
+                                                    <p class="starability-result" data-rating="<%=Math.round(center.avgRating) %>">
+                                                    </p>
+                                                </div>
+                                                <div class="col-4 offset-2">
+                                                    <%= center.nameArabic %>
+                                                </div>
+                                            </div>
+
                                         </a>
                                         <hr>
                                     </li>
@@ -256,7 +262,7 @@
 
         <!-- Optional JavaScript; choose one of the two! -->
 
-
+        <%- include('partials/footer.ejs') %>
     </div>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>

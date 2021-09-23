@@ -42,15 +42,8 @@
                                         <span class="card-text rating mt-1">location</span>
                                     </div>
                                     <div class="col-6 offset-2 star">
-                                        <p class="starability-result" data-rating="3"></p>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-3">
-                                        <span class="card-text rating mt-1">Speed</span>
-                                    </div>
-                                    <div class="col-6 offset-2 star">
-                                        <p class="starability-result" data-rating="3"></p>
+                                        <p class="starability-result"
+                                            data-rating="<%=  Math.round(center.avgLocation) %>"></p>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -58,15 +51,28 @@
                                         <span class="card-text rating mt-1">Service</span>
                                     </div>
                                     <div class="col-6 offset-2 star">
-                                        <p class="starability-result" data-rating="3"></p>
+                                        <p class="starability-result"
+                                            data-rating="<%= Math.round(center.avgService) %>"></p>
                                     </div>
                                 </div>
+
+
                                 <div class="row mt-2">
                                     <div class="col-3">
                                         <span class="card-text rating mt-1">Cleaniness</span>
                                     </div>
                                     <div class="col-6 offset-2 star">
-                                        <p class="starability-result" data-rating="3"></p>
+                                        <p class="starability-result" data-rating="<%=  Math.round(center.avgClean) %>">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-3">
+                                        <span class="card-text rating mt-1">Speed</span>
+                                    </div>
+                                    <div class="col-6 offset-2 star">
+                                        <p class="starability-result" data-rating="<%=  Math.round(center.avgSpeed) %>">
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -238,15 +244,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
+
                                 <div class="col-6 offset-3 d-flex justify-content-center">
-                                    <%if(user && user.type === 'notVaccinated' ){%>
-                                    <button class="btn btn-primary" id='review'>Write a Review</button>
-                                    <% } else { %>
-                                    <span class="text-danger text-center">you are not eligible to write a review or you are not signed in</span>
-                                    <% } %> 
+
+                                    <%if(user && !(userType==='notVaccinated' ) ){%>
+                                        <button class="btn btn-primary" id='review'>Write a Review</button>
+                                        <% } else { %>
+                                            <span class="text-danger text-center">you are not eligible to write a review
+                                                or you are not signed in</span>
+                                            <% } %>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="overflow-auto">
@@ -274,7 +282,33 @@
                                                     onclick="document.querySelector('.h<%=review._id%>').style.display = 'block'"
                                                     type="button">Edit </button>
                                             </div>
-                                            <% } %>
+                                            <% } else { if (user) {%>
+                                                <div class="col-4 ml-auto mt-1">
+                                                    <button class="btn btn-sm btn-warning"
+                                                        onclick="display('h/<%=center._id%>/<%= review._id %>')">Report</button>
+                                                    <form action="/<%=center._id%>/<%= review._id %>/reportReview"
+                                                        method="post" style="display: none;"
+                                                        id="h/<%=center._id%>/<%= review._id %>">
+                                                        <div class="form-group">
+                                                            <label for="reportReview<%= review._id %>">Report</label>
+                                                            <select id="reportReview<%= review._id %>"
+                                                                class="form-control" name="reportReview">
+                                                                <option value="spam">
+                                                                    Spam
+                                                                </option>
+                                                                <option value="harassment">
+                                                                    Harassment
+                                                                </option>
+                                                                <option value="inappropriate">
+                                                                    Inappropriate
+                                                                </option>
+                                                            </select>
+                                                            <button class="btn btn-sm btn-warning">Submit</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                                <%} } %>
                                     </div>
                                     <% if(user==review.author_id) { %>
 
@@ -291,7 +325,7 @@
                                                 <div class="col-2 ml-auto">
                                                     <button class="btn btn-outline-danger"
                                                         id='close_edit_<%=review._id%>' type="button" onclick="document.querySelector('.h<%=review._id%>')
-                                                            .style.display = 'none'">&#10060</button>
+                                                        .style.display = 'none'">&#10060</button>
                                                 </div>
 
 
@@ -335,37 +369,39 @@
                                             <div class="mb-3 row">
                                                 <div class="col-8 offset-2 d-flex justify-content-center">
                                                     <fieldset class="starability-basic">
-                                                        <h2 class="label ml-5">Speed</h2>
-                                                        <input type="radio" class="input-no-rate" name="review[speed]"
-                                                            value="1" aria-label="No rating." required />
-                                                        <input type="radio" id="<%=review._id%>-speed1"
-                                                            name="review[speed]" value="1" required
-                                                            <%=(review.speed===1)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-speed1" title="Terrible">1
+                                                        <h2 class="label ml-5">Service</h2>
+                                                        <input type="radio" class="input-no-rate" name="review[Service]"
+                                                            value="1" aria-label="No rating." />
+                                                        <input type="radio" id="<%=review._id%>-service1"
+                                                            name="review[service]" value="1"
+                                                            <%=(review.service===1)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-service1" title="Terrible">1
                                                             star</label>
-                                                        <input type="radio" id="<%=review._id%>-speed2"
-                                                            name="review[speed]" value="2" required
-                                                            <%=(review.speed===2)? 'checked' : '' %>/>
-                                                        <label for="<%=review._id%>-speed2" title="Not good">2
+                                                        <input type="radio" id="<%=review._id%>-service2"
+                                                            name="review[service]" value="2"
+                                                            <%=(review.service===2)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-service2" title="Not good">2
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-speed3"
-                                                            name="review[speed]" value="3" required
-                                                            <%=(review.speed===3)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-speed3" title="Average">3
+                                                        <input type="radio" id="<%=review._id%>-service3"
+                                                            name="review[service]" value="3"
+                                                            <%=(review.service===3)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-service3" title="Average">3
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-speed4"
-                                                            name="review[speed]" value="4" required
-                                                            <%=(review.speed===4)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-speed4" title="Very good">4
+                                                        <input type="radio" id="<%=review._id%>-service4"
+                                                            name="review[service]" value="4"
+                                                            <%=(review.service===4)? 'checked' : '' %>/>
+                                                        <label for="<%=review._id%>-service4" title="Very good">4
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-speed5"
-                                                            name="review[speed]" value="5" required
-                                                            <%=(review.speed===5)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-speed5" title="Amazing">5
+                                                        <input type="radio" id="<%=review._id%>-service5"
+                                                            name="review[service]" value="5"
+                                                            <%=(review.service===5)? 'checked' : '' %>/>
+                                                        <label for="<%=review._id%>-service5" title="Amazing">5
                                                             stars</label>
                                                     </fieldset>
                                                 </div>
                                             </div>
+
+                                            
                                             <div class="mb-3 row">
                                                 <div class="col-8 offset-2 d-flex justify-content-center">
                                                     <fieldset class="starability-basic">
@@ -403,38 +439,38 @@
                                             <div class="mb-3 row">
                                                 <div class="col-8 offset-2 d-flex justify-content-center">
                                                     <fieldset class="starability-basic">
-                                                        <h2 class="label ml-5">Service</h2>
-                                                        <input type="radio" class="input-no-rate" name="review[Service]"
-                                                            value="1" aria-label="No rating." />
-                                                        <input type="radio" id="<%=review._id%>-service1"
-                                                            name="review[service]" value="1"
-                                                            <%=(review.service===1)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-service1" title="Terrible">1
+                                                        <h2 class="label ml-5">Speed</h2>
+                                                        <input type="radio" class="input-no-rate" name="review[speed]"
+                                                            value="1" aria-label="No rating." required />
+                                                        <input type="radio" id="<%=review._id%>-speed1"
+                                                            name="review[speed]" value="1" required
+                                                            <%=(review.speed===1)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-speed1" title="Terrible">1
                                                             star</label>
-                                                        <input type="radio" id="<%=review._id%>-service2"
-                                                            name="review[service]" value="2"
-                                                            <%=(review.service===2)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-service2" title="Not good">2
+                                                        <input type="radio" id="<%=review._id%>-speed2"
+                                                            name="review[speed]" value="2" required
+                                                            <%=(review.speed===2)? 'checked' : '' %>/>
+                                                        <label for="<%=review._id%>-speed2" title="Not good">2
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-service3"
-                                                            name="review[service]" value="3"
-                                                            <%=(review.service===3)? 'checked' : '' %> />
-                                                        <label for="<%=review._id%>-service3" title="Average">3
+                                                        <input type="radio" id="<%=review._id%>-speed3"
+                                                            name="review[speed]" value="3" required
+                                                            <%=(review.speed===3)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-speed3" title="Average">3
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-service4"
-                                                            name="review[service]" value="4"
-                                                            <%=(review.service===4)? 'checked' : '' %>/>
-                                                        <label for="<%=review._id%>-service4" title="Very good">4
+                                                        <input type="radio" id="<%=review._id%>-speed4"
+                                                            name="review[speed]" value="4" required
+                                                            <%=(review.speed===4)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-speed4" title="Very good">4
                                                             stars</label>
-                                                        <input type="radio" id="<%=review._id%>-service5"
-                                                            name="review[service]" value="5"
-                                                            <%=(review.service===5)? 'checked' : '' %>/>
-                                                        <label for="<%=review._id%>-service5" title="Amazing">5
+                                                        <input type="radio" id="<%=review._id%>-speed5"
+                                                            name="review[speed]" value="5" required
+                                                            <%=(review.speed===5)? 'checked' : '' %> />
+                                                        <label for="<%=review._id%>-speed5" title="Amazing">5
                                                             stars</label>
                                                     </fieldset>
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="mb-3">
                                                 <label class="form-label" for="body">Review</label>
                                                 <textarea class="form-control" name="review[body]"
@@ -464,19 +500,17 @@
                         <!-- <div class="card-body"> -->
                         <div class="row mb-3">
                             <div class="col-10 offset-1 justify-content-center d-flex">
-                                <% if(!user) { %>
-                                    <p id="errorLogin" style="display: none;">
-                                        You must login first
-                                    </p>
-                                    <button class="btn btn btn-primary" onclick="addQuestionError()">Add
+
+                                <% if(user) { %>
+                                    <button class="btn btn-primary" onclick="addQuestion()" id="addQuestionButton">Add
                                         Question
                                     </button>
-                                    <%} else { %>
-                                        <button class="btn btn-primary" onclick="addQuestion()"
-                                            id="addQuestionButton">Add
-                                            Question
-                                        </button>
-                                        <%}%>
+                                    <% } else { %>
+                                        <span class="text-danger text-center">you are not signed in to ask a question
+                                            Please sign in first
+                                        </span>
+                                        <% } %>
+
 
                                             <div id="question" style="display: none; width: 100%;">
                                                 <form action="/<%=center._id%>/addQuestion" method="POST"
@@ -505,39 +539,72 @@
                                     <div class="col-8">
                                         <p class="card-text question" id="questionDisplay<%q._id%>">
                                             Q: <%=q.question%>
+
                                         </p>
                                     </div>
-                                    <% if(user==q.author_id) { %>
-                                        <div class="col-2">
-                                            <form action="/<%=center._id%>/<%=q._id%>?_method=DELETE" method="POST">
-                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                        <div class="col-2">
-                                            <button class="btn btn-sm btn-primary" id="buttonQuestion<%= q._id%>"
-                                                onclick="showFormQuestion('<%= q._id %>')">Edit </button>
-                                        </div>
-                                        <%} else {%>
-                                            <% if(user && userType !=="notVaccinated" ) { %>
-                                                <div class="col-4">
-                                                    <button class="btn btn-sm btn-success"
-                                                        id="buttonQuestion<%= q._id%>" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
-                                                .style.display = 'block' ">Add answer </button>
+
+                                    <%if( user && !(user==q.author_id)){%>
+                                        <div class="col-3">
+
+                                            <button class='btn-sm btn-warning'
+                                                onclick="display('h/<%=center._id%>/<%= q._id %>/reportQuestion')">Report</button>
+                                            <form action="/<%=center._id%>/<%= q._id %>/reportQuestion" method="post"
+                                                id='h/<%=center._id%>/<%= q._id %>/reportQuestion'
+                                                style="display: none;">
+                                                <div class="form-group">
+                                                    <label for="reportQuestion<%= q._id %>">Report</label>
+                                                    <select id="reportQuestion<%= q._id %>" class="form-control"
+                                                        name="reportQuestion">
+                                                        <option value="spam">
+                                                            Spam
+                                                        </option>
+                                                        <option value="harassment">
+                                                            Harassment
+                                                        </option>
+                                                        <option value="inappropriate">
+                                                            Inappropriate
+                                                        </option>
+                                                    </select>
                                                 </div>
-                                                <% } %>
-                                                    <% } %>
+                                                <button class="btn btn-sm btn-warning">Submit</button>
+                                            </form>
+
+                                        </div>
+                                        <%}%>
+                                            <% if(user==q.author_id) { %>
+                                                <div class="col-2">
+                                                    <form action="/<%=center._id%>/<%=q._id%>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn-sm btn-primary"
+                                                        id="buttonQuestion<%= q._id%>"
+                                                        onclick="display('<%= q._id %>')">Edit </button>
+                                                </div>
+                                                <%} else {%>
+                                                    <% if(user && userType !=="notVaccinated" ) { %>
+                                                        <div class="col-4">
+                                                            <button class="btn btn-sm btn-success"
+                                                                id="buttonQuestion<%= q._id%>"
+                                                                onclick="display('h/<%=center._id%>/<%=q._id%>')">
+                                                                Answer </button>
+                                                        </div>
+                                                        <% } %>
+                                                            <% } %>
                                 </div>
                                 <div class="row">
                                     <div class="col-8 offset-2">
                                         <form action="/<%=center._id%>/<%=q._id%>?_method=PUT" method="POST"
-                                            class="mb-3" id=<%=q._id%> style="display:
-                                            none;" >
-                                            <div class="mb-3">
+                                            class="mb-3" id=<%=q._id%> style="display: none;" >
+                                            <div class="mb-3 justify-content-center">
                                                 <label class="form-label">Edit your question</label>
                                                 <textarea class="form-control" cols="30" rows="3"
                                                     name="question[question]"><%=q.question %></textarea>
+                                                <button class="btn-sm btn-success mt-2">Save</button>
                                             </div>
-                                            <button class="btn btn-success">Save</button>
+
                                         </form>
                                     </div>
                                 </div>
@@ -550,14 +617,11 @@
                                             <div class="col-6">
                                                 <label class="form-label" for="answerBody">Add Answer</label>
                                             </div>
-                                            <div class="col-3 ml-auto">
-                                                <span class="btn btn-outline-danger" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
-                                        .style.display = 'none'">x</span>
-                                            </div>
+
                                         </div>
                                         <textarea class="form-control" id="answerBody" name="answer[answer]" cols="30"
                                             rows="3"></textarea>
-                                        <button class="btn btn-success">ADD</button>
+                                        <button class="btn btn-success">Add</button>
                                     </form>
                                     <%}%>
                                         <div class="row bg-secondary py-2 answer-round">
@@ -605,7 +669,42 @@
                                                                     </div>
                                                                     <button class="btn btn-success">Save</button>
                                                                 </form>
-                                                                <%}%>
+                                                                <%} else { if (user) {%>
+                                                                    <div class="col-4">
+                                                                        <button class="btn btn-sm btn-warning ml-auto"
+                                                                            onclick="display('h/<%=center._id%>/<%= a._id %>')">Report</button>
+                                                                        <form
+                                                                            action="/<%=center._id%>/<%= a._id %>/reportAnswer"
+                                                                            method="post" style="display: none;"
+                                                                            id="h/<%=center._id%>/<%= a._id %>">
+                                                                            <div class="form-group">
+                                                                                <di class="row">
+                                                                                    <div class="col-6">
+                                                                                        <label
+                                                                                            for="reportReview<%= a._id %>">Report</label>
+                                                                                    </div>
+
+                                                                                </di>
+                                                                                <select id="reportReview<%= a._id %>"
+                                                                                    class="form-control d-inline"
+                                                                                    name="reportAnswer">
+                                                                                    <option value="spam">
+                                                                                        Spam
+                                                                                    </option>
+                                                                                    <option value="harassment">
+                                                                                        Harassment
+                                                                                    </option>
+                                                                                    <option value="inappropriate">
+                                                                                        Inappropriate
+                                                                                    </option>
+                                                                                </select>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-warning">Submit</button>
+                                                                            </div>
+
+                                                                        </form>
+                                                                    </div>
+                                                                    <% } } %>
                                                         </div>
                                                         <%}%>
                                         </div>
@@ -619,7 +718,26 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            function display(id) {
+                const reviewId = id;
+                if (document.getElementById(reviewId).style.display === "none") {
+                    document.getElementById(reviewId).style.display = "block";
+                    event.srcElement.classList.add(event.srcElement.innerText)
+                    event.srcElement.innerHTML = 'Close'
 
+                    event.srcElement.classList.add('btn-danger')
+                    // event.srcElement.style.backgroundColor = 'red'
+                    console.log(event.srcElement.classList)
+                }
+                else {
+                    document.getElementById(reviewId).style.display = "none";
+                    event.srcElement.classList.remove('btn-danger')
+                    console.log(event.srcElement.classList[event.srcElement.classList.length - 1])
+                    event.srcElement.innerHTML = event.srcElement.classList[event.srcElement.classList.length - 1];
+                }
+            }
+        </script>
 
         <!-- <script type="text/javascript">
                     function showForm(id) {

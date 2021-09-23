@@ -1,48 +1,83 @@
+<title>about</title>
+<!-- <link rel="stylesheet" href="/CSS/owl.carousel.min.css">
+    <link rel="stylesheet" href="/CSS/owl.theme.default.min.css"> -->
 
-    
-    <% layout('layouts/boilerplate_track.ejs') %>
+<link rel="stylesheet" href="/CSS/about.css">
+<% layout('layouts/boilerplate.ejs') %>
     <%- include('partials/navBar_nocenter.ejs') %>
-    <div id="white" class="container px-1 m-2">
-        <div class="row ml-3 mt-4">
-            <div class="col-5 p-2">
-                <h1 class="display-5" id="Header">What is TRACK VAC?</h1>
-                
-            </div>
-            <div class="col-2 p-2 offset-4">
-                <label for="language"></label>
-                <select name="language" id="language">
-                    <option value="" selected disabled hidden>Language</option>
-                    <option value="ar">Arabic</option>
-                    <option value="en">English</option>
 
-                </select>
-            </div>
-        </div>
-        <div class="row ml-3 mt-3">
-            <div class="col-6 p-2 offset-1">
-                <p id='description'>Track vac is a website dedicated for you to find the best choice of vaccination
-                    centers , showing real experiences from vaccinated people That their reviews are highly appretiated.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-7 p-2">
-                <hr class='line'>
-            </div>
-        </div>
-        <br>
-        <br>
-        <div class="row mt-5">
-            <div class='col-1 offset-4'>
-                <img src="/img/Shape.png" alt="" class='location'>
-            </div>
-            <div class="col-6 align-items-center ml-2">
+        <!-- <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" /> -->
 
-                <p id='Slogan' class="mt-2"> The Best For You,<br>
-                    <span> Showed For You.</span>
-                </p>
-            </div>
-        </div>
 
-    </div>
-    
+        <div class=" px-1 m-2"
+            style="max-width: 100%; margin: 0px !important; padding: 0px !important;background-color: rgba(255, 255, 255, 0.3);">
+            <div id="white" class="px-1 m-2">
+                <img class="track" src="img/track.png">
+                <br>
+                <br>
+
+                <div class="row ml-2 mt-5 py-3 mr-3">
+                    <div class="col-md-8 col-sm-11">
+                        <h1 class="display-4" id="Header">What is TRACK VAC?</h1>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 offset-1 w-75">
+                        <a class="menu text btn" id="Starttracking" style="z-index: 2;" href="about/team">know More about us
+                        </a>
+
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-sm-11 col-md-9 col-lg-7 p-2" id='description'>
+                        <br>
+                        <ul>
+                            <li class="who"> “Track-Vac” is a website, which will contain all
+                                the
+                                necessary information about how to receive the
+                                vaccine locally.
+                            </li>
+                            <li class="who">“Track-Vac” will enable local community members
+                                to exchange and share their experience to help in
+                                the fight against the pandemic spread.
+
+                            </li>
+                        </ul>
+                        <div class="col-6 p-2">
+                            <hr class='line'>
+                        </div>
+                        <h3 class="aim">Our Aim is to raise the awareness of the local
+                            community about COVID-19 vaccination process.</h3>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+                <br>
+                <div class="row mt-5 mb-3">
+                    <div class='col-3 offset-2 d-flex justify-content-end align-items-center'>
+                        <img src="/img/Shape.png" alt="" class='location'"> 
+                    </div>
+                    <div class="col-lg-6 col-sm-10 d-flex align-items-center justify-content-start">
+
+                        <p id='Slogan' class="mt-auto mb-auto"> The Best For You,<br>
+                            <span> Showed For You.</span>
+                        </p>
+                    </div>
+                </div>
+            
+
+
+      
+
+        <%- include('partials/footer.ejs') %>
+            <!--<div>
+       
+    </div> -->
+
+            <script src="/node_modules/jquery/dist/jquery.js"></script>
+            <!-- <script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script> -->
+
+            <script src="javaScripts/jquery.js"></script>
+            <!-- <script src="javaScrips/owl.carousel.min.js"></script> -->
+            <script src="javaScripts/main.js"></script>
+            <script src="javaScripts/jquery.inview.min.js"></script>
