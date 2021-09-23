@@ -364,7 +364,7 @@ app.get('/admin/home', adminIsLoggedIn, async (req, res) => {
     res.render('adminhome', { reviewReports, answerReports, questionReports });
 })
 
-app.get('/admin/addadmin', adminIsLoggedIn, (req, res) => {
+app.get('/admin/addadmin',adminIsLoggedIn,  (req, res) => {
     res.render('addadmin');
 })
 

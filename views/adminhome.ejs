@@ -1,31 +1,34 @@
 <% layout('layouts/boilerplate_track.ejs') %>
-    <%- include('partials/navbar_admin.ejs') %>
-        <div class="container position-absolute">
-            <h1>Welcome</h1>
+ <%- include('partials/navbar_admin.ejs') %> 
+ <link rel="stylesheet" href="/css/adminhome.css">
+    <div class="container position-absolute" >
+        <h1>Welcome</h1>
+      
+                <div class="container">
+                    <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
+                        Reports</button>
+                    <div id="reviewReportDisplay" style="display:none">
+                        <% for(let review of reviewReports) { %>
+                            <div class="container">
+                                <%= review.type %> <br>
+                                    <%= review.review_id.body %>
+                                        <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
+                                            method="post">
+                                            <button class="btn btn-sm btn-danger">Reject
+                                                Report</button>
+                                        </form>
+                                        <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
+                                            method="POST">
+                                            <button class="btn btn-sm btn-info">Accept
+                                                Report</button>
+                                        </form>
+                            </div>
 
-            <div class="container">
-                <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
-                    Reports</button>
-                <div id="reviewReportDisplay" style="display:none">
-                    <% for(let review of reviewReports) { %>
-                        <div class="container">
-                            <%= review.type %> <br>
-                                <%= review.review_id.body %>
-                                    <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
-                                        method="post">
-                                        <button class="btn btn-sm btn-danger">Reject
-                                            Report</button>
-                                    </form>
-                                    <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
-                                        method="POST">
-                                        <button class="btn btn-sm btn-info">Accept
-                                            Report</button>
-                                    </form>
-                        </div>
-
-                        <% } %>
+                            <% } %>
 
 
+
+                    </div>
 
                 </div>
 
