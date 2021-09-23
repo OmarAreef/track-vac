@@ -97,7 +97,9 @@ app.get('/faq', (req, res) => {
     res.render('faq');
 })
 
-
+app.get('/code/html' , (req,res) => {
+    res.render('esm el page beta3tek')
+})
 
 
 app.get('/', catchAsync(async (req, res) => {
