@@ -1,11 +1,13 @@
 <% layout('layouts/boilerplate_track.ejs') %>
  <%- include('partials/navbar_admin.ejs') %> 
+
  <link rel="stylesheet" href="/css/adminhome.css">
     <div class="container position-absolute" >
+
         <h1>Welcome</h1>
       
                 <div class="container">
-                    <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()">Show Review
+                    <button class="btn btn-sm btn-info" id="reviews" onclick="showReviews()" style="margin-bottom: 30px;">Show Review
                         Reports</button>
                     <div id="reviewReportDisplay" style="display:none">
                         <% for(let review of reviewReports) { %>
