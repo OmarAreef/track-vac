@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark d-absolute" style="background-color: #050939;">
+<nav class="navbar navbar-expand-lg navbar-dark d-absolute" style="background-color: #050939; padding-bottom: 0px; margin: 0px;">
     <div class="container-fluid">
         <ul>
             <a class="navbar-brand" href='/admin/home'><img src="/img/LOGO (3) 1.png" alt="logo"></a>
@@ -9,7 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                
+
                 <li class="nav-item">
 
                     <a class="nav-link mr-2" type="button" href="/admin/resetpassword"
@@ -23,10 +23,23 @@
 
                 </li>
                 <li class="nav-item">
+
+                    <a class="nav-link mr-2" type="button" href="/admin/allreviews"
+                        style="font-family: Roboto;font-weight:bold; color: white; ">
+                      All Centers</a>
+
+                </li>
+                <li class="nav-item">
+
+                    <a class="nav-link mr-2" type="button" href="/admin/allreviews"
+                        style="font-family: Roboto;font-weight:bold; color: white; ">
+                        All Centers</a>
+
+                </li>
+                <li class="nav-item">
                     <% if (admin.role==='Admin' ){ %>
-                        <a style="font-family: Roboto; font-weight: bold; color: white;" 
-                        class='nav-link  mr-5 '
-                        href="/admin/addadmin">Add Admin</a>
+                        <a style="font-family: Roboto; font-weight: bold; color: white;" class='nav-link  mr-5 '
+                            href="/admin/addadmin">Add Admin</a>
                         <% }%>
                 </li>
                 <li class="nav-item">
