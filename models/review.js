@@ -19,5 +19,8 @@ const reviewSchema = new Schema({
     }
 
 });
+reviewSchema.virtual('averageRating').get(function() {
+    return ((this.location + this.clean + this.service + this.speed)/4); 
+})
 
 module.exports = mongoose.model("Review", reviewSchema);
