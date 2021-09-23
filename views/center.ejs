@@ -279,7 +279,7 @@
                                             <% } else { if (user) {%>
                                                 <div class="col-4 ml-auto mt-1">
                                                     <button class="btn btn-sm btn-warning"
-                                                        onclick="document.getElementById('h/<%=center._id%>/<%= review._id %>').style.display='block'">Report</button>
+                                                        onclick="display('h/<%=center._id%>/<%= review._id %>')">Report</button>
                                                     <form action="/<%=center._id%>/<%= review._id %>/reportReview"
                                                         method="post" style="display: none;"
                                                         id="h/<%=center._id%>/<%= review._id %>">
@@ -297,8 +297,9 @@
                                                                     Inappropriate
                                                                 </option>
                                                             </select>
+                                                            <button class="btn btn-sm btn-warning">Submit</button>
                                                         </div>
-                                                        <button class="btn btn-sm btn-warning">Submit</button>
+
                                                     </form>
                                                 </div>
                                                 <%} } %>
@@ -318,7 +319,7 @@
                                                 <div class="col-2 ml-auto">
                                                     <button class="btn btn-outline-danger"
                                                         id='close_edit_<%=review._id%>' type="button" onclick="document.querySelector('.h<%=review._id%>')
-                                                            .style.display = 'none'">&#10060</button>
+                                                        .style.display = 'none'">&#10060</button>
                                                 </div>
 
 
@@ -491,20 +492,18 @@
                         <!-- <div class="card-body"> -->
                         <div class="row mb-3">
                             <div class="col-10 offset-1 justify-content-center d-flex">
-                                <% if(!user) { %>
-                                    <p id="errorLogin" style="display: none;">
-                                        You must login first
-                                    </p>
-                                    <button class="btn btn btn-primary" onclick="addQuestionError()">Add
+
+                                <% if(user) { %>
+                                    <button class="btn btn-primary" onclick="addQuestion()" id="addQuestionButton">Add
                                         Question
                                     </button>
-                                    <%} else { %>
-                                        <button class="btn btn-primary" onclick="addQuestion()"
-                                            id="addQuestionButton">Add
-                                            Question
-                                        </button>
-                                        <%}%>
+                                    <% } else { %>
+                                        <span class="text-danger text-center">you are not signed in to ask a question
+                                            Please sign in first
+                                        </span>
+                                        <% } %>
 
+                                       
                                             <div id="question" style="display: none; width: 100%;">
                                                 <form action="/<%=center._id%>/addQuestion" method="POST"
                                                     class="w-100 ">
@@ -521,7 +520,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-
+                                          
                             </div>
                         </div>
                         <!-- </div> -->
@@ -542,14 +541,15 @@
                                         </div>
                                         <div class="col-2">
                                             <button class="btn btn-sm btn-primary" id="buttonQuestion<%= q._id%>"
-                                                onclick="showFormQuestion('<%= q._id %>')">Edit </button>
+                                                onclick="display('<%= q._id %>')">Edit </button>
                                         </div>
                                         <%} else {%>
                                             <% if(user && userType !=="notVaccinated" ) { %>
                                                 <div class="col-4">
                                                     <button class="btn btn-sm btn-success"
-                                                        id="buttonQuestion<%= q._id%>" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
-                                                .style.display = 'block' ">Add answer </button>
+                                                        id="buttonQuestion<%= q._id%>"
+                                                        onclick="display('h/<%=center._id%>/<%=q._id%>')">
+                                                        Answer </button>
                                                 </div>
                                                 <% } %>
                                                     <% } %>
@@ -557,14 +557,14 @@
                                 <div class="row">
                                     <div class="col-8 offset-2">
                                         <form action="/<%=center._id%>/<%=q._id%>?_method=PUT" method="POST"
-                                            class="mb-3" id=<%=q._id%> style="display:
-                                            none;" >
-                                            <div class="mb-3">
+                                            class="mb-3" id=<%=q._id%> style="display: none;" >
+                                            <div class="mb-3 justify-content-center">
                                                 <label class="form-label">Edit your question</label>
                                                 <textarea class="form-control" cols="30" rows="3"
                                                     name="question[question]"><%=q.question %></textarea>
+                                                <button class="btn-sm btn-success mt-2">Save</button>
                                             </div>
-                                            <button class="btn btn-success">Save</button>
+
                                         </form>
                                     </div>
                                 </div>
@@ -577,14 +577,11 @@
                                             <div class="col-6">
                                                 <label class="form-label" for="answerBody">Add Answer</label>
                                             </div>
-                                            <div class="col-3 ml-auto">
-                                                <span class="btn btn-outline-danger" onclick="document.getElementById('h/<%=center._id%>/<%=q._id%>')
-                                        .style.display = 'none'">x</span>
-                                            </div>
+
                                         </div>
                                         <textarea class="form-control" id="answerBody" name="answer[answer]" cols="30"
                                             rows="3"></textarea>
-                                        <button class="btn btn-success">ADD</button>
+                                        <button class="btn btn-success">Add</button>
                                     </form>
                                     <%}%>
                                         <div class="row bg-secondary py-2 answer-round">
@@ -635,22 +632,18 @@
                                                                 <%} else { if (user) {%>
                                                                     <div class="col-4">
                                                                         <button class="btn btn-sm btn-warning ml-auto"
-                                                                            onclick="document.getElementById('h/<%=center._id%>/<%= a._id %>').style.display='block'">Report</button>
+                                                                            onclick="display('h/<%=center._id%>/<%= a._id %>')">Report</button>
                                                                         <form
                                                                             action="/<%=center._id%>/<%= a._id %>/reportAnswer"
                                                                             method="post" style="display: none;"
                                                                             id="h/<%=center._id%>/<%= a._id %>">
                                                                             <div class="form-group">
                                                                                 <di class="row">
-                                                                                    <div class="col-5">
+                                                                                    <div class="col-6">
                                                                                         <label
                                                                                             for="reportReview<%= a._id %>">Report</label>
                                                                                     </div>
-                                                                                    <div class="col-5"><button
-                                                                                            class="btn btn-sm btn-outline-danger"
-                                                                                            type="button"
-                                                                                            onclick="document.getElementById('h/<%=center._id%>/<%= a._id %>').style.display='none'">X
-                                                                                        </button></div>
+
                                                                                 </di>
                                                                                 <select id="reportReview<%= a._id %>"
                                                                                     class="form-control d-inline"
@@ -665,9 +658,10 @@
                                                                                         Inappropriate
                                                                                     </option>
                                                                                 </select>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-warning">Submit</button>
                                                                             </div>
-                                                                            <button
-                                                                                class="btn btn-sm btn-warning">Submit</button>
+
                                                                         </form>
                                                                     </div>
                                                                     <% } } %>
@@ -684,7 +678,26 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            function display(id) {
+                const reviewId = id;
+                if (document.getElementById(reviewId).style.display === "none") {
+                    document.getElementById(reviewId).style.display = "block";
+                    event.srcElement.classList.add(event.srcElement.innerText)
+                    event.srcElement.innerHTML = 'Close'
 
+                    event.srcElement.classList.add('btn-danger')
+                    // event.srcElement.style.backgroundColor = 'red'
+                    console.log(event.srcElement.classList)
+                }
+                else {
+                    document.getElementById(reviewId).style.display = "none";
+                    event.srcElement.classList.remove('btn-danger')
+                    console.log(event.srcElement.classList[event.srcElement.classList.length - 1])
+                    event.srcElement.innerHTML = event.srcElement.classList[event.srcElement.classList.length - 1];
+                }
+            }
+        </script>
 
         <!-- <script type="text/javascript">
                     function showForm(id) {
