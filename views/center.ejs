@@ -240,12 +240,8 @@
                             <div class="row">
 
                                 <div class="col-6 offset-3 d-flex justify-content-center">
-<<<<<<< HEAD
 
                                     <%if(user && !(userType==='notVaccinated' ) ){%>
-=======
-                                    <%if(user && user.Type !=='notVaccinated' ){%>
->>>>>>> d807f950eef7d94c4d819ebb76afc425a5b844da
                                         <button class="btn btn-primary" id='review'>Write a Review</button>
                                         <% } else { %>
                                             <span class="text-danger text-center">you are not eligible to write a review
@@ -535,8 +531,36 @@
                                     <div class="col-8">
                                         <p class="card-text question" id="questionDisplay<%q._id%>">
                                             Q: <%=q.question%>
+                                            
                                         </p>
                                     </div>
+                                    
+                                    <%if( user && !(user == q.author_id)){%>
+                                    <div class="col-3">
+                                       
+                                            <button class='btn-sm btn-warning' onclick="display('h/<%=center._id%>/<%= q._id %>/reportQuestion')">Report</button>
+                                            <form action="/<%=center._id%>/<%= q._id %>/reportQuestion" method="post" 
+                                                id='h/<%=center._id%>/<%= q._id %>/reportQuestion' style="display: none;">
+                                                <div class="form-group">
+                                                    <label for="reportQuestion<%= q._id %>">Report</label>
+                                                    <select id="reportQuestion<%= q._id %>" class="form-control"
+                                                        name="reportQuestion">
+                                                        <option value="spam">
+                                                            Spam
+                                                        </option>
+                                                        <option value="harassment">
+                                                            Harassment
+                                                        </option>
+                                                        <option value="inappropriate">
+                                                            Inappropriate
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-sm btn-warning">Submit</button>
+                                            </form>
+                                            
+                                    </div>
+                                    <%}%>
                                     <% if(user==q.author_id) { %>
                                         <div class="col-2">
                                             <form action="/<%=center._id%>/<%=q._id%>?_method=DELETE" method="POST">
