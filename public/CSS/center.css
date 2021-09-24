@@ -3,6 +3,10 @@ h1,h2,h3,h4,h5 .name {
     font-weight: 700 !important;
     
 }
+ul {
+    list-style: none;
+    padding: 4px !important;
+}
 
 .location {
     font-family: roboto , 'sans-serif';

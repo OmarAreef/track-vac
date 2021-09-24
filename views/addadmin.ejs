@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate_track.ejs') %>
     <%- include('partials/navbar_admin.ejs') %>
-        <div class="container position-absolute">
+        <div class="container position-absolute" style="z-index: 99;">
             <h1>Add another Admin</h1>
             <form action="/admin/addadmin" method="POST" class="validated-form" novalidate>
                 <div class="mb-3">

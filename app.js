@@ -26,7 +26,7 @@ const center = require('./models/center');
 
 
 
-mongoose.connect('mongodb://localhost:27017/track-vac', {
+mongoose.connect('mongodb://localhost:27017/track-vac1', {
 }, err => {
     if (err) throw err;
     console.log('Connected to MongoDB!!!')
@@ -391,7 +391,7 @@ app.get('/admin/login', (req, res) => {
 app.get('/admin/home', adminIsLoggedIn, async (req, res) => {
     const reviewReports = await ReportReview.find().populate("review_id");
     const answerReports = await ReportAnswer.find().populate("answer_id");
-    const questionReports = await ReportAnswer.find().populate("question_id");
+    const questionReports = await ReportQuestion.find().populate("question_id");
     res.render('adminhome', { reviewReports, answerReports, questionReports });
 })
 

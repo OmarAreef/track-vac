@@ -10,7 +10,7 @@ const reportQuestionSchema = new Schema({
     ,
     question_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Answer'
+        ref: 'Question'
     }
 });
 
