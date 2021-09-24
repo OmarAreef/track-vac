@@ -17,21 +17,29 @@
 
                     </div>
                     <hr class="mx-2">
-                    <div class="row overflow-auto">
+                    <div class="container overflow-auto">
                         <% for(let review of reviewReports) { %>
-                            <div class="container">
-                                <%= review.type %> <br>
-                                    <%= review.review_id.body %>
-                                        <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
-                                            method="post">
-                                            <button class="btn btn-sm btn-danger">Reject
-                                                Report</button>
-                                        </form>
-                                        <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-info">Accept
-                                                Report</button>
-                                        </form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Type:</span>
+                                    <%= review.type %> <br>
+                                        <span>Review</span>
+                                        <%= review.review_id.body %>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/rejectReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/acceptReview/<%=review._id%>/<%= review.review_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                                </div>
                             </div>
 
                             <% } %>
@@ -49,21 +57,29 @@
 
                     </div>
                     <hr class="mx-2">
-                    <div class="row overflow-auto">
+                    <div class="container overflow-auto">
                         <% for(let answer of answerReports) { %>
-                            <div class="container">
-                                <%= answer.type %><br>
-                                    <%= answer.answer_id.answer %>
-                                        <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                            method="post">
-                                            <button class="btn btn-sm btn-danger">Reject
-                                                Report</button>
-                                        </form>
-                                        <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-info">Accept
-                                                Report</button>
-                                        </form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Type:</span>
+                                    <%= answer.type %><br>
+                                        <span>Answer:</span>
+                                        <%= answer.answer_id.answer %>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/rejectAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/acceptAnswer/<%=answer._id%>/<%= answer.answer_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                                </div>
                             </div>
 
                             <% } %>
@@ -80,22 +96,31 @@
 
                     </div>
                     <hr class="mx-2">
-                    <div class="row overflow-auto">
+                    <div class="container overflow-auto">
                         <% for(let question of questionReports) { %>
-                            <div class="container">
-                                <%= question.type %><br>
-                                    <%= question.question_id.question %>
-                                        <form action="/rejectQuestion/<%=question._id%>/<%= question.question_id._id %>"
-                                            method="post">
-                                            <button class="btn btn-sm btn-danger">Reject
-                                                Report</button>
-                                        </form>
-                                        <form action="/acceptQuestion/<%=question._id%>/<%= question.question_id._id %>"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-info">Accept
-                                                Report</button>
-                                        </form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Type</span>
+                                    <%= question.type %><br>
+                                        <span>Question</span>
+                                        <%= question.question_id.question %>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/rejectQuestion/<%=question._id%>/<%= question.question_id._id %>"
+                                        method="post">
+                                        <button class="btn btn-sm btn-danger">Reject
+                                            Report</button>
+                                    </form>
+                                </div>
+                                <div class="col-3">
+                                    <form action="/acceptQuestion/<%=question._id%>/<%= question.question_id._id %>"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-info">Accept
+                                            Report</button>
+                                    </form>
+                                </div>
                             </div>
+                            <hr class="mx-3">
 
                             <% } %>
                     </div>

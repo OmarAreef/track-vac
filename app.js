@@ -22,6 +22,7 @@ const LocalStrategy = require('passport-local');
 const Admin = require('./models/admin');
 const user = require('./models/user');
 const center = require('./models/center');
+const { findById } = require('./models/user');
 
 
 
@@ -295,6 +296,8 @@ app.delete('/admin/allreviews/:reviewId', adminIsLoggedIn, catchAsync(async (req
     console.log(review.center_id);
     await Center.findByIdAndUpdate(review.center_id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    const center = await Center.findById(review.center_id) 
+    center.save();
     res.redirect('/admin/allreviews');
 }));
 
@@ -510,8 +513,11 @@ app.post('/:id/:question/reportQuestion', catchAsync(async (req, res) => {
 
 app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
     const { review } = req.params;
+    const reviewe = await findById(review)
+    const center = await findById(reviewe.center_id)
     await Review.findByIdAndDelete(review);
     await ReportReview.deleteMany({ review_id: review });
+    center.save();
     res.redirect("/admin/home");
 }))
 
