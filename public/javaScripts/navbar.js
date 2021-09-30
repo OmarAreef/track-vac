@@ -4,14 +4,17 @@ let dictNav = {
         'button1': 'About us',
         'button2': 'FAQ',
         'button3': 'Sign in',
-        'button4': 'Log out'
-
+        'button4': 'Log out',
+        'REGnumber' : 'Registration Number' ,
+        'IDD' : 'Last 4 Digits From ID'
     },
     'ar': {
         'button1': 'معلومات عنا',
         'button2': 'س و ج',
         'button3': 'تسجيل الدخول',
-        'button4': 'تسجيل خروج'
+        'button4': 'تسجيل خروج',
+        'REGnumber' : 'رقم تسجيل وزارة الصحة' ,
+        'IDD' : 'اخر اربع ارقام من اليطاقة'
 
     }
 }

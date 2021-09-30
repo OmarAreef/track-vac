@@ -289,7 +289,7 @@
                                             <p class="starability-result"
                                                 data-rating="<%= Math.round((review.location +review.speed +review.service+ review.clean)/4) %>">
                                             </p>
-                                            <p class="card-text text-start">Review: <%= review.body %>
+                                            <p class="card-text text-start"> <span class="REv">Review:</span>  <%= review.body %>
                                             </p>
                                         </div>
                                         <% if(user==review.author_id) { %>
@@ -566,7 +566,7 @@
                                 <div class="row d-flex align-items-center mb-2 mt-2">
                                     <div class="col-8">
                                         <p class="card-text question text-start" id="questionDisplay<%q._id%>">
-                                            Q: <%=q.question%>
+                                           <span class="QUs"> Q:</span>  <%=q.question%>
 
                                         </p>
                                     </div>

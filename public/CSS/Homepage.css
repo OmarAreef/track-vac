@@ -149,6 +149,7 @@ margin-inline-start: 11vw ;
 max-height: fit-content !important;
 height: auto !important;
 width: 80%;
+z-index: 4;
 }
 #basic-addon1{
   /* transform: translate(30px,42px); */
@@ -323,10 +324,11 @@ h1 , h2 , h3 , h4 {
   background-size:scale-down ;
   background-position-x: right;
   background-position-y: bottom;
-  /* background-attachment: fixed; */
+  background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.377) 2.5%, rgba(255, 255, 255, 0) 112.38%);
+  box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
   background-attachment:fixed;
   min-height: 95vh;
-  /* padding: 1.5em; */
+  
 }
 .thumb{
   border-radius: 12px;

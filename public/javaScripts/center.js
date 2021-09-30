@@ -77,7 +77,9 @@ let dict = {
         'Answer': 'Answer',
         'Add': 'Add',
         'Answers': 'Answers',
-        'Delete': 'Delete'
+        'Delete': 'Delete' ,
+        'REv' : 'Review : ',
+        'QUs' : 'Question : '
     },
     'ar': {
         'Ratings': 'التقييمات',
@@ -109,7 +111,9 @@ let dict = {
         'AddAnswer': 'أضف اجابة',
         'Add': 'أضف',
         'Answers': 'الأجوبة',
-        'Delete': 'حذف'
+        'Delete': 'حذف' ,
+        'REv' : ' المراجعة : ',
+        'QUs' : 'السوال : '
     }
 }
 const dictLang = dict[language];

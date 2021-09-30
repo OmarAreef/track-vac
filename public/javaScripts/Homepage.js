@@ -3,12 +3,18 @@ window.addEventListener('load', vanish);
 function vanish() {
     loader.classList.add("disppear")
 }
-console.log(vacCenters)
+// console.log(vacCenters)
+
+// let allElemnets = document.querySelectorAll();'
+let point = [31,31]
+if (vacCenters && vacCenters.length){
+    point =  [vacCenters[0].longitude, vacCenters[0].latitude];
+}
 mapboxgl.accessToken = 'pk.eyJ1Ijoib21hci1hcmVmIiwiYSI6ImNrdGx3OXZvMDBoNGwydm4ydWVrb3d0bTMifQ._DEnKPltxE3MKSmFI0KBmg';
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [vacCenters[0].longitude, vacCenters[0].latitude],
+    center: point,
     zoom: 9
 });
 for (let center of vacCenters) {
@@ -22,8 +28,6 @@ for (let center of vacCenters) {
         .addTo(map);
 
 }
-// let allElemnets = document.querySelectorAll();
-
 let dict = {
     'en': {
         'EnglishL': 'English',
@@ -87,6 +91,7 @@ else {
     
 
 }
+
 
 
 // dictLang.forEach(element => {
