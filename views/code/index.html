@@ -6,8 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" id='lang-ar'
+        integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css">
+    <!-- <link id='lang-en' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link id='lang-en' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/CSS/owl.theme.default.min.css">
     <link rel="stylesheet" href="/CSS/owl.carousel.min.css">
     <link rel="stylesheet" href="/CSS/main.css">
@@ -24,7 +29,8 @@ justify-content: center;
 ">
 
     <a href="/about" style="position:absolute;margin-top: 50vh;transform: translateX(-45vw); width: 12vw;">
-        <img src="/img/white-down-arrow-png-2.png" class="img-fluid" style="transform: rotate(90deg);"></a>
+        <img src="/img/white-down-arrow-png-2.png" class="img-fluid"
+            style="transform: rotate(90deg); position: fixed;"></a>
 
     <div class=" container px-1 m-2 Team">
         <br>
@@ -32,30 +38,44 @@ justify-content: center;
         <div class="section animated-row">
             <div class="row justify-content-center">
                 <div class="col-md-8 wide-col-laptop">
-                    <a href="#"><img class="logo" src="/img/LOGO.png"
-                            style="position:sticky;transform: translateX(-11vw);"></a>
+                    <div class="row ms-3 d-flex align-items-center pe-2 mt-4 me-2" style="z-index: 2;">
+                        <div class="col-sm-5 col-md-4 col-6 " style="z-index: 2;">
+
+                            <a href='/'> <img id="logo" class="ms-n5 mt-n4 pb-4" src="/img/LOGO.png"
+                                    style="z-index: 2;"></img> </a>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 ms-auto" style="z-index: 2;">
+                            <div class="input-group mb-4 ">
+                                <select id="language" name="Language" style="z-index: 2;" class='form-control px-1'
+                                    value="Language" placeholder="Language">
+                                    <option value="en">English</option>
+                                    <option value="ar">Arabic</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class=" animate offset-3" data-animate="fadeInUp">
-                        <span class="welcoming">Welcome on board</span>
-                        <h2 class="s" style="color: white;">Meet the team!</h2>
+                        <span class="welcoming" id='welcoming'>Welcome on board</span>
+                        <h2 id="s" class="s" style="color: white;">Meet the team!</h2>
                     </div>
                     <div class="photos">
                         <div class="services-list owl-carousel">
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Mark.jpeg">
-                                    <p>Mark Wafik </p>
+                                    <p id="mark">Mark Wafik </p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Nawraz.jpeg">
-                                    <p>Nawraz Saeed </p>
+                                    <p id="nawraz">Nawraz Saeed </p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Omar.jpeg">
-                                    <p>Omar Ahmed</p>
+                                    <p id="omar">Omar Ahmed</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -63,14 +83,14 @@ justify-content: center;
 
                                     <img class="team" src="/img/Lina.jpg">
 
-                                    <p>Lina Emad</p>
+                                    <p id="lina">Lina Emad</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Amera salah.jpg">
 
-                                    <p>Amera Salah</p>
+                                    <p id="amera">Amera Salah</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -78,40 +98,40 @@ justify-content: center;
 
                                     <img class="team" src="/img/reem.jpeg">
 
-                                    <p>Reem Abdelrazek </p>
+                                    <p id="reem">Reem Abdelrazek </p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Salmateama.jpg">
-                                    <p>Salma Teama </p>
+                                    <p id="salmateama">Salma Teama </p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Ahmed tamer.jpg">
 
-                                    <p>Ahmed Tamer</p>
+                                    <p id="ahmedtamer">Ahmed Tamer</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Ahmed Samir.jpg">
-                                    <p>Ahmed Samir </p>
+                                    <p id="ahmedsamir">Ahmed Samir </p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Ahmedbelal.jpg">
-                                    <p> Ahmed Belal</p>
+                                    <p id="ahmedbelal"> Ahmed Belal</p>
                                 </div>
                             </div>
-                            
+
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
                                     <img class="team" src="/img/Aya Ahmed.jpg">
 
-                                    <p>Aya Ahmed</p>
+                                    <p id="aya">Aya Ahmed</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -119,7 +139,7 @@ justify-content: center;
 
                                     <img class="team" src="/img/Haidy.jpg">
 
-                                    <p>Haidy</p>
+                                    <p id="haidy">Haidy</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -127,16 +147,24 @@ justify-content: center;
 
                                     <img class="team" src="/img/khaled romeh.jpg">
 
-                                    <p>khaled Romeh</p>
+                                    <p id="khalid">khaled Romeh</p>
                                 </div>
                             </div>
-                            
+
                             <div class="item animate" data-animate="fadeInUp">
                                 <div class="box">
 
                                     <img class="team" src="/img/Yousefekilany.jpg">
 
-                                    <p>Yousef El kilany</p>
+                                    <p id="yousefelkilany">Yousef El kilany</p>
+                                </div>
+                            </div>
+                            <div class="item animate" data-animate="fadeInUp">
+                                <div class="box">
+
+                                    <img class="team" src="/img/markmalak.jpg">
+
+                                    <p id="markmalak">Mark Malak</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -144,7 +172,23 @@ justify-content: center;
 
                                     <img class="team" src="/img/Yousefmagdy.jpg">
 
-                                    <p>Yousef Magdy</p>
+                                    <p id="yousefmagdy">Yousef Magdy</p>
+                                </div>
+                            </div>
+                            <div class="item animate" data-animate="fadeInUp">
+                                <div class="box">
+
+                                    <img class="team" src="/img/salmasherif.jpg">
+
+                                    <p id="salmasherif">Salma Sherif</p>
+                                </div>
+                            </div>
+                            <div class="item animate" data-animate="fadeInUp">
+                                <div class="box">
+
+                                    <img class="team" src="/img/Lobna.jpeg">
+
+                                    <p id="lobna">Lobna</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -152,7 +196,7 @@ justify-content: center;
 
                                     <img class="team" src="/img/Tasneem Hazem.jpg">
 
-                                    <p>Tasneem Hazem</p>
+                                    <p id="tasneemhazem">Tasneem Hazem</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -160,7 +204,7 @@ justify-content: center;
 
                                     <img class="team" src="/img/Jomanawael.jpg">
 
-                                    <p>Jomana Wael</p>
+                                    <p id="jomanawael">Jomana Wael</p>
                                 </div>
                             </div>
                             <div class="item animate" data-animate="fadeInUp">
@@ -168,7 +212,7 @@ justify-content: center;
 
                                     <img class="team" src="/img/Aliamahmoud.jpg">
 
-                                    <p>Alia Mahmoud</p>
+                                    <p id="aliamahmoud">Alia Mahmoud</p>
                                 </div>
                             </div>
                         </div>
@@ -185,34 +229,59 @@ justify-content: center;
         <br>
         <br>
         <br>
-        <div class="row">
-            <div class="col-2 p-2 offset-3">
-                <img class="coor" src="/img/Dr Eman.jpg">
-                <p>Dr Eman</p>
-            </div>
-            <div class="col-2 p-2">
-                <img class="coor" src="/img/Dr Maggie.jpg">
-                <p>Dr Maggie</p>
-            </div>
-            <div class="col-2 p-2 ">
-                <img class="coor" src="/img/Ainshams.jpg">
-                <p>Rania Sweif</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="container px-1 m-2" style="max-width: 100%;">
-                <div class="row mt-5">
-                    <div class='col-1 offset-3'>
-                        <img src="/img/Shape.png" alt="" class='location' style="opacity: 20%;">
-                    </div>
-                    <div class="col-6 align-items-center ml-2">
-
-                        <p id='Slogan' class="mt-2"> The Best For You,<br>
-                            <span class="s"> Showed For You.</span>
-                        </p>
-                    </div>
+        <div class="row text-center pt-4 pb-3 justify-content-center">
+            <div class="p-2 col-sm-7 col-md-4">
+                <img class="coor img-fluid" src="/img/Dr Eman.jpg">
+                <div id="eman" class=" Professor">Dr. Eman Azab
+                    <br>
+                    <ul>
+                        <li> Assistant Professor at the German University in Cairo </li>
+                        <li>Faculty of Information Engineering & Technology </li>
+                        <li> IEEE Senior Member </li>
+                        <li> WIE Egypt Board Member</li>
+                    </ul>
                 </div>
             </div>
+            <div class="p-2 col-sm-7 col-md-4 ">
+                <img class="coor img-fluid" src="/img/Dr Maggie.jpg">
+                <div id="maggie" class=" Professor">Dr. Maggie Mashaly
+                    <br>
+                    <ul>
+                        <li> Assistant Professor at the German University in Cairo </li>
+                        <li>Faculty of Information Engineering & Technology </li>
+                        <li> IEEE Senior Member </li>
+                        <li> WIE Egypt Board Member</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="p-2 col-sm-7 col-md-4">
+                <img class="coor img-fluid" src="/img/Ainshams.jpg">
+                <div id="rania" class=" Professor">Assoc. Prof. Rania Sweif
+                    <br>
+                    <ul>
+                        <li> Associate Professor at the Ain Shams University</li>
+                        <li>Faculty of Engineering </li>
+                        <li> IEEE Senior Member </li>
+                        <li> WIE Egypt Board Member</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            
+
+                <div class='col-sm-10 col-md-4 justify-content-center text-center'>
+                    <img src="/img/Shape.png" alt="" class='location' style="opacity: 20%;">
+                </div>
+                <div class="col-sm-10 col-md-6 align-items-center ms-2">
+
+                    <p id='Slogan' class="mt-1"> The Best For You,<br>
+                        <span class="s"> Showed For You.</span>
+                    </p>
+                </div>
+
+            
         </div>
 
     </div>

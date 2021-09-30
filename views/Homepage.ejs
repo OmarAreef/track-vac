@@ -7,17 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>Track vac</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
+    <link rel="stylesheet"  id= 'lang-ar' integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css">
+    <!-- <link id='lang-en' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link id='lang-en' href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/Homepage.css">
     <link rel="stylesheet" href="/CSS/overlay.css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="/css/starability.css">
+    <!-- <link  rel="stylesheet"> -->
+   
 
 </head>
 
+<script>
+    const language = '<%-language %>';
+</script>
 
 <body class="">
 
@@ -29,66 +36,79 @@
                 <span></span>
             </div>
         </div>
-        <div class="container-fluid pt-5" style="z-index: 1; height:92vh; ">
-            <div class="row">
+        <div id="background" class="container-fluid pt-2 mb-5" style="z-index: 1;  ">
+           <!-- <div class="row">
                 <div class="col-12">
                     <img src="/img/rectangle 31.png" class="image-fluid d-block position-absolute ml-2 px-2"
                         id='rectangle' alt="">
                 </div>
 
-            </div>
-            <div class="row px-4 py-2 mt-2" id="main" style="z-index: 1;">
+            </div>-->
+            
+            
+            <div class="row px-4 py-2 mt-2" id="main" >
+               
                 <div class="col-12">
                     <!-- <div id="up" class="p-2 container position-relative mb-4" style="z-index: 2;"> -->
                     <!-- <div id="header" class="container" style="z-index: 2;"> -->
                     <div class="row  d-flex align-items-center pr-2 mt-4 mr-2" style="z-index: 2;">
                         <div class="col-sm-5 col-md-4 col-6 " style="z-index: 2;">
 
-                            <img id="logo" class="ml-n5 mt-n4 pb-4" src="/img/LOGO.png" style="z-index: 2;"></img>
+
+                            <img id="logo" class="ms-n5 mt-n4 pb-4" src="/img/LOGO.png" style="z-index: 2;"></img>
                         </div>
-                        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 ml-auto mr-3 col-5" style="z-index: 2;">
-                            <div class="input-group mb-4">
-                                <span class="input-group-text" id="basic-addon1"><img id="globe" class="img-fluid"
-                                        src="/img/globe.png" style="z-index: 2;"></img>
-                                </span>
-                                <select id="language" name="Language" style="z-index: 2;" class='form-control px-1'
-                                    value="Language" placeholder="Language">
-                                    <option value="English">English</option>
-                                    <option value="Arabic">Arabic</option>
-                                </select>
-                            </div>
+                        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 ms-auto" style="z-index: 2;">
+                            <form action="/selectLanguage" method="post">
+                                <div class="input-group mb-4">
+
+                                    <span class="input-group-text" id="basic-addon1"><img id="globe" class="img-fluid"
+                                            src="/img/globe.png" style="z-index: 2;"></img>
+                                    </span>
+                                    <select id="language" name="Language" style="z-index: 2;" class='form-control px-1'
+                                        value="Language" placeholder="Language" onchange="this.form.submit()">
+                                        <option value="en" class="EnglishL" <%=(language==='en' )? 'selected' : '' %>
+                                            >English</option>
+                                        <option value="ar" class="ArabicL" <%=(language==='ar' )? 'selected' : '' %>
+                                            >Arabic</option>
+                                    </select>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
 
-                    <div class="rowm b-1" style="z-index: 2;">
-                        <h1 class="col-sm-8 col-md-7 col-lg-6 text" style="font-weight: bolder; color: white;">
+                    <div class="row mb-1" style="z-index: 2;">
+                        <h1 class="col-sm-8 col-md-7 col-lg-6 text Slogan1" style="font-weight: bolder; color: white;">
                             The best for you,
                         </h1>
                     </div>
                     <div class="row mb-2" style="z-index: 2;">
-                        <h1 class="col-sm-8 col-md-7 col-lg-6 offset-1 text"
-                            style="font-weight: bolder; color: white; ">showed for you </h1>
+                        <h1 class="col-sm-8 col-md-7 col-lg-6 offset-1 text Slogan2"
+                            style="font-weight: bolder; color: white; ">
+                            showed for you </h1>
                     </div>
 
                     <div class="row mb-1" style="z-index: 2;">
-                        <h2 class="col-sm-8 col-md-7 col-lg-6 text" style="color: white;">Find and share
+                        <h2 class="col-sm-8 col-md-7 col-lg-6 text moreInfo" style="color: white;">Find and share
                             more information </h2>
                     </div>
                     <div class="row mb-2" style="z-index: 2;">
-                        <h2 class="col-sm-8 col-md-7 col-lg-6 col-xl-5 ml-4 text" style="color: white;">about vaccine
+                        <h2 class="col-sm-8 col-md-7 col-lg-6 col-xl-5 ms-4 text vaccineHolders" style="color: white;">
+                            about vaccine
                             Holders </h2>
                     </div>
 
-                    <div class="row ml-3" style="z-index: 2;">
-                        <div class="col-sm-8 col-md-6 col-lg-4 col-xl-3 mb-3">
+                    <div class="row ms-3" style="z-index: 2;">
+                        <div class="col-sm-8 col-md-6 col-lg-4 col-xl-3 mb-3 ">
 
-                            <a class="menu text btn" id="Starttracking" style="z-index: 2;" href="#start">Start Tracking
+                            <a class="menu text btn tracking" id="Starttracking" style="z-index: 2;" href="#start">Start
+                                Tracking
                             </a>
 
                         </div>
                         <div class="col-sm-8 col-md-4 col-lg-4 col-xl-3">
 
-                            <a class="menu text btn" style="z-index: 2;" id="Aboutus" href="/about">About
+                            <a class="menu text btn aboutUs" style="z-index: 2;" id="Aboutus" href="/about">About
                                 us</a>
 
                         </div>
@@ -120,14 +140,15 @@
              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); ">
             <%- include('partials/navBar_nocenter.ejs') %>
 
-                <div class="row mx-2 mt-5 py-2 d-flex">
+                <div class="row mx-2 mt-5 py-2">
                     <div id="filters" class="col-sm-9 col-md-5 col-lg-3 container mb-3" style="z-index: 2; height:100%">
                         <div class="row mb-2 pt-3">
-                            <h1 class="col-6 offset-3">Filters</h1>
+                            <h1 class="col-6 offset-3 filters">Filters</h1>
                         </div>
                         <div class="row mb-n2">
-                            <div class="col-sm-8 col-12 d-flex justify-content-start ml-2" class="form-group">
-                                <label for="inputState" style="font-size: x-large;">Governorates</label>
+                            <div class="col-sm-8 col-12 d-flex justify-content-start ms-2" class="form-group">
+                                <label for="inputState" style="font-size: x-large;"
+                                    class="governorates">Governorates</label>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -153,8 +174,8 @@
                             </div>
                         </div>
                         <div class="row mb-n2">
-                            <div class="col-sm-8 col-12 d-flex justify-content-start ml-2" class="form-group">
-                                <label for="inputState" style="font-size: x-large;">Districts</label>
+                            <div class="col-sm-8 col-12 d-flex justify-content-start ms-2" class="form-group">
+                                <label for="inputState" style="font-size: x-large;" class='districts'>Districts</label>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -178,8 +199,8 @@
                             </div>
                         </div>
                         <div class="row mb-n2">
-                            <div class="col-sm-8 col-12 d-flex justify-content-start ml-2" class="form-group">
-                                <label for="inputState" style="font-size: x-large;">Centers</label>
+                            <div class="col-sm-8 col-12 d-flex justify-content-start ms-2" class="form-group">
+                                <label for="inputState" style="font-size: x-large;" class="centers">Centers</label>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -204,9 +225,9 @@
                         </div>
                     </div>
                     <div id="results" class="col-sm-9 col-md-6 col-lg-4 container thumb overflow-auto mb-3"
-                        style="z-index: 2; min-height: 326px;">
+                        style="z-index: 2; min-height: 326px; min-width: fit-content;">
                         <div class="row mb-1 pt-3">
-                            <h1 class="col-6 offset-3">Results</h1>
+                            <h1 class="col-6 offset-3 results">Results</h1>
                         </div>
                         <div class="row mb-4">
                             <div class="col-6 offset-3">
@@ -224,18 +245,28 @@
                                 <%for(let center of centerHelper) {%>
                                     <li><a id="center" href="<%= center._id %>">
                                             <div class="row">
-                                                <div class="col-6 offset-5 mb-1">
-                                                    <%= center.districtArabic%>, <%= center.governorateArabic%>
+                                                <div class="col-6 offset-3 mb-1">
+                                                    <% if (language==='ar' ) { %>
+                                                        <%= center.districtArabic%>, <%= center.governorateArabic%>
+                                                                <% } else {%>
+                                                                    <%= center.district%>, <%= center.governorate%>
+                                                                            <%}%>
                                                 </div>
                                             </div>
                                             <div class="row d-flex align-items-center">
 
-                                                <div class="col-5">
-                                                    <p class="starability-result" data-rating="<%=Math.round(center.avgRating) %>">
-                                                    </p>
-                                                </div>
-                                                <div class="col-4 offset-2">
+                                               
+                                                <div class="col-6">
+                                                    <% if (language==='ar' ) { %>
                                                     <%= center.nameArabic %>
+                                                    <% } else {%>
+                                                        <%= center.name%>
+                                                        <%}%>
+                                                </div>
+                                                <div class="col-5 ms-auto">
+                                                    <p class="starability-result"
+                                                        data-rating="<%=Math.round(center.avgRating) %>">
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -249,7 +280,7 @@
                         <span id="filter-count"></span>
                     </div>
 
-                    <div class="col-sm-9 col-md-6 col-lg-4 thumb container" id="map" style="width :90% ; height:300px">
+                    <div class="col-sm-9 col-md-6 col-lg-4 thumb container" id="map" style=" height:300px">
                     </div>
 
 

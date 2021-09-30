@@ -58,7 +58,7 @@
   
   .starability-basic > input {
     position: absolute;
-    margin-right: -100%;
+    margin-inline-end: -100%;
     opacity: 0;
   }
   
@@ -169,7 +169,7 @@
     }
     .starability-basic > input {
       position: static;
-      margin-right: 0;
+      margin-inline-end: 0;
       opacity: 1;
     }
     .starability-basic .input-no-rate {

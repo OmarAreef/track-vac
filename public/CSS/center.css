@@ -60,7 +60,7 @@ ul {
 .logo{
     background-color: transparent;
     margin-top: -30px;
-    margin-left: -20px;
+    margin-inline-start: -20px;
 }
 #close{
     padding: -5px !important;

@@ -105,6 +105,51 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', end
 /* #globe{
   transform: translate(30px,42px);
 } */
+#globe{
+  transform: translateX(40px);
+}
+@media only screen and (max-width: 800px){
+  #globe {
+     opacity: 0%; }
+  }
+@media only screen and (max-width: 1183px)
+and (min-width: 799px){
+      #globe {
+         opacity: 100%; }
+      }
+@media only screen and (max-width: 1400px )
+and (min-width: 1200px){
+        #globe {
+           opacity: 0%; }
+        }
+@media only screen and (max-width: 1550px){
+    #globe {
+       transform: translateX(30px);
+       }
+    }
+
+#background {
+  background-image: url('/img/track.png')  ;
+  background-repeat: no-repeat;
+ /* background-size:scale-down ;*/
+  background-position-x: right;
+  background-position-y: bottom;
+  /* background-attachment: fixed; */
+  background-attachment:fixed;
+  /* padding: 1.5em; */
+}
+#main {
+  background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.377) 2.5%, rgba(255, 255, 255, 0) 112.38%);
+  box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
+  border: 5px solid rgba(255, 255, 255, .2);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 40px;
+margin-top:20vh ;
+margin-inline-start: 11vw ;
+max-height: fit-content !important;
+height: auto !important;
+width: 80%;
+}
 #basic-addon1{
   /* transform: translate(30px,42px); */
   background-color: rgba(255, 255, 255, 0.00);
@@ -168,7 +213,7 @@ option {
   max-height: 600px;
   height: 93% ;
   width:95% !important;
-  margin-left: 5px;
+  margin-inline-start: 5px;
   
 }
 #Starttracking {
@@ -290,8 +335,8 @@ h1 , h2 , h3 , h4 {
 }
 hr{
   border-top:2px solid  ;
-  margin-left: 3px;
-  margin-right: 3px;
+  margin-inline-start: 3px;
+  margin-inline-end: 3px;
 }
 li{
   text-decoration: none !important;
@@ -306,7 +351,7 @@ li{
     background-color: rgba(5, 9, 57, .8);
   }
   #logo{
-    margin-left: -5px !important; 
+    margin-inline-start: -5px !important; 
   }
   
 }

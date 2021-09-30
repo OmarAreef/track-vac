@@ -1,37 +1,55 @@
-let select = document.querySelector('#language');
 
-select.addEventListener('click', function () {
-    let language = select.value
-    let header= document.querySelector('#Header');
-    
-    header.innerHTML = lang[language].header
-    let slogan= document.querySelector('#Slogan');
-    slogan.innerHTML = lang[language].slogan
-    let description= document.querySelector('#description');
-    description.innerHTML = lang[language].description
-    
-    if (language=== 'en'){
-        console.log('here')
-        document.querySelector('#lang').removeAttribute('href');
-        document.querySelector('.location').setAttribute('src' , '/img/Shape.png')
-    }
-    if (language === 'ar'){
-         document.querySelector('#lang').setAttribute('href' , '/css/bootstrap-rtl.css');
-        document.querySelector('.location').removeAttribute('src')
-    }
-    // header.innerHTML = lang[language].header
-
-});
-
-let lang = {
+let dictAbout = {
     'en': {
         'header': 'What is TRACK VAC?',
-        'description': 'Track vac is a website dedicated for you to find the best choice of vaccination centers , showing real experiences from vaccinated people That their reviews are highly appretiated.',
-        'slogan': 'The Best For You,<br><span> Showed For You.</span>'
+        'description1': '“Track-Vac” is a website, which will contain all thenecessary information about how to receive the vaccine locally.',
+        'description2': '“Track-Vac” will enable local community members to exchange and share their experience to help in the fight against the pandemic spread.',
+        'description3':'Our Aim is to raise the awareness of the local community about COVID-19 vaccination process.',
+        'slogan': 'The Best For You,<br><span> Showed For You.</span>',
+        'meettheteam' : 'Meet the Team'
     },
     'ar': {
         'header': 'ما هوا تراكفاك؟',
+        'description1': ' تراكفاك" هو موقع إلكتروني حيث تجد كل المعلومات المهمه عن كيفية تلقي اللقاح حولك"' ,
+        'description2':'تركفاك" سيتيح لأفراد المجتمع المحلي تبادل ومشاركة تجاربهم في سبيل القضاء علي انتشار الوباء " ',
+        'description3':'هدفنا هو زيادة وعي المجتمع المحلي عن عملية اللقاح ضد كورونا',
         'slogan': '<span> الافضل لك </span><br>, يظهر لك',
-        'description': 'TarckVac هو موقع إلكتروني مخصص لك للعثور على أفضل اختيار لمراكز التطعيم.'
+        'meettheteam' : 'تعرف علي فريق العمل'
     }
 }
+
+const dictLangAbout = dictAbout[language];
+for (let attr in dictLangAbout) {
+    let element = document.querySelectorAll(`.${attr}`);
+    console.log(dictLangAbout[attr])
+    if (element) {
+        element.forEach(elem => {
+            elem.innerHTML = dictLangAbout[attr]
+        })
+    }
+
+}
+if (language === 'ar') {
+    document.querySelector('#lang-ar').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    document.querySelector('#lang-en').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    let html =  document.querySelector('html')
+    html.setAttribute('lang' , 'ar')
+    html.setAttribute('dir' , 'rtl')
+  
+  }
+  else {
+    // document.querySelectorAll('*').forEach(elem => {
+    //     elem.classList.remove('rtl')
+    // })
+    // document.querySelector('body').classList.remove('rtl')
+    // document.querySelector('#language-css').removeAttribute('href')
+    document.querySelector('#lang-ar').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    document.querySelector('#lang-en').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    // document.querySelector('#language-css').setAttribute('href',"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+    // document.querySelector('#language-css').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    let html =  document.querySelector('html')
+    html.setAttribute('lang' , 'en' )
+    html.removeAttribute('dir' )
+    
+  
+  }

@@ -17,8 +17,8 @@ body {
   a:hover{ text-decoration: underline; }
   .left { float:left; }
   .right { float:right; }
-  .alignleft { float: left; margin-right: 15px; }
-  .alignright { float: right; margin-left: 15px; }
+  .alignleft { float: left; margin-inline-end: 15px; }
+  .alignright { float: right; margin-inline-start: 15px; }
   .clearfix:after,
   form:after {
     content: ".";

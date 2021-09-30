@@ -87,67 +87,121 @@ app.use(function (req, res, next) {
     res.locals.user = req.session.userId;
     res.locals.admin = req.user;
     res.locals.userType = req.session.userType;
+    if (! (res.locals.language)) {
+        res.locals.language = (req.session.language ? req.session.language : 'en');
+    }
+
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 });
+app.post('/selectLanguage', catchAsync(async (req, res) => {
+    const { Language } = req.body;
+    req.session.language = Language;
+    // console.log(req.session.language)
+    res.redirect('back')
+}));
 
 app.get('/about', (req, res) => {
     // res.sendFile(path.join(__dirname+'/views/code/index.html'));
     res.render('about')
 })
 app.get('/about/team', (req, res) => {
-    res.sendFile(path.join(__dirname+'/views/code/index.html'));
-   
+    res.sendFile(path.join(__dirname + '/views/code/index.html'));
+
 })
 app.get('/faq', (req, res) => {
     res.render('faq');
 })
 
-app.get('/code/html' , (req,res) => {
+app.get('/code/html', (req, res) => {
     res.render('esm el page beta3tek')
 })
 
 
 app.get('/', catchAsync(async (req, res) => {
-    const { governorate, district, name } = req.query;
-    var districts = [];
-    var centers = [];
-    const governorates = await Center.distinct("governorate");
 
-    if (governorate && district && name) {
-        const centerHelper = await Center.find({ governorate, district, name });
-        const districts = await Center.find({ governorate }).distinct('district');
-        const centers = await Center.find({ governorate, district }).distinct('name');
+    if (res.locals.language == "en") {
+
+        const { governorate, district, name } = req.query;
+        var districts = [];
+        var centers = [];
+        const governorates = await Center.distinct("governorate");
+
+        if (governorate && district && name) {
+            const centerHelper = await Center.find({ governorate, district, name });
+            const districts = await Center.find({ governorate }).distinct('district');
+            const centers = await Center.find({ governorate, district }).distinct('name');
 
 
-        res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
+            res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
 
-        // console.log("1");
-    } else if (governorate && district) {
-        const centerHelper = await Center.find({ governorate, district });
-        const districts = await Center.find({ governorate }).distinct('district');
-        const centers = await Center.find({ governorate, district }).distinct('name');
+            // console.log("1");
+        } else if (governorate && district) {
+            const centerHelper = await Center.find({ governorate, district });
+            const districts = await Center.find({ governorate }).distinct('district');
+            const centers = await Center.find({ governorate, district }).distinct('name');
 
-        res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
-        // console.log("2");
+            res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
+            // console.log("2");
+        }
+        else if (governorate) {
+            const centerHelper = await Center.find({ governorate });
+            const districts = await Center.find({ governorate }).distinct('district');
+
+            res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
+            // console.log("3");
+        }
+        else {
+            const centerHelper = await Center.find({});;
+            res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+            // console.log("4");
+        }
     }
-    else if (governorate) {
-        const centerHelper = await Center.find({ governorate });
-        const districts = await Center.find({ governorate }).distinct('district');
+    else if (res.locals.language == "ar") {
 
-        res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
-        // console.log("3");
+        const { governorate, district, name } = req.query;
+        var districts = [];
+        var centers = [];
+        const governorates = await Center.distinct("governorateArabic");
+
+        if (governorate && district && name) {
+            const centerHelper = await Center.find({ governorateArabic: governorate, districtArabic: district, nameArabic: name });
+            const districts = await Center.find({ governorateArabic: governorate }).distinct('districtArabic');
+            const centers = await Center.find({ governorateArabic: governorate, districtArabic: district }).distinct('nameArabic');
+
+
+            res.render('Homepage', { centerHelper, governorates, governorate, district, name, districts, centers });
+
+            // console.log("1");
+        } else if (governorate && district) {
+            const centerHelper = await Center.find({ governorateArabic: governorate, districtArabic: district });
+            const districts = await Center.find({ governorateArabic: governorate }).distinct('districtArabic');
+            const centers = await Center.find({ governorateArabic: governorate, districtArabic: district }).distinct('nameArabic');
+
+            res.render('Homepage', { centers, centerHelper, name, governorates, governorate, district, districts });
+            // console.log("2");
+        }
+        else if (governorate) {
+            const centerHelper = await Center.find({ governorateArabic: governorate });
+            const districts = await Center.find({ governorateArabic: governorate }).distinct('districtArabic');
+            res.render('Homepage', { districts, centerHelper, name, governorate, centers, governorates, district });
+            // console.log("3");
+        }
+        else {
+            const centerHelper = await Center.find({});;
+            res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
+            // console.log("4");
+        }
     }
-    else {
-        const centerHelper = await Center.find({});;
-        res.render('Homepage', { governorates, district, centerHelper, name, governorate: 'All', districts, centers });
-        // console.log("4");
-    }
+
 }))
 app.get('/centers/logout', isLoggedIn, catchAsync(async (req, res) => {
+    let lang = req.session.language
     req.session.destroy();
-    console.log(req.baseUrl, res.baseUrl)
+    res.locals.language = lang;
+    console.log(lang)
+    console.log(res.locals.language)
     res.redirect('back')
 }));
 
@@ -163,7 +217,7 @@ app.post("/login/:id", catchAsync(async (req, res) => {
         }
         return;
     }
-    if(!(/^-?\d+$/.test(Ipass))||!(/^-?\d+$/.test(Ireg_num))){
+    if (!(/^-?\d+$/.test(Ipass)) || !(/^-?\d+$/.test(Ireg_num))) {
         if (req.params.id === 'undefined') {
             //req.flash('error', 'you are not registered');
             res.redirect('/center');
@@ -234,8 +288,8 @@ app.put('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, validateReview, ca
     // center.avgClean = center.avgClean- review.clean
 
     await Review.findByIdAndUpdate(reviewId, { ...req.body.review });
-    
-    
+
+
     center.save();
     res.redirect(`/${id}`);
 }));
@@ -296,7 +350,7 @@ app.delete('/admin/allreviews/:reviewId', adminIsLoggedIn, catchAsync(async (req
     console.log(review.center_id);
     await Center.findByIdAndUpdate(review.center_id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
-    const center = await Center.findById(review.center_id) 
+    const center = await Center.findById(review.center_id)
     center.save();
     res.redirect('/admin/allreviews');
 }));
@@ -398,7 +452,7 @@ app.get('/admin/home', adminIsLoggedIn, async (req, res) => {
     res.render('adminhome', { reviewReports, answerReports, questionReports });
 })
 
-app.get('/admin/addadmin',adminIsLoggedIn,  (req, res) => {
+app.get('/admin/addadmin', adminIsLoggedIn, (req, res) => {
     res.render('addadmin');
 })
 
@@ -530,7 +584,7 @@ app.post("/rejectReview/:report/:review", catchAsync(async (req, res) => {
 app.post("/acceptQuestion/:report/:question", catchAsync(async (req, res) => {
     const { question } = req.params;
     const questionBody = await Question.findById(question);
-    await Center.findByIdAndUpdate(id, { $pull: { questions: question } });
+    await Center.findByIdAndUpdate(question, { $pull: { questions: question } });
     for (let answer of questionBody.answers) {
         await ReportAnswer.deleteMany({ answer_id: answer });
         await Answer.findByIdAndDelete(answer);
