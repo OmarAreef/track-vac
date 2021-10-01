@@ -134,6 +134,8 @@ and (min-width: 1200px){
  /* background-size:scale-down ;*/
   background-position-x: right;
   background-position-y: bottom;
+  min-height: 90vh;
+
   /* background-attachment: fixed; */
   background-attachment:fixed;
   /* padding: 1.5em; */
@@ -318,18 +320,17 @@ h1 , h2 , h3 , h4 {
 /* .text {
   font-size: 1.3rem;
 } */
-#main {
+/* #main {
   background-image: url('/img/track.png');
   background-repeat: no-repeat;
   background-size:scale-down ;
   background-position-x: right;
   background-position-y: bottom;
-  background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.377) 2.5%, rgba(255, 255, 255, 0) 112.38%);
-  box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
+ 
   background-attachment:fixed;
   min-height: 95vh;
-  
-}
+  /* padding: 1.5em; */
+/* } */
 .thumb{
   border-radius: 12px;
   border :2px #050939 solid;
@@ -346,7 +347,7 @@ li{
 }
 @media (max-width : 670px) {
   .text {
-    font-size: 1.4em !important;
+    font-size: 1.3em !important;
   }
   #Aboutus , #Starttracking {
     width: 80%;

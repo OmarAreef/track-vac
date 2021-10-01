@@ -11,24 +11,24 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-4">
-                    <button class="nav-link button1 btn" href="/about"  type="button"
-                        style="font-family: Roboto; font-weight: bold; color: white; background-color: #17A2B8;">About us</button>
+                    <a class="nav-link button1 btn" href="/about"  type="button"
+                        style="font-family: Roboto; font-weight: bold; color: white; background-color: #17A2B8;">About us</a>
                 </li>
                 <li class="nav-item me-4">
 
-                    <button class="nav-link button2 btn" href="/faq" type="button"
-                        style="font-family: Roboto;font-weight:bold; color: white;background-color: #17A2B8; ">FAQ</button>
+                    <a class="nav-link button2 btn" href="/faq" type="button"
+                        style="font-family: Roboto;font-weight:bold; color: white;background-color: #17A2B8; ">FAQ</a>
 
                 </li>
                 <li class="nav-item ">
                     <% if (!user){ %>
-                        <button class="btn  button3" type="button" id="signin"
+                        <a class="btn  button3" type="button" id="signin"
                             style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;">Sign
-                            in</button>
+                            in</a>
                         <% } else { %>
-                            <button class="btn button4" type="button" id="logout"
+                            <a class="btn button4" type="button" id="logout"
                                 style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;"
-                                href="/centers/logout">Logout</button>
+                                href="/centers/logout">Logout</a>
                             <% } %>
                 </li>
             </ul>
@@ -48,7 +48,7 @@
                     <button class="btn btn-outline-danger mb-3" id='close_sign'>&#10060</button>
                 </div>
             </div>
-            <h3 class="display-5 ms-5 mb-2 button3">Login</h3>
+            <h3 class="display-5 ms-5 mb-2">Login</h3>
             <form action="/login/undefined" method="POST" class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label class="form-label REGnumber" for="username">Registration Number</label>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-success button3">Login</button>
+                <button class="btn btn-success">Login</button>
             </form>
 
         </div>

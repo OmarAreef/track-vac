@@ -244,11 +244,11 @@ app.post("/login/:id", catchAsync(async (req, res) => {
     }
     else {
         if (req.params.id === 'undefined') {
-            //req.flash('error', 'you are not registered');
+            req.flash('error', 'you are not registered');
             res.redirect('/');
         }
         else {
-            //req.flash('error', 'you are not registered');
+            req.flash('error', 'you are not registered');
             res.redirect('/' + req.params.id);
         }
     }
@@ -567,8 +567,8 @@ app.post('/:id/:question/reportQuestion', catchAsync(async (req, res) => {
 
 app.post("/acceptReview/:report/:review", catchAsync(async (req, res) => {
     const { review } = req.params;
-    const reviewe = await findById(review)
-    const center = await findById(reviewe.center_id)
+    const reviewe = await Review.findById(review)
+    const center = await Center.findById(reviewe.center_id)
     await Review.findByIdAndDelete(review);
     await ReportReview.deleteMany({ review_id: review });
     center.save();

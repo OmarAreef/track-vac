@@ -55,19 +55,19 @@
                                 </div>
 
                                 <div class="row mt-2">
-                                    <div class="col-4 text-center">
+                                    <div class="col-3 text-center">
                                         <span class="card-text rating mt-1 Location text-center">location</span>
                                     </div>
-                                    <div class="col-6 ms-2 star d-flex justify-content-end">
+                                    <div class="col-7 ms-2 star d-flex justify-content-end">
                                         <p class="starability-result "
                                             data-rating="<%=  Math.round(center.avgLocation) %>"></p>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col-4 text-center">
+                                    <div class="col-3 text-center">
                                         <span class="card-text rating mt-1 Service text-center">Service</span>
                                     </div>
-                                    <div class="col-6 ms-2 star d-flex justify-content-end">
+                                    <div class="col-7 ms-2 star d-flex justify-content-end">
                                         <p class="starability-result"
                                             data-rating="<%= Math.round(center.avgService) %>"></p>
                                     </div>
@@ -75,19 +75,19 @@
 
 
                                 <div class="row mt-2">
-                                    <div class="col-4 text-center">
+                                    <div class="col-3 text-center">
                                         <span class="card-text rating mt-1 Cleaniness">Cleaniness</span>
                                     </div>
-                                    <div class="col-6 ms-2 star d-flex justify-content-end">
+                                    <div class="col-7 ms-2 star d-flex justify-content-end">
                                         <p class="starability-result" data-rating="<%=  Math.round(center.avgClean) %>">
                                         </p>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col-4 text-center">
+                                    <div class="col-3 text-center">
                                         <span class="card-text rating mt-1 Speed text-center">Speed</span>
                                     </div>
-                                    <div class="col-6 ms-2 star d-flex justify-content-end">
+                                    <div class="col-7 ms-2 star d-flex justify-content-end">
                                         <p class="starability-result" data-rating="<%=  Math.round(center.avgSpeed) %>">
                                         </p>
                                     </div>
@@ -750,6 +750,7 @@
 
             </div>
         </div>
+        <%- include('partials/footer.ejs') %>
 
         <script type="text/javascript">
             function display(id) {

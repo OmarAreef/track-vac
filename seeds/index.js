@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
+const admin = require('../models/admin');
+const answer = require('../models/answer');
 const Center = require('../models/center');
 const Day = require('../models/day');
+const question = require('../models/question');
+const reportAnswer = require('../models/reportAnswer');
+const reportQuestion = require('../models/reportQuestion');
+const reportReview = require('../models/reportReview');
+const review = require('../models/review');
 const User = require('../models/user');
 const helper = require("./centers.js");
 const helper1 = require("./users.js");
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 
 mongoose.connect('mongodb://localhost:27017/track-vac1',
@@ -20,6 +28,13 @@ db.once("open", () => {
 
 
 const seedDB = async () => {
+    await review.deleteMany({});
+    await answer.deleteMany({});
+    await question.deleteMany({});
+    await reportAnswer.deleteMany({});
+    await reportQuestion.deleteMany({})
+    await reportReview.deleteMany({});
+
     await Center.deleteMany({});
     await Day.deleteMany({});
     const sun = new Day({ day: 'sun', From: '8:00', To: '21:00' });
@@ -60,6 +75,23 @@ const seedDB = async () => {
         })
         await user.save();
     }
+    await admin.deleteMany({});
+    const username = 'admin'
+    const password = '123'
+    const email = 'admin@trackvac.com'
+    const role = 'Admin'
+    try {
+        console.log('admin')
+        const user = new admin({ 'email' : email ,'username': username,'role' : role });
+        const registeredUser = await admin.register(user, password);
+        console.log('here')
+        // req.flash('success', "Admin Added Succesfully");
+        // res.redirect('/admin/addadmin');
+    } catch (e) {
+        // req.flash('error', e.message);
+        // res.redirect('/admin/addadmin');
+    }
+
 
 }
 

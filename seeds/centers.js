@@ -1,8 +1,8 @@
 module.exports = [
     {
         name: "Nozha",
-        latitude: 34.0522342,
-        longitude: -118.2436849,
+        latitude: 30.1129911,
+        longitude: 31.3564065,
         governorate: "Cairo",
         district: "Nozha",
         nameArabic: "مركز النزهة",

@@ -1,10 +1,10 @@
-<%- layout('layouts/boilerplate.ejs') %>
+<%- layout('layouts/boilerplate_admin.ejs') %>
     <link rel="stylesheet" href="/css/allreviews.css">
     <%- include('partials/navbar_admin.ejs') %>
 
         <div class="container position-absolute">
             <div class="row mx-2 mt-5 py-2 d-flex">
-                <div id="filters" class="col-sm-9 col-md-5 col-lg-3 container mb-3" style="z-index: 2; height:100%">
+                <div id="filters" class="col-sm-8 container mb-3" style="z-index: 2; height:100%">
                     <div class="row mb-2 pt-3">
                         <h1 class="col-6 offset-3">Filters</h1>
                     </div>
@@ -88,331 +88,332 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="filters" class="col-sm-10 col-md-8 mb-3 overflow-auto"
-                    style="z-index: 2; height:100% ; max-height: 450px;">
-                    <div class="row mb-2 pt-3">
-                        <div class="col-8 offset-2 justify-content-center d-flex">
-                            <h1>Reviews</h1>
-
-                        </div>
+            </div>
+            <div class="row mx-2 mt-5 py-2 d-flex">
+            <div id="filters" class="col-sm-12 mb-3 overflow-auto"
+                style="z-index: 2; height:100% ; max-height: 450px;">
+                <div class="row mb-2 pt-3">
+                    <div class="col-8 offset-2 justify-content-center d-flex">
+                        <h1>Reviews</h1>
 
                     </div>
-                    <hr class="mx-3">
-                    <!-- div. -->
-                    <%for(let review of reviewHelper) {%>
-                        <div class="row mb-1">
-                            <div class="col-6">
-                                <h4>Author:</h4>
-                                <%=review.author_id%>
-                            </div>
 
-
-                            <div class="col-5 ml-auto">
-                                <h4>Review:</h4>
-                                <%=review.body%>
-                            </div>
-                        </div>
-                        <div class="row mb-1 d-flex align-items-stretch">
-                            <div class="col-3 offset-6"><button type="button" class="btn btn-sm btn-primary"
-                                    onclick="showReviews('<%=review._id%>')">read
-                                    More </button>
-
-
-                            </div>
-                            <div class="col-3">
-                                <form action="/admin/allreviews/<%=review._id%>?_method=DELETE" method="POST">
-                                    <button class="btn btn-sm btn-danger">Delete Review</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="row mb-2" id="review<%=review._id%>" style="display:none;">
-
-                            <div class="col-4">
-                                <h4>Review details</h4>
-                                <ul>
-                                    <li>
-                                        Location :
-                                        <%=review.location%>
-                                    </li>
-                                    <li>
-                                        Cleanliness :
-                                        <%=review.clean%>
-                                    </li>
-                                    <li>Service :
-                                        <%=review.service%>
-                                    </li>
-                                    <li>
-                                        Speed :
-                                        <%=review.speed%>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class=col-4">
-                                <h4>User details</h4>
-                                <ul>
-                                    <li>Re Number :
-                                        <%=review.author_id.reg_num%>
-                                    </li>
-                                    <li>
-                                        USer Type :
-                                        <%=review.author_id.userType%>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-4">
-                                <h4>Center details</h4>
-                                <%=review.center_id.name%>
-                            </div>
-                        </div>
-                        <hr class="mx-3">
-
-                        <%}%>
                 </div>
+                <hr class="mx-3">
+                <!-- div. -->
+                <%for(let review of reviewHelper) {%>
+                    <div class="row mb-1">
+                        <div class="col-6">
+                            <h4>Author:</h4>
+                            <%=review.author_id%>
+                        </div>
 
-                <!-- <div class="col-4 offset-2">
+
+                        <div class="col-5 ml-auto">
+                            <h4>Review:</h4>
+                            <%=review.body%>
+                        </div>
+                    </div>
+                    <div class="row mb-1 d-flex align-items-stretch">
+                        <div class="col-3 offset-6"><button type="button" class="btn btn-sm btn-primary"
+                                onclick="showReviews('<%=review._id%>')">read
+                                More </button>
+
+
+                        </div>
+                        <div class="col-3">
+                            <form action="/admin/allreviews/<%=review._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Delete Review</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row mb-2" id="review<%=review._id%>" style="display:none;">
+
+                        <div class="col-4">
+                            <h4>Review details</h4>
+                            <ul>
+                                <li>
+                                    Location :
+                                    <%=review.location%>
+                                </li>
+                                <li>
+                                    Cleanliness :
+                                    <%=review.clean%>
+                                </li>
+                                <li>Service :
+                                    <%=review.service%>
+                                </li>
+                                <li>
+                                    Speed :
+                                    <%=review.speed%>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class=col-4">
+                            <h4>User details</h4>
+                            <ul>
+                                <li>Re Number :
+                                    <%=review.author_id.reg_num%>
+                                </li>
+                                <li>
+                                    USer Type :
+                                    <%=review.author_id.userType%>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-4">
+                            <h4>Center details</h4>
+                            <%=review.center_id.name%>
+                        </div>
+                    </div>
+                    <hr class="mx-3">
+
+                    <%}%>
+            </div>
+
+            <!-- <div class="col-4 offset-2">
                 <button class="btn btn-sm btn-info" onclick="showAllQuestions()">Show
                     All Questions</button>
             </div> -->
-                <div id="filters" class="col-sm-10 col-md-8 mb-3 overflow-auto"
-                    style="z-index: 2; height:100% ; max-height: 450px;">
-                    <div class="row mb-2 pt-3">
-                        <div class="col-8 offset-2 justify-content-center d-flex">
-                            <h1>All Questions</h1>
-
-                        </div>
+            <div id="filters" class="col-sm-12 mb-3 overflow-auto"
+                style="z-index: 2; height:100% ; max-height: 450px;">
+                <div class="row mb-2 pt-3">
+                    <div class="col-8 offset-2 justify-content-center d-flex">
+                        <h1>All Questions</h1>
 
                     </div>
-                    <hr class="mx-3">
-                    <%for(let center of centerHelper) {%>
-                        <%for(let question of center.questions) {%>
-                            <div class="row">
-                                <div class="col-4 offset-1">
-                                    <%= question.author_id._id%>
-                                </div>
-                                <div class="col-5 offset-1">
-                                    <%=question.question%>
-                                </div>
-                                <div class="col-4 offset-2"><button type="button" class="btn btn-primary"
-                                        onclick="showQuestions('<%=question._id%>')">read
-                                        More </button>
-                                    <div class="container" id="question<%=question._id%>" style="display:none;">
-                                        <div class="container">
-                                            <h4>Answers details</h4>
-                                            <ul>
-                                                <% for(let answer of question.answers) {%>
-                                                    <li>
-                                                        Answer <%= answer._id%> :
-                                                            <%=answer.answer%>
-                                                    </li>
-                                                    <li>
-                                                        Answer <%= answer._id%> author :
-                                                            <%=answer.author_id%>
-                                                    </li>
-                                                    <% }%>
-                                            </ul>
-                                        </div>
-                                        <div class="container">
-                                            <h4>Question details</h4>
-                                            <ul>
-                                                <li>Author id :
-                                                    <%=question.author_id._id%>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="container">
-                                            <h4>Center details</h4>
-                                            <%=center.name%>
-                                        </div>
 
+                </div>
+                <hr class="mx-3">
+                <%for(let center of centerHelper) {%>
+                    <%for(let question of center.questions) {%>
+                        <div class="row">
+                            <div class="col-4 offset-1">
+                                <%= question.author_id._id%>
+                            </div>
+                            <div class="col-5 offset-1">
+                                <%=question.question%>
+                            </div>
+                            <div class="col-4 offset-2"><button type="button" class="btn btn-primary"
+                                    onclick="showQuestions('<%=question._id%>')">read
+                                    More </button>
+                                <div class="container" id="question<%=question._id%>" style="display:none;">
+                                    <div class="container">
+                                        <h4>Answers details</h4>
+                                        <ul>
+                                            <% for(let answer of question.answers) {%>
+                                                <li>
+                                                    Answer <%= answer._id%> :
+                                                        <%=answer.answer%>
+                                                </li>
+                                                <li>
+                                                    Answer <%= answer._id%> author :
+                                                        <%=answer.author_id%>
+                                                </li>
+                                                <% }%>
+                                        </ul>
+                                    </div>
+                                    <div class="container">
+                                        <h4>Question details</h4>
+                                        <ul>
+                                            <li>Author id :
+                                                <%=question.author_id._id%>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="container">
+                                        <h4>Center details</h4>
+                                        <%=center.name%>
                                     </div>
 
                                 </div>
-                                <div class="col-4 offset-2">
-                                    <form action="/admin/allquestions/<%=center._id%>/<%=question._id%>?_method=DELETE"
-                                        method="POST">
-                                        <button class="btn btn-sm btn-danger">Delete Question</button>
-                                    </form>
-                                </div>
+
                             </div>
+                            <div class="col-4 offset-2">
+                                <form action="/admin/allquestions/<%=center._id%>/<%=question._id%>?_method=DELETE"
+                                    method="POST">
+                                    <button class="btn btn-sm btn-danger">Delete Question</button>
+                                </form>
+                            </div>
+                        </div>
+                        <%}%>
                             <%}%>
-                                <%}%>
-                </div>
-                <!-- <div class="col-4 offset-2">
+            </div>
+            <!-- <div class="col-4 offset-2">
                 <button class="btn btn-sm btn-info" onclick="showAllCenters()">Show
                     All Centers</button>
             </div> -->
-                <div id="filters" class="col-sm-10 col-md-8 mb-3 overflow-auto"
-                    style="z-index: 2; height:100% ; max-height: 450px;">
-                    <div class="row mb-2 pt-3">
-                        <div class="col-8 offset-2 justify-content-center d-flex">
-                            <h1>All Centers</h1>
-
-                        </div>
+            <div id="filters" class="col-sm-12 mb-3 overflow-auto"
+                style="z-index: 2; height:100% ; max-height: 450px;">
+                <div class="row mb-2 pt-3">
+                    <div class="col-8 offset-2 justify-content-center d-flex">
+                        <h1>All Centers</h1>
 
                     </div>
-                    <hr class="mx-3">
-                    <%for(let center of centerHelper) {%>
-                        <div class="row">
-                            <div class="col-4 offset-2">
-                                <%=center.name%>
-                            </div>
-                            <div class="col-4 offset-2">
-                                <%=center.nameArabic%>
-                            </div>
-                            <div class="col-3"><button type="button" class="btn btn-primary"
-                                    onclick="showCenters('<%=center._id%>')">read
-                                    More </button>
-                            </div>
-                            <div class="col-3">
-                                <form action="/admin/allcenters/<%=center._id%>?_method=DELETE" method="POST">
-                                    <button class="btn btn-sm btn-danger">Delete Center</button>
-                                </form>
-                            </div>
-                            <div class="col-3">
-                                <a class="btn btn-sm btn-info" href="/admin/editcenter/?centerId=<%=center._id%>">Edit
-                                    Center</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container col-10" id="center<%=center._id%>" style="display:none;">
 
-                                <h4>Center details</h4>
-                                <ul>
-                                    <li>
-                                        Latitude :
-                                        <%=center.latitude%>
-                                    </li>
-                                    <li>
-                                        Longitude :
-                                        <%=center.longitude%>
-                                    </li>
-                                    <li>Governorate :
-                                        <%=center.governorate%>
-                                    </li>
-                                    <li>
-                                        district :
-                                        <%=center.district%>
-                                    </li>
-                                    <li>
-                                        governorateArabic :
-                                        <%=center.governorateArabic%>
-                                    </li>
-                                    <li>
-                                        districtArabic :
-                                        <%=center.districtArabic%>
-                                    </li>
-                                    <li>
-                                        Image :
-                                        <img src="<%=center.districtArabic%>">
-                                    </li>
-                                    <li>
-                                        <% for(let day of center.workingHours) { %>
-                                            <ul>
-                                                <li>
-                                                    day :
-                                                    <%=day.day%>
-                                                </li>
-                                                <li>
-                                                    from :
-                                                    <%=day.From%>
-                                                </li>
-                                                <li>
-                                                    To :
-                                                    <%=day.To%>
-                                                </li>
-                                            </ul>
-                                            <%}%>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-
-
-
-                        <hr class="mx-2 mb-2">
-                        <%}%>
                 </div>
+                <hr class="mx-3">
+                <%for(let center of centerHelper) {%>
+                    <div class="row">
+                        <div class="col-4 offset-2">
+                            <%=center.name%>
+                        </div>
+                        <div class="col-4 offset-2">
+                            <%=center.nameArabic%>
+                        </div>
+                        <div class="col-3"><button type="button" class="btn btn-primary"
+                                onclick="showCenters('<%=center._id%>')">read
+                                More </button>
+                        </div>
+                        <div class="col-3">
+                            <form action="/admin/allcenters/<%=center._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Delete Center</button>
+                            </form>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-sm btn-info" href="/admin/editcenter/?centerId=<%=center._id%>">Edit
+                                Center</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container col-10" id="center<%=center._id%>" style="display:none;">
+
+                            <h4>Center details</h4>
+                            <ul>
+                                <li>
+                                    Latitude :
+                                    <%=center.latitude%>
+                                </li>
+                                <li>
+                                    Longitude :
+                                    <%=center.longitude%>
+                                </li>
+                                <li>Governorate :
+                                    <%=center.governorate%>
+                                </li>
+                                <li>
+                                    district :
+                                    <%=center.district%>
+                                </li>
+                                <li>
+                                    governorateArabic :
+                                    <%=center.governorateArabic%>
+                                </li>
+                                <li>
+                                    districtArabic :
+                                    <%=center.districtArabic%>
+                                </li>
+                                <li>
+                                    Image :
+                                    <img src="<%=center.districtArabic%>">
+                                </li>
+                                <li>
+                                    <% for(let day of center.workingHours) { %>
+                                        <ul>
+                                            <li>
+                                                day :
+                                                <%=day.day%>
+                                            </li>
+                                            <li>
+                                                from :
+                                                <%=day.From%>
+                                            </li>
+                                            <li>
+                                                To :
+                                                <%=day.To%>
+                                            </li>
+                                        </ul>
+                                        <%}%>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+
+                    <hr class="mx-2 mb-2">
+                    <%}%>
             </div>
+        </div>
 
-            <script type="text/javascript">
-                function showReviews(id) {
-                    const reviewId = "review" + id;
-                    if (document.getElementById(reviewId).style.display === "none") {
-                        document.getElementById(reviewId).style.display = "flex";
-                    }
-                    else {
-                        document.getElementById(reviewId).style.display = "none";
-                    }
+        <script type="text/javascript">
+            function showReviews(id) {
+                const reviewId = "review" + id;
+                if (document.getElementById(reviewId).style.display === "none") {
+                    document.getElementById(reviewId).style.display = "flex";
                 }
-            </script>
-            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-            <script>
-                function showQuestions(id) {
-                    const questionId = "question" + id;
-                    if (document.getElementById(questionId).style.display === "none") {
-                        document.getElementById(questionId).style.display = "block";
-                    }
-                    else {
-                        document.getElementById(questionId).style.display = "none";
-                    }
+                else {
+                    document.getElementById(reviewId).style.display = "none";
                 }
-                function showCenters(id) {
-                    const centerId = "center" + id;
-                    if (document.getElementById(centerId).style.display === "none") {
-                        document.getElementById(centerId).style.display = "block";
-                    }
-                    else {
-                        document.getElementById(centerId).style.display = "none";
-                    }
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script>
+            function showQuestions(id) {
+                const questionId = "question" + id;
+                if (document.getElementById(questionId).style.display === "none") {
+                    document.getElementById(questionId).style.display = "block";
                 }
-                function showAllReviews() {
-                    if (document.getElementById("showAllReviews").style.display === "none") {
-                        document.getElementById("showAllReviews").style.display = "block";
-                    }
-                    else {
-                        document.getElementById("showAllReviews").style.display = "none";
-                    }
+                else {
+                    document.getElementById(questionId).style.display = "none";
                 }
-                function showAllQuestions() {
-                    if (document.getElementById("showAllQuestions").style.display === "none") {
-                        document.getElementById("showAllQuestions").style.display = "block";
-                    }
-                    else {
-                        document.getElementById("showAllQuestions").style.display = "none";
-                    }
+            }
+            function showCenters(id) {
+                const centerId = "center" + id;
+                if (document.getElementById(centerId).style.display === "none") {
+                    document.getElementById(centerId).style.display = "block";
                 }
-                function showAllCenters() {
-                    if (document.getElementById("showAllCenters").style.display === "none") {
-                        document.getElementById("showAllCenters").style.display = "block";
-                    }
-                    else {
-                        document.getElementById("showAllCenters").style.display = "none";
-                    }
+                else {
+                    document.getElementById(centerId).style.display = "none";
                 }
-            </script>
-            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+            }
+            function showAllReviews() {
+                if (document.getElementById("showAllReviews").style.display === "none") {
+                    document.getElementById("showAllReviews").style.display = "block";
+                }
+                else {
+                    document.getElementById("showAllReviews").style.display = "none";
+                }
+            }
+            function showAllQuestions() {
+                if (document.getElementById("showAllQuestions").style.display === "none") {
+                    document.getElementById("showAllQuestions").style.display = "block";
+                }
+                else {
+                    document.getElementById("showAllQuestions").style.display = "none";
+                }
+            }
+            function showAllCenters() {
+                if (document.getElementById("showAllCenters").style.display === "none") {
+                    document.getElementById("showAllCenters").style.display = "block";
+                }
+                else {
+                    document.getElementById("showAllCenters").style.display = "none";
+                }
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
-            <script>
-                $(document).on('ready', function () {
+        <script>
+            $(document).on('ready', function () {
 
-                    $("#eventtype1").on('change', function () {
-                        var e1 = $(this).val();
-                        location.href = "/admin/allreviews/?governorate=" + e1;
-                    });
-                    $("#eventtype2").on('change', function () {
-                        var e1 = $("#eventtype1").val();
-                        var e2 = $("#eventtype2").val();
-                        location.href = "/admin/allreviews/?governorate=" + e1 + "&district=" + e2;
-                    });
-                    $("#eventtype3").on('change', function () {
-                        var e1 = $("#eventtype1").val();
-                        var e2 = $("#eventtype2").val();
-                        var e3 = $("#eventtype3").val();
-                        location.href = "/admin/allreviews/?governorate=" + e1 + "&district=" + e2 + "&name=" + e3;
-                    });
-
-
+                $("#eventtype1").on('change', function () {
+                    var e1 = $(this).val();
+                    location.href = "/admin/allreviews/?governorate=" + e1;
                 });
-            </script>
+                $("#eventtype2").on('change', function () {
+                    var e1 = $("#eventtype1").val();
+                    var e2 = $("#eventtype2").val();
+                    location.href = "/admin/allreviews/?governorate=" + e1 + "&district=" + e2;
+                });
+                $("#eventtype3").on('change', function () {
+                    var e1 = $("#eventtype1").val();
+                    var e2 = $("#eventtype2").val();
+                    var e3 = $("#eventtype3").val();
+                    location.href = "/admin/allreviews/?governorate=" + e1 + "&district=" + e2 + "&name=" + e3;
+                });
+
+
+            });
+        </script>

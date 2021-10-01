@@ -6,15 +6,17 @@ let dictAbout = {
         'description2': '“Track-Vac” will enable local community members to exchange and share their experience to help in the fight against the pandemic spread.',
         'description3':'Our Aim is to raise the awareness of the local community about COVID-19 vaccination process.',
         'slogan': 'The Best For You,<br><span> Showed For You.</span>',
-        'meettheteam' : 'Meet the Team'
+        'meettheteam' : 'Meet the Team',
+        'description4' : '“Track-Vac” is sponsored by IEEE HAC & Sight Committee <br> Grant #21-COV1-086.'
     },
     'ar': {
         'header': 'ما هوا تراكفاك؟',
-        'description1': ' تراكفاك" هو موقع إلكتروني حيث تجد كل المعلومات المهمه عن كيفية تلقي اللقاح حولك"' ,
-        'description2':'تركفاك" سيتيح لأفراد المجتمع المحلي تبادل ومشاركة تجاربهم في سبيل القضاء علي انتشار الوباء " ',
+        'description1': ' "تراكفاك" هو موقع إلكتروني حيث تجد كل المعلومات المهمه عن كيفية تلقي اللقاح حولك' ,
+        'description2':'"تراكفاك" سيتيح لأفراد المجتمع المحلي تبادل ومشاركة تجاربهم في سبيل القضاء علي انتشار الوباء ',
         'description3':'هدفنا هو زيادة وعي المجتمع المحلي عن عملية اللقاح ضد كورونا',
         'slogan': '<span> الافضل لك </span><br>, يظهر لك',
-        'meettheteam' : 'تعرف علي فريق العمل'
+        'meettheteam' : 'تعرف علي فريق العمل',
+        'description4' : ' "تراكفاك " برعاية IEEE HAC & Sight Committee منحة  # 21-COV1-086. '
     }
 }
 
