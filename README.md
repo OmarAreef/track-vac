@@ -6,6 +6,7 @@
 2. Download Node.js <br> 
 3. install git bash terminal.
 
+note : make sure you have access to the internet at all times.
 ## How to start project locally: 
 1. open your terminal in the folder you have the project in and run ( npm i ) to install dependencies this may take a few minutes.
 2. open another terminal in your home directory ( running powershell on windows will open in the home directory by default ) then run ( mongod ) to open a connection to the DB.
