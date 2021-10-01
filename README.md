@@ -15,7 +15,7 @@ note : make sure you have access to the internet at all times.
 5. Then lastly run( node app ) to the start the app.
 
 ## Users & Admin credentials: 
-to access admin pages you need to go to localhost:3000/admin/login , there is a ready admin with username : admin , password : password.
+to access admin pages you need to go to localhost:3000/admin/login , there is a ready admin with username : admin , password : 123.
 
 there are 3 user login in data : 
 1. reg_num: 10008980771468, pass: 2233, this user is registered however still not vaccinated.
