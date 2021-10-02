@@ -129,7 +129,7 @@ and (min-width: 1200px){
     }
 
 #background {
-  background-image: url('/img/track.png')  ;
+  background-image: url('/img/Track.png')  ;
   background-repeat: no-repeat;
  /* background-size:scale-down ;*/
   background-position-x: right;
@@ -321,7 +321,7 @@ h1 , h2 , h3 , h4 {
   font-size: 1.3rem;
 } */
 /* #main {
-  background-image: url('/img/track.png');
+  background-image: url('/img/Track.png');
   background-repeat: no-repeat;
   background-size:scale-down ;
   background-position-x: right;
