@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config({ path: '../.env' });
+}
 const mongoose = require('mongoose');
 const admin = require('../models/admin');
 const answer = require('../models/answer');
@@ -13,9 +16,10 @@ const helper = require("./centers.js");
 const helper1 = require("./users.js");
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const dbUrl = process.env.DB_URL ;
 
 
-mongoose.connect('mongodb://localhost:27017/track-vac1',
+mongoose.connect(dbUrl,
     err => {
         if (err) throw err;
         console.log('connected to MongoDB')

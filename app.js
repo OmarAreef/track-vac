@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -23,11 +26,11 @@ const Admin = require('./models/admin');
 const user = require('./models/user');
 const center = require('./models/center');
 const { findById } = require('./models/user');
+const dbUrl = process.env.DB_URL ;
 
 
 
-
-mongoose.connect('mongodb://localhost:27017/track-vac1', {
+mongoose.connect(dbUrl, {
 }, err => {
     if (err) throw err;
     console.log('Connected to MongoDB!!!')
