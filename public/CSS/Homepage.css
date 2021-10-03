@@ -137,7 +137,7 @@ and (min-width: 1200px){
   min-height: 90vh;
 
   /* background-attachment: fixed; */
-  background-attachment:fixed;
+  /* background-attachment:fixed; */
   /* padding: 1.5em; */
 }
 #main {
@@ -287,6 +287,8 @@ h1 , h2 , h3 , h4 {
 #start {
   max-width: 100%;
   padding: 0px;
+  /* min-height: 100vh !important; */
+  /* max-height: fit-content !important; */
 }
 
 #filters {
@@ -347,7 +349,16 @@ li{
 }
 @media (max-width : 670px) {
   .text {
-    font-size: 1.3em !important;
+    font-size: 1.2em !important;
+    
+  }
+  #main {
+    background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.5) 2.5%, rgba(255, 255, 255, 0.3) 112.38%);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .Slogan1 , .Slogan2 , .moreInfo , .vaccineHolders{
+    color: rgba(5, 9, 57, 1) !important;
   }
   #Aboutus , #Starttracking {
     width: 80%;

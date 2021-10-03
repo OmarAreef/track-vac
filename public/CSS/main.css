@@ -90,7 +90,7 @@
     }
     #Slogan {
       font-family: Roboto,'sans-serif';
-      color : rgba(0, 0, 0, 0.55);
+      /* color : rgba(0, 0, 0, 0.55); */
       font-weight: 700;
       font-size: 2.7em;
       letter-spacing: 2px;
@@ -98,6 +98,21 @@
       text-indent: 30px;
 
   }
-  .s {
-    margin-inline-start: 2.1em;
+  
+@media (max-width : 470px) {
+  #Slogan {
+    font-size: 96%;
+}
+img.location {
+    max-width: 40px !important;
+}
+#logo {
+  max-width: 96% !important;
+}
+#welcoming {
+  font-size: 95% !important;
+}
+#s {
+  font-size: 80% !important;
+}
 }

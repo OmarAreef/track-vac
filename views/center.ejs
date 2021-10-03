@@ -44,50 +44,50 @@
                 </div>
                 <div class="row w-100 mt-3">
 
-                    <div class="col-sm-10 col-md-5 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch">
+                    <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch">
                         <img src="<%=center.image%>" class="img-fluid thumb h-100 mb-2">
                     </div>
-                    <div class="col-sm-12 col-md-7 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch">
-                        <div class="card thumb w-100 shadow bg-color">
-                            <div class="card-body mx-n3">
+                    <div class="col-sm-12 col-md-7 col-lg-5 col-xl-4 pb-2 d-flex align-items-stretch" >
+                        <div class="card thumb-1 w-100 shadow bg-color" >
+                            <div class="card-body mx-n3 " style="min-height: fit-content;">
                                 <div class="card-title">
                                     <h4 class="card-title text-center mb-n1 Ratings">Ratings</h4>
                                 </div>
 
-                                <div class="row mt-2">
-                                    <div class="col-3 text-center">
+                                <div class="row mt-2 justify-content-center">
+                                    <div class="col-sm-12 col-md-4 text-center">
                                         <span class="card-text rating mt-1 Location text-center">location</span>
                                     </div>
-                                    <div class="col-7 ms-2 star d-flex justify-content-end">
+                                    <div class="col-md-7 col-sm-12 ms-2 star d-flex justify-content-center">
                                         <p class="starability-result "
                                             data-rating="<%=  Math.round(center.avgLocation) %>"></p>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-3 text-center">
+                                <div class="row mt-2 justify-content-center">
+                                    <div class="col-sm-12 col-md-4 text-center">
                                         <span class="card-text rating mt-1 Service text-center">Service</span>
                                     </div>
-                                    <div class="col-7 ms-2 star d-flex justify-content-end">
+                                    <div class="col-md-7 ms-2 col-sm-12 star d-flex justify-content-center">
                                         <p class="starability-result"
                                             data-rating="<%= Math.round(center.avgService) %>"></p>
                                     </div>
                                 </div>
 
 
-                                <div class="row mt-2">
-                                    <div class="col-3 text-center">
+                                <div class="row mt-2 justify-content-center">
+                                    <div class="col-sm-12 col-md-4 text-center">
                                         <span class="card-text rating mt-1 Cleaniness">Cleaniness</span>
                                     </div>
-                                    <div class="col-7 ms-2 star d-flex justify-content-end">
+                                    <div class="col-md-7 ms-2 col-sm-12 star d-flex justify-content-center">
                                         <p class="starability-result" data-rating="<%=  Math.round(center.avgClean) %>">
                                         </p>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-3 text-center">
+                                <div class="row mt-2 justify-content-center">
+                                    <div class="col-sm-12 col-md-4 text-center">
                                         <span class="card-text rating mt-1 Speed text-center">Speed</span>
                                     </div>
-                                    <div class="col-7 ms-2 star d-flex justify-content-end">
+                                    <div class="col-md-7 ms-2 col-sm-12 star d-flex justify-content-center">
                                         <p class="starability-result" data-rating="<%=  Math.round(center.avgSpeed) %>">
                                         </p>
                                     </div>
@@ -96,17 +96,17 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-11 col-lg-10 col-xl-4 d-flex align-items-stretch pb-2">
-                        <div class="card thumb w-100 shadow bg-color" id='Map'>
+                        <div class="card thumb-1 w-100 shadow bg-color" id='Map'>
                             <div class="card-body">
                                 <div class=" card-title">
                                     <h4 class="card-title text-center mb-n1 Location">Location</h4>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-6 border border-rounded rounded-2 pt-3 me-n1" id='map'>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6 col-sm-12 border border-rounded rounded-2 pt-3 me-n1" id='map'>
                                         <!--  -->
                                     </div>
-                                    <div class="col-6 card-text py-3">
+                                    <div class="col-md-6 col-sm-12 card-text pt-3 text-center">
                                         <h4 class="text WorkingHours">openeing and closing hours</h4>
                                         <ul>
                                             <% for(let w of center.workingHours) { %>
@@ -517,8 +517,8 @@
                 </div>
                 <div class="col-sm-12 col-md-8 col-lg-6">
                     <div class="card mb-3 bg-color shadow thumb container" style="min-height:400px">
-                        <div class="card-title mb-n1 py-2 row">
-                            <div class="col-6 offset-3">
+                        <div class="card-title mb-n1 pt-2 row justify-content-center">
+                            <div class="col-md-6 col-sm-10 text-center">
                                 <h4 class="text-center QuesAndAnswer">Questions and Answers</h4>
                             </div>
                         </div>
@@ -545,7 +545,7 @@
                                                     <div class="row">
                                                         <input class="form-control mb-1" type="text" cols="30" rows="3"
                                                             name="question[question]" id="questionBody"
-                                                            placeholder="What is your question.. ?"></input>
+                                                            placeholder="What is your question.. ?" required></input>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6 offset-3 d-flex justify-content-center">
