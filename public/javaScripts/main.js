@@ -10,13 +10,13 @@ $(document).ready(function () {
             smartSpeed: 700,
             autoplayTimeout: 6000,
             responsive: {
-                0: {
-                    items: 1,
-                    margin: 0
+                300: {
+                    items: 2,
+                    margin: 5
                 },
                 460: {
                     items: 2,
-                    margin: 0
+                    margin: 10
                 },
                 576: {
                     items: 3,
@@ -155,7 +155,7 @@ let dict = {
 
     }
 }
-select.addEventListener('click', function () {
+function changelang() {
     let language = select.value
     const dictLang = dict[language];
     for (let attr in dictLang) {
@@ -166,9 +166,16 @@ select.addEventListener('click', function () {
                 elem.innerHTML = dictLang[attr]
             })
         }
-
     }
+}
+
+select.addEventListener('change', function () {
+    changelang() ;
+
 })
+
+changelang();
+
 
 if (language === 'ar') {
     document.querySelector('#lang-ar').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css")

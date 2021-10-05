@@ -19,6 +19,9 @@
     <link type='text/css' rel="stylesheet" href="/CSS/main.css">
 
 </head>
+<!-- <script>
+    const language = '<%-language %>';
+</script> -->
 
 <body style=" background: linear-gradient(to right,  #1afeaf 0%,#089ca6 22%,#044a92 52%,#021f7b 78%,#050939 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1afeaf', endColorstr='#050939',GradientType=1 ); /* IE6-9 */
@@ -50,8 +53,8 @@ justify-content: center;
                             <div class="input-group mb-4 ">
                                 <select id="language" name="Language" style="z-index: 2;" class='form-control px-1'
                                     value="Language" placeholder="Language">
-                                    <option value="en">English</option>
-                                    <option value="ar">Arabic</option>
+                                    <option value="en" <%= (language === 'en' ? 'selected' : '' ) %> >English</option>
+                                    <option value="ar"  <%= (language === 'ar' ? 'selected' : '' ) %> >Arabic</option>
                                 </select>
                             </div>
                         </div>

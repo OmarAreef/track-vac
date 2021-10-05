@@ -110,8 +110,8 @@ app.get('/about', (req, res) => {
     res.render('about')
 })
 app.get('/about/team', (req, res) => {
-    res.sendFile(path.join(__dirname + '/views/code/index.html'));
-
+    // res.sendFile(path.join(__dirname + '/views/code/index.html'));
+    res.render('code/index')
 })
 app.get('/faq', (req, res) => {
     res.render('faq');

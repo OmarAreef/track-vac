@@ -32,10 +32,10 @@ let dict = {
     'en': {
         'EnglishL': 'English',
         'ArabicL': 'Arabic',
-        'Slogan1': 'the best for you',
-        'Slogan2': 'showed for you',
+        'Slogan1': 'The Best for you',
+        'Slogan2': 'Showed for you,',
         'moreInfo': 'find and share more information',
-        'vaccineHolders': 'about Vaccination centers',
+        'vaccineHolders': 'about Vacination centers',
         'tracking': 'Start Tracking',
         'aboutUs': 'about Us',
         'governorates': 'Governorates',
@@ -51,7 +51,7 @@ let dict = {
         'Slogan1': 'الأفضل لك',
         'Slogan2': 'يظهر لك',
         'moreInfo': 'شاهد و شارك المزيد من المعلومات ',
-        'vaccineHolders': 'اماكن تلقي اللقاح',
+        'vaccineHolders': 'عن اماكن تلقي اللقاح',
         'tracking': 'ابدأ التتبع',
         'aboutUs': 'عنا',
         'governorates': 'المحافظات',
@@ -71,6 +71,10 @@ if (language === 'ar') {
     document.querySelector('#lang-ar').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
     document.querySelector('#lang-en').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
     let html =  document.querySelector('html')
+    let back = document.querySelector('#background')
+    let globe = document.querySelector('#globe')
+    globe.style.display ='none';
+    back.classList.add('backgroundar')
     html.setAttribute('lang' , 'ar')
     html.setAttribute('dir' , 'rtl')
 
@@ -79,6 +83,10 @@ else {
     // document.querySelectorAll('*').forEach(elem => {
     //     elem.classList.remove('rtl')
     // })
+    let back = document.querySelector('#background')
+    back.classList.remove('backgroundar')
+    let globe = document.querySelector('#globe')
+    globe.style.display ='inline';
     // document.querySelector('body').classList.remove('rtl')
     // document.querySelector('#language-css').removeAttribute('href')
     document.querySelector('#lang-ar').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )

@@ -132,9 +132,23 @@ and (min-width: 1200px){
   background-image: url('/img/Track.png')  ;
   background-repeat: no-repeat;
  /* background-size:scale-down ;*/
-  background-position-x: right;
+  background-position-x:right;
+  
   background-position-y: bottom;
-  min-height: 90vh;
+  min-height: 93vh;
+
+  /* background-attachment: fixed; */
+  /* background-attachment:fixed; */
+  /* padding: 1.5em; */
+}
+.backgroundar {
+  background-image: url('/img/Trackar.png')  !important ;
+  background-repeat: no-repeat !important;
+ /* background-size:scale-down ;*/
+  background-position-x:left !important;
+  
+  background-position-y: bottom !important ;
+  min-height: 93vh !important;
 
   /* background-attachment: fixed; */
   /* background-attachment:fixed; */
@@ -143,13 +157,14 @@ and (min-width: 1200px){
 #main {
   background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.377) 2.5%, rgba(255, 255, 255, 0) 112.38%);
   box-shadow: 50px 60px 100px rgba(0, 0, 0, 0.05);
-  border: 5px solid rgba(255, 255, 255, .2);
+  border: 5px solid rgba(255, 255, 255, .4);
 /* Note: backdrop-filter has minimal browser support */
 border-radius: 40px;
-margin-top:20vh ;
-margin-inline-start: 11vw ;
+/* margin-top:20vh ; */
+/* margin-inline-start: 11vw ; */
+/* min-height: 600px !important; */
 max-height: fit-content !important;
-height: auto !important;
+/* height: auto !important; */
 width: 80%;
 z-index: 4;
 }
@@ -349,13 +364,14 @@ li{
 }
 @media (max-width : 670px) {
   .text {
-    font-size: 1.2em !important;
+    font-size: 1.5em !important;
     
   }
   #main {
     background: linear-gradient(104.15deg, rgba(255, 255, 255, 0.5) 2.5%, rgba(255, 255, 255, 0.3) 112.38%);
     padding-left: 10px !important;
     padding-right: 10px !important;
+    min-height: 550px !important;
   }
   .Slogan1 , .Slogan2 , .moreInfo , .vaccineHolders{
     color: rgba(5, 9, 57, 1) !important;
