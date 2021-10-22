@@ -266,7 +266,9 @@ app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res)
     center.reviews.push(review);
     await review.save();
     await center.save();
-    res.redirect(`/${center._id}`);
+    // req.flash('error', 'you are not registered');
+    req.flash('success', 'Review Written successfully !');
+    res.redirect('back');
 }))
 
 app.delete('/:id/reviews/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(async (req, res) => {

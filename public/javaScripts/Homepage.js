@@ -6,9 +6,9 @@ function vanish() {
 // console.log(vacCenters)
 
 // let allElemnets = document.querySelectorAll();'
-let point = [31,31]
-if (vacCenters && vacCenters.length){
-    point =  [vacCenters[0].longitude, vacCenters[0].latitude];
+let point = [31, 31]
+if (vacCenters && vacCenters.length) {
+    point = [vacCenters[0].longitude, vacCenters[0].latitude];
 }
 mapboxgl.accessToken = 'pk.eyJ1Ijoib21hci1hcmVmIiwiYSI6ImNrdGx3OXZvMDBoNGwydm4ydWVrb3d0bTMifQ._DEnKPltxE3MKSmFI0KBmg';
 const map = new mapboxgl.Map({
@@ -30,6 +30,13 @@ for (let center of vacCenters) {
 }
 let dict = {
     'en': {
+        'Ratings': 'Ratings',
+        'Location': 'Location',
+        'Service': 'Service',
+        'Cleaniness': 'Cleaniness',
+        'Speed': 'Speed',
+        'Review': 'Write a Review',
+        'Submit': 'Submit',
         'EnglishL': 'English',
         'ArabicL': 'Arabic',
         'Slogan1': 'The Best for you',
@@ -42,10 +49,19 @@ let dict = {
         'districts': 'Districts',
         'centers': 'Centers',
         'results': 'Results',
-        'filters': 'Filters'
+        'filters': 'Filters',
+        'EnterReview': 'Enter your Review here',
+        'NotAllowed': 'You are not eligible to write a review or You are not signed in.',
     },
     'ar':
-    {
+    {   
+        
+        'Location': 'موقع',
+        'Service': 'خدمة',
+        'Cleaniness': 'النظافة',
+        'Speed': 'السرعة',
+        'Review': 'أكتب مراجعة',
+        'Submit': 'تم',
         'EnglishL': 'الإنجليزية',
         'ArabicL': 'العربية',
         'Slogan1': 'الأفضل لك',
@@ -58,25 +74,32 @@ let dict = {
         'districts': 'الأحياء',
         'centers': 'المراكز',
         'results': 'النتائج',
-        'filters': 'التصفيات'
+        'NotAllowed': 'لست مؤهلاً لكتابة مراجعة أو أنك لم تسجل الدخول',
+        'filters': 'التصفيات',
+        'EnterReview': 'أدخل رأيك هنا',
     }
 };
 const dictLang = dict[language];
 for (let attr in dictLang) {
-    let element = document.querySelector(`.${attr}`);
+    let element = document.querySelectorAll(`.${attr}`);
     console.log(dictLang[attr])
-    element.innerHTML = dictLang[attr]
+    if (element) {
+        element.forEach(elem => {
+            elem.innerHTML = dictLang[attr]
+        })
+    }
+
 }
 if (language === 'ar') {
-    document.querySelector('#lang-ar').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
-    document.querySelector('#lang-en').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
-    let html =  document.querySelector('html')
+    document.querySelector('#lang-ar').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css")
+    document.querySelector('#lang-en').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css")
+    let html = document.querySelector('html')
     let back = document.querySelector('#background')
     let globe = document.querySelector('#globe')
-    globe.style.display ='none';
+    globe.style.display = 'none';
     back.classList.add('backgroundar')
-    html.setAttribute('lang' , 'ar')
-    html.setAttribute('dir' , 'rtl')
+    html.setAttribute('lang', 'ar')
+    html.setAttribute('dir', 'rtl')
 
 }
 else {
@@ -86,19 +109,35 @@ else {
     let back = document.querySelector('#background')
     back.classList.remove('backgroundar')
     let globe = document.querySelector('#globe')
-    globe.style.display ='inline';
+    globe.style.display = 'inline';
     // document.querySelector('body').classList.remove('rtl')
     // document.querySelector('#language-css').removeAttribute('href')
-    document.querySelector('#lang-ar').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
-    document.querySelector('#lang-en').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
+    document.querySelector('#lang-ar').removeAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css")
+    document.querySelector('#lang-en').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css")
     // document.querySelector('#language-css').setAttribute('href',"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
     // document.querySelector('#language-css').setAttribute('href', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" )
-    let html =  document.querySelector('html')
-    html.setAttribute('lang' , 'en' )
-    html.removeAttribute('dir' )
-    
+    let html = document.querySelector('html')
+    html.setAttribute('lang', 'en')
+    html.removeAttribute('dir')
+
 
 }
+function onR(id) {
+    if (user && !(userType === 'notVaccinated')) {
+        document.getElementById(id).style.display = "block";
+    }
+    else {
+        alert(dict[language].NotAllowed)
+    }
+}
+
+function offR(id) {
+    document.getElementById(id).style.display = "none";
+}
+// let write = document.querySelector('#review');
+// write.addEventListener('click', on);
+// let close = document.querySelector('#close_review');
+// close.addEventListener('click', off);
 
 
 

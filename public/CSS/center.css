@@ -58,9 +58,10 @@ ul {
     font-weight: 400;
 }
 .logo{
-    background-color: transparent;
-    margin-top: -30px;
-    margin-inline-start: -20px;
+    /* background-color: transparent; */
+    /* margin-top: -30px; */
+    /* margin-inline-start: -20px; */
+    width: clamp(50px , 60% , 120px);
 }
 #close{
     padding: -5px !important;

@@ -2,6 +2,15 @@ span{
     display: flex;
     align-content: flex-end;
 }
-.navbar {
-position: sticky;
+.navGlobe {
+    padding-left: 3px;
+    padding-right: 3px;
+    background-image: url(../img/globe.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 150%;
+}
+.imgGlobe {
+   
+    z-index: 99;
 }
