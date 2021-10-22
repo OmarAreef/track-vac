@@ -1,5 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark d-absolute py-0 pe-3"
-    style="background-color: #050939; padding-bottom: 0px; margin: 0px;">
+<link rel="stylesheet" href="../CSS/navbar.css">
+
+<nav class="navbar navbar-expand-lg navbar-dark pe-3"
+    style="background-color: #050939ee; padding: 0px; margin: 0px;">
     <div class="container-fluid">
         <ul>
             <a class="navbar-brand" href='/'><img src="/img/LOGO (3) 1.png" alt="logo"></a>
@@ -10,17 +12,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item me-4 mb-2">
-                    <a class="nav-link button1 btn" href="/about"  type="button"
-                        style="font-family: Roboto; font-weight: bold; color: white; background-color: #17A2B8;">About us</a>
+                <li class="nav-item me-4 ">
+                    <a class="nav-link button1 btn" href="/about" type="button"
+                        style="font-family: Roboto; font-weight: bold; color: white; background-color: #17A2B8;">About
+                        us</a>
                 </li>
-                <li class="nav-item me-4 mb-2">
+                <li class="nav-item me-4 ">
 
                     <a class="nav-link button2 btn" href="/faq" type="button"
                         style="font-family: Roboto;font-weight:bold; color: white;background-color: #17A2B8; ">FAQ</a>
 
                 </li>
-                <li class="nav-item mb-2 ">
+                <li class="nav-item me-4 ">
                     <% if (!user){ %>
                         <a class="btn  button3" type="button" id="signin"
                             style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;">Sign
@@ -30,6 +33,28 @@
                                 style="font-family: Roboto;font-weight:bold; color: white; background-color: #17A2B8;"
                                 href="/centers/logout">Logout</a>
                             <% } %>
+                </li>
+                <li class="nav-item ">
+                    <form action="/selectLanguage" method="post">
+                        <div class="input-group">
+
+
+
+                            <select id="language" name="Language" style="z-index: 2; font-family: Roboto;font-weight:bold; color: white; background-color: transparent" class='form-control px-1 navGlobe'
+                                value="Language" placeholder="Language" onchange="this.form.submit()" >
+                                
+                                <option selected hidden  >
+                                    
+                                   
+                                </option>
+                                <option value="ar" class="ArabicL" style="background-color: transparent; color: black;" <%=(language==='ar' )? '' : '' %>
+                                    >ar</option>
+                                <option value="en" class="EnglishL" style="background-color: transparent; color: black;" <%=(language==='en' )? '' : '' %>
+                                    >en</option>
+                            </select>
+
+                        </div>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -71,4 +96,3 @@
 
         </div>
         <script src="../javaScripts/navbar.js"></script>
-       

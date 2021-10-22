@@ -1,0 +1,113 @@
+<div class="container thumb-1 overlay" id='write_review'
+    style="background: linear-gradient(to right,  #ffff 0%, rgba(194,194,194,1) 100%); height: clamp(200px , 70% , 500px); overflow-y: scroll;">
+    <div class="row px-2">
+        <div class="col-6 offset-3">
+            <img src="/img/logo(4).png" alt="" class="img-fluid logo">
+        </div>
+        <div class="col-1">
+            <button class="btn btn-outline-danger" id='close_review'>&#10060</button>
+        </div>
+    </div>
+    <h3 class="display-5 Review text-center">Write a Review</h3>
+    <form action="/<%=center._id%>/reviews" method="POST" class="mb-3 needs-validation" novalidate>
+        <div class="mb-3 row">
+            <div class="col-8 offset-2 d-flex justify-content-center">
+                <fieldset class="starability-basic">
+                    <h2 class="label ms-5 Location">Location</h2>
+                    <input type="radio" class="input-no-rate" name="review[location]" value="1" checked
+                        aria-label="No rating." required />
+                    <input type="radio" id="first-rate1" name="review[location]" value="1" required />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[location]" value="2" required />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[location]" value="3" required />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[location]" value="4" required />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[location]" value="5" required />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3 row">
+                <div class="col-8 offset-2 d-flex justify-content-center">
+                    <fieldset class="starability-basic">
+                        <h2 class="label ms-5 Service">Service</h2>
+                        <input type="radio" class="input-no-rate" name="review[service]" value="0" checked
+                            aria-label="No rating." required />
+                        <input type="radio" id="second-rate1" name="review[service]" value="1" required />
+                        <label for="second-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="second-rate2" name="review[service]" value="2" required />
+                        <label for="second-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="second-rate3" name="review[service]" value="3" required />
+                        <label for="second-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="second-rate4" name="review[service]" value="4" required />
+                        <label for="second-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="second-rate5" name="review[service]" value="5" required />
+                        <label for="second-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3 row">
+                <div class="col-8 offset-2 d-flex justify-content-center">
+                    <fieldset class="starability-basic">
+                        <h2 class="label ms-5 Cleaniness">Clean</h2>
+                        <input type="radio" class="input-no-rate" name="review[clean]" value="0" checked
+                            aria-label="No rating." />
+                        <input type="radio" id="third-rate1" name="review[clean]" value="1" required />
+                        <label for="third-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="third-rate2" name="review[clean]" value="2" required />
+                        <label for="third-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="third-rate3" name="review[clean]" value="3" required />
+                        <label for="third-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="third-rate4" name="review[clean]" value="4" required />
+                        <label for="third-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="third-rate5" name="review[clean]" value="5" required />
+                        <label for="third-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3 row">
+                <div class="col-8 offset-2 d-flex justify-content-center">
+                    <div class="row w-100 d-flex justify-content-center">
+                        <fieldset class="starability-basic">
+                            <h2 class="label ms-5 Speed">Speed</h2>
+                            <input type="radio" class="input-no-rate" name="review[speed]" value="0" checked
+                                aria-label="No rating." required />
+                            <input type="radio" id="fourth-rate1" name="review[speed]" value="1" required />
+                            <label for="fourth-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="fourth-rate2" name="review[speed]" value="2" required />
+                            <label for="fourth-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="fourth-rate3" name="review[speed]" value="3" required />
+                            <label for="fourth-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="fourth-rate4" name="review[speed]" value="4" required />
+                            <label for="fourth-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="fourth-rate5" name="review[speed]" value="5" required />
+                            <label for="fourth-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                        <!-- <div class="invalid-feedback ">
+                                                rating cannot be zero
+                                            </div> -->
+                        <div class="valid-feedback">
+                            looks good
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <h2 class="label EnterReview">Enter your Review here:</h2>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required
+                placeholder="What happened at the center what did you like and what did you dislike ...?"></textarea>
+            <div class="invalid-feedback Empty">
+                Review Cannot be empty
+            </div>
+        </div>
+        <button class="btn btn-success Submit">Submit</button>
+    </form>
+</div>
