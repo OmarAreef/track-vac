@@ -82,37 +82,37 @@ let dict = {
         'QUs' : 'Question : '
     },
     'ar': {
-        'Ratings': 'التقييمات',
-        'Location': 'موقع',
-        'Service': 'خدمة',
+        'Ratings': 'التقييم',
+        'Location': 'الموقع',
+        'Service': 'الخدمة',
         'Cleaniness': 'النظافة',
         'Speed': 'السرعة',
-        'WorkingHours': 'ساعات الافتتاح والختام',
-        'Review': 'أكتب مراجعة',
-        'Good': 'تبدو جيدا',
-        'EnterReview': 'أدخل رأيك هنا',
-        'Empty': 'لا يمكن أن تكون المراجعة فارغة',
+        'WorkingHours': 'ساعات الإفتتاح والغلق',
+        'Review': 'اكتب تعليق',
+        'Good': 'يبدو جيدا',
+        'EnterReview': 'اضف تعليقك هنا',
+        'Empty': 'لا يمكن أن يكون التعليق فارغاً',
         'Submit': 'تم',
-        'Reviews': 'المراجعات',
-        'NotAllowed': 'لست مؤهلاً لكتابة مراجعة أو أنك لم تسجل الدخول',
-        'AvgRating': 'متوسط ​​تقييم',
+        'Reviews': 'التعليقات',
+        'NotAllowed': 'لست مؤهلاً لكتابة تعليق أو أنك لم تسجل الدخول',
+        'AvgRating': 'متوسط ال​​تقييمات',
         'Delete': 'حذف',
-        'Edit': 'تحرير',
-        'Report': 'تقرير',
-        'Spam': 'رسائل إلكترونية مزعجة',
+        'Edit': 'تعديل',
+        'Report': 'إبلاغ',
+        'Spam': 'رسالة إلكترونية مزعجة',
         'Harassment': 'إزعاج',
-        'Inappropriate': 'غير لائقة',
-        'EditReview': 'تحرير المراجعة الخاصة بك',
+        'Inappropriate': 'غير لائق',
+        'EditReview': 'تعديل التعليق',
         'QuesAndAnswer': 'أسئلة وأجوبة',
         'Question': 'السؤال',
         'NotQuestion': 'أنت لم تسجل الدخول لطرح سؤال.الرجاء تسجيل الدخول أولا.',
         'AddQuestion': 'أضف سؤالا',
-        'Answer': 'الاجابة',
-        'AddAnswer': 'أضف اجابة',
+        'Answer': 'الإجابة',
+        'AddAnswer': 'أضف إجابة',
         'Add': 'أضف',
         'Answers': 'الأجوبة',
         'Delete': 'حذف' ,
-        'REv' : ' المراجعة : ',
+        'REv' : ' التعليق : ',
         'QUs' : 'السوال : '
     }
 }
@@ -153,7 +153,7 @@ else {
 }
 function on() {
     if (user && !(userType === 'notVaccinated')) {
-        document.getElementById("write_review").style.display = "block";
+        document.getElementById("write_review").classList.add('overlay-visible') ;
     }
     else {
         alert (dict[language].NotAllowed)
@@ -161,7 +161,7 @@ function on() {
 }
 
 function off() {
-    document.getElementById("write_review").style.display = "none";
+    document.getElementById("write_review").classList.remove('overlay-visible');
 }
 let write = document.querySelector('#review');
 write.addEventListener('click', on);

@@ -4,12 +4,13 @@ const { number } = require('joi');
 module.exports.reviewSchema = Joi.object(
     {
         review: Joi.object({
-            body: Joi.string().required(),
+            body: Joi.string(),
             location: Joi.number().required().min(1).max(5),
             clean: Joi.number().required().min(1).max(5),
             service: Joi.number().required().min(1).max(5),
             speed: Joi.number().required().min(1).max(5),
-        }).required()
+        }).required(),
+        
     }
 )
 module.exports.questionSchema = Joi.object(

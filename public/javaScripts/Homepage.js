@@ -52,6 +52,11 @@ let dict = {
         'filters': 'Filters',
         'EnterReview': 'Enter your Review here',
         'NotAllowed': 'You are not eligible to write a review or You are not signed in.',
+        'select1' : 'Select governorate',
+        'select2' : 'Select district',
+        'select3' : 'Select center',
+        'results': 'Results',
+        
     },
     'ar':
     {   
@@ -68,14 +73,19 @@ let dict = {
         'Slogan2': 'يظهر لك',
         'moreInfo': 'شاهد و شارك المزيد من المعلومات ',
         'vaccineHolders': 'عن اماكن تلقي اللقاح',
-        'tracking': 'ابدأ التتبع',
-        'aboutUs': 'عنا',
+        'tracking': 'إبدأ التصفح',
+        'aboutUs': 'من نحن',
         'governorates': 'المحافظات',
-        'districts': 'الأحياء',
+        'districts': 'المدينة',
         'centers': 'المراكز',
         'results': 'النتائج',
+        'select1' : 'إختر محافظة',
+        'select2' : 'إختر مدينة',
+        'select3' : 'إختر مركز',
+       
+        'filters': 'تحديد مكان ',
         'NotAllowed': 'لست مؤهلاً لكتابة مراجعة أو أنك لم تسجل الدخول',
-        'filters': 'التصفيات',
+        
         'EnterReview': 'أدخل رأيك هنا',
     }
 };
@@ -124,7 +134,7 @@ else {
 }
 function onR(id) {
     if (user && !(userType === 'notVaccinated')) {
-        document.getElementById(id).style.display = "block";
+        document.getElementById(id).classList.add('overlay-visible');
     }
     else {
         alert(dict[language].NotAllowed)
@@ -132,7 +142,7 @@ function onR(id) {
 }
 
 function offR(id) {
-    document.getElementById(id).style.display = "none";
+    document.getElementById(id).classList.remove('overlay-visible');
 }
 // let write = document.querySelector('#review');
 // write.addEventListener('click', on);

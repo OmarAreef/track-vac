@@ -1,5 +1,5 @@
 <div class="container thumb-1 overlay" id='write_review'
-    style="background: linear-gradient(to right,  #ffff 0%, rgba(194,194,194,1) 100%); height: clamp(200px , 70% , 500px); overflow-y: scroll;">
+    style="background: linear-gradient(to right,  #ffff 0%, rgba(194,194,194,1) 100%); height: clamp(200px , 70% , 500px); overflow-y: scroll; ">
     <div class="row px-2">
         <div class="col-6 offset-3">
             <img src="/img/logo(4).png" alt="" class="img-fluid logo">
@@ -102,11 +102,9 @@
         </div>
         <div class="mb-3">
             <h2 class="label EnterReview">Enter your Review here:</h2>
-            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required
-                placeholder="What happened at the center what did you like and what did you dislike ...?"></textarea>
-            <div class="invalid-feedback Empty">
-                Review Cannot be empty
-            </div>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" 
+                placeholder="..."> </textarea>
+            
         </div>
         <button class="btn btn-success Submit">Submit</button>
     </form>
