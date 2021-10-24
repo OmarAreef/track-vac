@@ -1,10 +1,10 @@
 
 function on() {
-    document.getElementById("sign").style.display = "block";
+    document.getElementById("sign").classList.add('overlay-visible');
 }
 
 function off() {
-    document.getElementById("sign").style.display = "none";
+    document.getElementById("sign").classList.remove('overlay-visible');
 }
 let sign = document.querySelector('#signin') ;
 sign.addEventListener('click' , on);
