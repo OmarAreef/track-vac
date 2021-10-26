@@ -18,8 +18,9 @@
     padding-top: 5%;
 }
 .team {
-    height: 20vh;
-    width: 30%;
+    /* height: 20vh; */
+    max-height: 15% !important;
+    
   }
   .services-list .item {
     background-color: rgba(250,250,250,0.25);
