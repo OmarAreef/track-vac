@@ -212,51 +212,68 @@ app.post("/login/:id", catchAsync(async (req, res) => {
     var Ireg_num = req.body.username;
     var Ipass = req.body.password;
     if (Ireg_num === "" || Ipass === "") {
-        if (req.params.id === 'undefined') {
+        req.flash('error', 'Please Enter the Registration number and the last 4 digits from your ID');
+        if (req.params.id === 'undefined') {         
             res.redirect('/');
         }
         else {
             res.redirect('/' + req.params.id);
         }
-        return;
+        return
     }
     if (!(/^-?\d+$/.test(Ipass)) || !(/^-?\d+$/.test(Ireg_num))) {
-        if (req.params.id === 'undefined') {
-            //req.flash('error', 'you are not registered');
-            res.redirect('/center');
-        }
-        else {
-            //req.flash('error', 'you are not registered');
-            res.redirect('/' + req.params.id);
-        }
-        return;
-    }
-    const user = await User.findOne({ reg_num: Ireg_num, pass: Ipass });
-    if (user) {
-
-        if (req.params.id === 'undefined') {
-            req.session.userId = user._id;
-            req.session.userType = user.userType;
+        req.flash('error', 'Please Enter the Registration number and the last 4 digits from your ID');
+        if (req.params.id === 'undefined') {         
             res.redirect('/');
         }
         else {
-            req.session.userId = user._id;
-            req.session.userType = user.userType;
             res.redirect('/' + req.params.id);
         }
+        return          
+    }
+    let user = await User.findOne({ reg_num: Ireg_num, pass: Ipass });
+    if (!user) {
+        try{
+            user = await User.findOne({ reg_num: Ireg_num});
+            if(!user){
+                user = await new User ({ reg_num: Ireg_num, pass: Ipass });
+                await user.save()
+            }
+            else{
+                req.flash('error', 'The last 4 Digits don\'t match with the registration number');
+                if (req.params.id === 'undefined') {         
+                    res.redirect('/');
+                }
+                else {
+                    res.redirect('/' + req.params.id);
+                }
+                return
+            }
+        }
+        catch(e){
+            req.flash('error', 'Invalid Registeration Number');
+            if (req.params.id === 'undefined') {         
+                res.redirect('/');
+            }
+            else {
+                res.redirect('/' + req.params.id);
+            }
+            return
+        }
+    }   
+    if (req.params.id === 'undefined') {
+        req.session.userId = user._id;
+        req.session.userType = user.userType;
+        res.redirect('/');
     }
     else {
-        if (req.params.id === 'undefined') {
-            req.flash('error', 'you are not registered');
-            res.redirect('/');
-        }
-        else {
-            req.flash('error', 'you are not registered');
-            res.redirect('/' + req.params.id);
-        }
+        req.session.userId = user._id;
+        req.session.userType = user.userType;
+        res.redirect('/' + req.params.id);
     }
 
 }));
+
 
 app.post('/:id/reviews', isLoggedIn, validateReview, catchAsync(async (req, res) => {
     const center = await Center.findById(req.params.id);
