@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     userType: {
         type: String,
-        enum: ['notVaccinated', '1stDose', '2ndDose'],
+        enum: ['notVaccinated', '1stDose', '2ndDose' , '3rdDose'],
         default: 'notVaccinated'
     }
 });
